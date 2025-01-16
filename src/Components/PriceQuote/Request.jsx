@@ -3,6 +3,7 @@ import CONFIG from "../../config.json";
 function Request() {
     var API = CONFIG.API;
 
+    
     return (<>
     <form action={`${API}/pricerequest`} method="POST">
         <label htmlFor="subject">

@@ -1,5 +1,9 @@
-function ListOwnCars() {
+import CONFIG from "../../config.json";
 
+function ListOwnCars() {
+    var API = CONFIG.API;
+
+    
     class OwnCar {
         constructor(brand, model, year, licenseplate, vin, images) {
             this.brand = brand;
@@ -9,6 +13,10 @@ function ListOwnCars() {
             this.vin = vin;
             this.images = images;
         }
+    }
+
+    const LoadOwnCars = () => {
+        // TODO
     }
 
     const OwnCarEntry = (el) => {
@@ -25,6 +33,7 @@ function ListOwnCars() {
         <input type="button" value="Törlés" />
         </>)
     } 
+
 
     var owncars = [new OwnCar("BMW", "E46 316i", "2004", "NFG162", "XXXXXXXXXXXXXXXXX", ["https://m.blog.hu/ug/ugyintezoskisokos/postimage/forgalmi-engedely_1462879533.jpg", "https://autos.culturamix.com/blog/wp-content/gallery/transferencia-de-veiculo-como-fazer2/transferencia-de-veiculo-como-fazer-5.jpg", "https://th.bing.com/th/id/OIP.lcbZb2_HAU6QPIqLeKUJEgHaFj?rs=1&pid=ImgDetMain"])]
 

@@ -3,6 +3,7 @@ import CONFIG from "../../config.json";
 function ActiveRequests() {
     var API = CONFIG.API;
 
+    
     class RequestStruct {
 constructor(title, description, vin, answered) {
     this.title = title;
