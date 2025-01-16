@@ -1,0 +1,34 @@
+Autószerelő weboldal	
+- Bejelentkezés/Regisztráció
+	Ha az ügyfél nics bejelentkezve, attól még hozzáfér az oldal legtöbb tartalmához, de adott dolgokat, pl. Időpontfoglalást nem végezhet. Ez jobb felül lenne egy
+	gomb. Ennek megnyomásával a felhasználót átdobja egy másik oldalra, ahol van a bejelentkezés, ez alatt meg a regisztráció. ehhez szükséges: Email, Név, Jelszó,
+	Tel.Szám
+
+- Árajánlás kérés ticket rendszerrel
+	Az ajánlatkérés egy külön oldalon lenne, a navbarban 'Árajánlás' néven, és ezen az oldalon lenne egy form, ahol az ügyfél meg tudja adni kocsiját a
+	'Saját járműveim' listájábol. Ehhez a listához alvázszám, rendszám, stb által hozzáadhatja saját járművét. A kiválasztás után megadhatja a probléma leírását,
+	majd azalatt lévő gombbal el tudja küldeni az árajánlást. Ez oldalon lenne egy gomb, amit ha megnyom, meg tudja nézni az elküldött aktív árajánlásait, ami 
+	egy 'Chat' ablakban jelenne meg. Az árajánlásra tud az ügyfél válaszolni, úgy mintha egy chat lenne.
+
+- Időpontfoglalás
+	Menü, ahol ki tudja választani járművet a 'Saját járműveim' listábol, és ha nyitott árajánlást, akkor azt is meg tudja adni, hogy a technikusok tudják, hogy
+	min kellesz dolgozniuk. Ezután kiválaszthatja az időpontot amit akar, HA ELÉRHETŐ. A 'Saját járműveim' oldalon láthatja a járműve állapotát. Pl: 'OK',
+	'SZERELÉS ALATT', 'ÁTVÉTELRE VÁR'.
+
+- Saját autó felvétele(Alvázszám, márka, modell, motorkód, rendszám, stb.), forgalmi befotózásával hogy fix övék a jármű.
+	Az ügyfél hozzáadhatja saját járművét a fiókjához, ezt forgalmival engedély befotózásával teheti meg. A forgalmi szükséges, hogy tudjuk a hogy a
+	fehasználóé a jármű.
+
+- Autó állapota(Vár szerelésre, folyamatban, kész)
+	A jármű állapotára 3 jelzés van:
+		OK: A jármű nincs a technikusainknál, az ügyfélnél van.
+		SZERELÉS ALATT: a jármű a technikusainknál van, szerelés alatt.
+		ÁTVÉTELRE VÁR: a jármű készen áll az átvételre az ügyfél által.
+
+- Marketplace ahol a felhasználók hírdethetnek használt alkatrészeket, ezt az egyik adminnak jóvá kell hagynia a hírdetést, hogy megjelenjen, a troll
+  hírdetések elkerülése érdekében.
+	A felhasználók létrehozhatnak hírdetést, de ezek csak akkor kerülnek a piacra, ha valamelyik adminisztrátor jóváhagyja a hírdetést.
+
+- Közösségi rész, ahol a felhasználók ki postolhatják projekt autóikat, vagy hibákkal kapcsolatos postokat készíthessenek, ahol felhasználók
+  tudnak kommentet hagyni. Like rendszer is élne.
+	Hasonlóan mint az 'Instagram', A felhasználók postot készithetnek járművükről, vagy annak hibáiról, segítség kérésként.
