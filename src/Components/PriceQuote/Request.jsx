@@ -16,9 +16,9 @@ function Request() {
         </label>
         <input type="text" name="body" id="body" />
         <select name="owncars" id="owncars">
-            <option value="car1">car1</option>
-            <option value="car2">car2</option>
-            <option value="car3">car3</option>
+            <option value="owncar1">owncar1</option>
+            <option value="owncar2">owncar2</option>
+            <option value="owncar3">owncar3</option>
         </select>
 
         <input type="submit" value="Árajánlat Kérése" />
