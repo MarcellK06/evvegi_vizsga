@@ -9,6 +9,7 @@ function LoginForm() {
         <input type="text" name="name" id="name" required/>
         <input type="password" name="password" id="password" required/>
         <input type="submit" value="Bejelentkezés" />
+        {/* jelszó visszaállítási lehetőség */}
     </form>
     </>);
 }
