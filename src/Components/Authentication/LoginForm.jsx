@@ -5,16 +5,17 @@ import $ from 'jquery';
 function LoginForm() {
     var API = CONFIG.API;
 
-    const nameRef = useRef();
+    const emailRef = useRef();
     const passwordRef = useRef();
 
     const HandleLogin = () => {
-        var name = nameRef.current.value;
+        var email = emailRef.current.value;
         var password = passwordRef.current.value;
         $.ajax({
-            url: `${API}/login`,
+            url: `${API}/User/login`,
+            type: "post",
             data: {
-                name: name,
+                email: email,
                 password: password
             },
             success: function (resp) {
@@ -24,7 +25,7 @@ function LoginForm() {
     }
 
     return (<>
-        <input type="text" name="name" id="name" ref={nameRef} required/>
+        <input type="email" name="email" id="email" ref={emailRef} required/>
         <input type="password" name="password" id="password" ref={passwordRef} required/>
         <input type="button" value="Bejelentkezés" onClick={HandleLogin} />
         {/* jelszó visszaállítási lehetőség */}

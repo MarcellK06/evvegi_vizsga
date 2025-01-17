@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import CONFIG from "../../config.json";
 import $ from 'jquery';
+import Cookie from 'js-cookie';
 
 function CreateListing() {
     var API = CONFIG.API;
@@ -15,9 +16,11 @@ function CreateListing() {
         var itemDescription = itemDescriptionRef.current.value;
         var itemPrice = itemPriceRef.current.value;
         var car = carRef.current.value;
+        var userid = Cookie.get("userid");
         $.ajax({
             url: `${API}/marketplace/createlisting`,
             data: {
+                userid: userid,
                 itemName: itemName,
                 itemDescription: itemDescription,
                 itemPrice: itemPrice,
@@ -26,7 +29,7 @@ function CreateListing() {
             success: function(resp) {
                 // TODO
             }
-        })
+        });
     }
 
     return (<>
@@ -44,7 +47,7 @@ function CreateListing() {
             <option value="owncar3">owncar3</option>
         </select>
         <input type="button" value="Közzététel" onClick={HandleCreateListing} />
-    </>)
+    </>);
 }
 
 export default CreateListing;

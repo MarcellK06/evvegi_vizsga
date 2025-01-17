@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import CONFIG from "../../config.json";
 import $ from 'jquery';
+import Cookie from 'js-cookie';
 
 function AddOwnCar() {
     var API = CONFIG.API;
@@ -13,6 +14,7 @@ function AddOwnCar() {
     const registrationRef = useRef();
 
     const HandleCarAdd = () => {
+        var userid = Cookie.get("userid");
         var brand = brandRef.current.value;
         var model = modelRef.current.value;
         var year = yearRef.current.value;
@@ -22,6 +24,7 @@ function AddOwnCar() {
         $.ajax({
             url: `${API}/car/add`,
             data: {
+                userid: userid,
                 brand: brand,
                 model: model,
                 year: year,
@@ -32,7 +35,7 @@ function AddOwnCar() {
             success: function (resp) {
                 // TODO
             }
-        })
+        });
     }
 
     return (<>
