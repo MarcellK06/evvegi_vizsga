@@ -6,6 +6,11 @@ function PasswordResetForm(){
         */}
     return (
         <>
+        <div className="">
+        <input type="text" name="email" id="email" />
+        <p>Visszaállítási kódot 2 percenként kérhet!</p>
+        <input type="button" value="Kód Küldése" />
+        </div>
         </>
     )
 }

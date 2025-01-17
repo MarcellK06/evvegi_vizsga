@@ -1,4 +1,7 @@
 import CONFIG from "../../config.json";
+import $ from 'jquery';
+import Cookie from 'js-cookie';
+import { useEffect } from "react";
 
 function ListOwnCars() {
     var API = CONFIG.API;
@@ -14,9 +17,21 @@ function ListOwnCars() {
             this.images = images;
         }
     }
+    var owncars = []
 
     const LoadOwnCars = () => {
-        // TODO
+        var userid = Cookie.get("userid");
+        $.ajax({
+            url: `${API}/car/load/all`,
+            data: {
+                userid: userid
+            },
+            success: function(resp) {
+                resp.cars.forEach((el) => {
+                    owncars.push(new OwnCar(el.brand, el.model, el.year, el.licenseplate, el.vin, el.images));
+                })
+            }
+        })
     }
 
     const OwnCarEntry = (el) => {
@@ -34,8 +49,9 @@ function ListOwnCars() {
         </>)
     } 
 
-
-    var owncars = [new OwnCar("BMW", "E46 316i", "2004", "NFG162", "XXXXXXXXXXXXXXXXX", ["https://m.blog.hu/ug/ugyintezoskisokos/postimage/forgalmi-engedely_1462879533.jpg", "https://autos.culturamix.com/blog/wp-content/gallery/transferencia-de-veiculo-como-fazer2/transferencia-de-veiculo-como-fazer-5.jpg", "https://th.bing.com/th/id/OIP.lcbZb2_HAU6QPIqLeKUJEgHaFj?rs=1&pid=ImgDetMain"])]
+    useEffect(() => {
+        LoadOwnCars();
+    }, [])
 
     return (<>
     {owncars.map((i) => OwnCarEntry(i))}
