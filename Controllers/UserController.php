@@ -45,7 +45,7 @@ Route::post("/User/login", ["email", "password"], function ($params){
     $email = $params["email"];
     $pass = $params["password"];
 
-    $user = DB::table("user")->select(["name", "email", "phone"])->where("email", "like", "$email");
+    $user = DB::table("user")->select()->where("email", "like", "$email")->get();
     if(count($user) == 0){
         http_response_code(401);
         echo DB::arrayToJson([
@@ -62,5 +62,5 @@ Route::post("/User/login", ["email", "password"], function ($params){
         ]);
         return;
     }
-    echo DB::arrayToJson(["status" => 200, "token" => "dfghdfhdfuighdfuihz", $user[0]]);
+    echo DB::arrayToJson(["status" => 200, "token" => getenv("TOKEN"), $user[0]]);
 });
