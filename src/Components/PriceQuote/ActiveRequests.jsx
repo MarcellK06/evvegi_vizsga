@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import CONFIG from "../../config.json";
+import Cookie from 'js-cookie';
 
 function ActiveRequests() {
     var API = CONFIG.API;
@@ -13,8 +15,21 @@ constructor(title, description, vin, answered) {
 }
     }
 
+    var requests = [];
+
     const LoadRequests = () => {
-        //TODO
+        var userid = Cookie.get("userid");
+        $.ajax({
+            url: `${API}/pricerequests/get-all`,
+            data: {
+                userid: userid
+            },
+            success: function(resp) {
+                resp.requests.forEach((el) => {
+                    requests.push(new RequestStruct(el.title, el.description, el.vin, el.answered));
+                })
+            }
+        })
     }
 
     const RequestEntry = (el) => {
@@ -27,10 +42,12 @@ constructor(title, description, vin, answered) {
         </div>)
     }
 
-    var templateList = [new RequestStruct("Ez egy cím.", "Ez egy leírás.", "XXXXXXXXXXXXXXXX", false),new RequestStruct("Ez egy másik cím.", "Ez egy másik leírás.", "YYYYYYYYYYYYYYYYY", true)];
+    useEffect(() => {
+        LoadRequests();
+    }, [])
 
     return (<>
-    {templateList.map((i) => RequestEntry(i))}
+    {requests.map((i) => RequestEntry(i))}
 </>)
 }
 
