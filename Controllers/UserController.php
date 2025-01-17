@@ -62,5 +62,5 @@ Route::post("/User/login", ["email", "password"], function ($params){
         ]);
         return;
     }
-    echo DB::arrayToJson(["status" => 200, "token" => getenv("TOKEN"), $user[0]]);
+    echo DB::arrayToJson(["status" => 200, "token" => getenv("TOKEN"), "user" => $user[0]]);
 });
