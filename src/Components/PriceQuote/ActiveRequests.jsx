@@ -27,9 +27,9 @@ constructor(title, description, vin, answered) {
             success: function(resp) {
                 resp.requests.forEach((el) => {
                     requests.push(new RequestStruct(el.title, el.description, el.vin, el.answered));
-                })
+                });
             }
-        })
+        });
     }
 
     const RequestEntry = (el) => {
@@ -39,16 +39,16 @@ constructor(title, description, vin, answered) {
         <p>{el.vin}</p>
         <p>Válaszolva: {el.answered ? "Igen" : "Nem"}</p>
         <input type="button" value="Válasz Mutatása" style={{display: el.answered ? "block" : "none"}} />
-        </div>)
+        </div>);
     }
 
     useEffect(() => {
         LoadRequests();
-    }, [])
+    }, []);
 
     return (<>
     {requests.map((i) => RequestEntry(i))}
-</>)
+</>);
 }
 
 export default ActiveRequests;

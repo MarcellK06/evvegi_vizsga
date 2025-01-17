@@ -1,6 +1,6 @@
-function Markerplace(){
+function Marketplace(){
     return (
         <></>
-    )
+    );
 }
-export default Markerplace
+export default Marketplace;

@@ -35,7 +35,7 @@ function AddOwnCar() {
             success: function (resp) {
                 // TODO
             }
-        })
+        });
     }
 
     return (<>

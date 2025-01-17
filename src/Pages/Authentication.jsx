@@ -17,10 +17,10 @@ function Authentication(){
     const [form, setForm] = useState(null);
     useEffect(() => {
         setForm(setState());
-    }, []) 
+    }, []);
     
     return (
         <>{form == null ? null : form}</>
-    )
+    );
 }
 export default Authentication

@@ -27,9 +27,9 @@ function ListListings() {
             success: function(resp) {
                 resp.listings.forEach((el) => {
                     listings.push(new ListingStruct(el.itemName, el.itemDescription, el.itemPrice, el.car));
-                })
+                });
             }
-        })
+        });
     }
 
     const ListingEntry = (el) => {
@@ -43,11 +43,11 @@ function ListListings() {
 
     useEffect(() => {
         LoadListings();
-    }, [])
+    }, []);
 
     return(<>
     {listings.map((i) => ListingEntry(i))}
-    </>)
+    </>);
 
 }
 

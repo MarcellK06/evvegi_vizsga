@@ -29,9 +29,9 @@ function ListOwnCars() {
             success: function(resp) {
                 resp.cars.forEach((el) => {
                     owncars.push(new OwnCar(el.brand, el.model, el.year, el.licenseplate, el.vin, el.images));
-                })
+                });
             }
-        })
+        });
     }
 
     const OwnCarEntry = (el) => {
@@ -51,11 +51,11 @@ function ListOwnCars() {
 
     useEffect(() => {
         LoadOwnCars();
-    }, [])
+    }, []);
 
     return (<>
     {owncars.map((i) => OwnCarEntry(i))}
-    </>)
+    </>);
 }
 
 export default ListOwnCars;
