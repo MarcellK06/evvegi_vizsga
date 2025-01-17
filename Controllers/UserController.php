@@ -10,20 +10,57 @@ use Application\Database\DB;
 use Application\Assets\Header\HttpHeadersInterface\HttpHeadersInterface;
 use Application\Assets\Header\HttpHeadersManager\HttpHeadersManager;
 
-Route::post("/login", ["email", "password"], function($params) {
-    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
-    $email = $params['email'];
-    $password = $params['password'];
-    
-    $res = DB::runSql("SELECT 'id', 'email', 'password' FROM users WHERE email LIKE $email;");
-    $id = $res[0]->id;
+Route::post("/User/register", ["fullName", "email", "phone", "password"], function ($params){
+    $fullName = $params["fullName"];
+    $email = $params["email"];
+    $phone = $params["phone"];
+    $password= $params["password"];
+    $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
-    if (count($res) == 0)
-        return DB::arrayToJson(["ACCOUNT_NOT_FOUND"]);
+    try{
+        $email_check = DB::table("user")->select()->where("email", "like", $email)->get();
+        if(count($email_check) > 0){
+            http_response_code(400);
+            echo DB::arrayToJson([
+                "status" => 400,
+                "Message" => "Az email cím már fogalat!"
+            ]);
+            return;
+        } 
+        DB::table("users")->insert(["name" => $fullName, "email" => $email,"phone"=> $phone,"password"=> $password_hashed]);
+        echo DB::arrayToJson([
+            "status" => 201,
+            "Message" => ""
 
-    $respassword = $res[0]->password;
-    if (password_verify($password, $respassword))
-        return DB::arrayToJson(['SUCCESSFUL_LOGIN', $id]);
 
-    return DB::arrayToJson(['INVALID_EMAIL_OR_PASSWORD']);
+        ]);
+    }catch(Exception $err){
+        echo DB::arrayToJson([
+            "status" => 500,
+            "Message" => "Failed to register user! ".$err->getMessage()
+        ]);
+    }
+});
+Route::post("/User/login", ["email", "password"], function ($params){
+    $email = $params["email"];
+    $pass = $params["password"];
+
+    $user = DB::table("user")->select(["name", "email", "phone"])->where("email", "like", "$email");
+    if(count($user) == 0){
+        http_response_code(401);
+        echo DB::arrayToJson([
+            "status" => 401,
+            "Message" => "Hibás email cím vagy jelszó!"
+        ]);
+        return;
+    }
+    if(!password_verify($pass,$user[0]->password)) {
+        http_response_code(401);
+        echo DB::arrayToJson([
+            "status" => 401,
+            "Message" => "Hibás email cím vagy jelszó!"
+        ]);
+        return;
+    }
+    echo DB::arrayToJson(["status" => 200, "token" => "dfghdfhdfuighdfuihz", $user[0]]);
 });
