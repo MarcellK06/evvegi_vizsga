@@ -6,8 +6,6 @@ import ReactDOM from "react-dom/client";
 export const NavigatorContext = createContext();
 
 export const NavigatorProvider = ({children}) => {
-    const [footer, setFooter] = useState(true);
-    const [navbar, setNavbar] = useState(true);
 
     const [_Navbar, _setNavbar] = useState(<Navbar/>)
     const [_Footer, _setFooter] = useState(<Footer/>)
