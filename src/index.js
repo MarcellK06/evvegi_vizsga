@@ -4,8 +4,12 @@ import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Authentication from './Pages/Authentication';
-import Marketplace from "./Pages/Markertplace";
+import Marketplace from "./Pages/Marketplace";
 import { NavigatorProvider } from "./Providers/NavigatorProvider";
+import Contact from "./Pages/Contact";
+import Requests from "./Pages/Requests";
+import OwnCars from "./Pages/OwnCars";
+import Community from "./Pages/Community";
 //192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,6 +19,10 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/marketplace" element={<Marketplace />} />
+        <Route path="/requests" element={<Requests />} />
+        <Route path="/own-cars" element={<OwnCars />} />
+        <Route path="/community" element={<Community />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/auth/:type" element={<Authentication />} />
       </Routes>
     </BrowserRouter></NavigatorProvider>

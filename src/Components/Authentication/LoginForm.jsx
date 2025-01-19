@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import CONFIG from "../../config.json";
 import $ from 'jquery';
+import Cookie from 'js-cookie';
 
 function LoginForm() {
     var API = CONFIG.API;
@@ -12,14 +13,14 @@ function LoginForm() {
         var email = emailRef.current.value;
         var password = passwordRef.current.value;
         $.ajax({
-            url: `${API}/User/login`,
+            url: `${API}/user/login`,
             type: "post",
             data: {
                 email: email,
                 password: password
             },
             success: function (resp) {
-                // TODO
+                Cookie.set("token", resp[1].token);
             }
         })
     }

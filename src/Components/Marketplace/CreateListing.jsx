@@ -27,7 +27,7 @@ function CreateListing() {
                 car: car
             },
             success: function(resp) {
-                // TODO
+                window.location.reload();
             }
         });
     }

@@ -3,7 +3,7 @@ import CONFIG from "../../config.json";
 import $ from 'jquery';
 import Cookie from 'js-cookie';
 
-function CommentCommunityPost() {
+function CommentCommunityPost(postid) {
     var API = CONFIG.API;
     const descriptionRef = useRef();
     const imagesRef = useRef();
@@ -15,6 +15,7 @@ function CommentCommunityPost() {
         $.ajax({
             url: `${API}/community/comment`,
             data: {
+                postid: postid,
                 userid: userid,
                 description: description,
                 images: images

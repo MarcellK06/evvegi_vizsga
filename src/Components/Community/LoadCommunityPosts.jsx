@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import CONFIG from "../../config.json";
 import $ from 'jquery';
+import LikeCommunityPost from "./LikeCommunityPost";
+import CommentCommunityPost from "./CommentCommunityPost";
 
 
 function LoadCommunityPosts() {
     
-    const [i, setI] = useState(0);
+    const [i, setI] = useState(1);
     var API = CONFIG.API;
 
     class CommunityPost {
-        constructor(title, description, images) {
+       constructor(title, description, images) {
             this.title = title;
             this.description = description;
             this.images = images;
@@ -21,11 +23,14 @@ function LoadCommunityPosts() {
     const LoadImage = (url) => {
         return (<img src={url}/>);
     }
+
     const PostEntry = (el) => {
         return (<>
         <p>{el.title}</p>
         <p>{el.description}</p>
         {el.images.map((i) => LoadImage(i))}
+        <LikeCommunityPost postid={el.id}/>
+        <CommentCommunityPost postid={el.id}/>
         </>);
     }
 
@@ -49,20 +54,16 @@ function LoadCommunityPosts() {
     }
 
     useEffect(() => {
-        setI(i + 1);
-    }, []);
-
-    useEffect(() => {
         LoadPosts();
     }, [i]);
 
 
     return(<>
-    <button value="Previous" onClick={setI(i-1)} disabled={i <= 1}/>
+    <input type="button" value="Previous" onClick={(e) => {setI(i-1)}} disabled={i <= 1}/>
     <div>
         {activeposts.map((i) => PostEntry(i))}
     </div>
-    <button value="Next" onClick={setI(i+1)}/>
+    <input type="button" value="Next" onClick={(e) => {setI(i+1)}}/>
     </>);
 
 }

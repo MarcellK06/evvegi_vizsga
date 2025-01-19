@@ -3,10 +3,8 @@ import CONFIG from "../../config.json";
 import Cookie from 'js-cookie';
 import $ from 'jquery';
 
-function LikeCommunityPost() {
+function LikeCommunityPost(postid) {
     var API = CONFIG.API;
-
-    var postid = 0; //Add át a post idjét init-nél
 
     const LikePost = () => {
         var userid = Cookie.get("userid");
@@ -20,7 +18,7 @@ function LikeCommunityPost() {
             success: (resp) => {
                 el.classList.add("liked");
             },
-            error: (resp) => {
+            error: (resp) => { // Adjon vissza errort, ha már likolt a post, és adatbázisból törölje a likeot.
                 if (el.classList.contains("liked"))
                     el.classList.remove("liked");
             }

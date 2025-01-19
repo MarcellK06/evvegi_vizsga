@@ -13,14 +13,19 @@ function RegisterForm() {
     const HandleRegister = () => {
         var name = nameRef.current.value;
         var password = passwordRef.current.value;
+        var email = emailRef.current.value;
+        var tel = telRef.current.value;
         $.ajax({
-            url: `${API}/login`,
+            url: `${API}/user/register`,
+            type: "post",
             data: {
                 name: name,
+                email: email,
+                tel: tel,
                 password: password
             },
             success: function (resp) {
-                // TODO
+                window.location = "/auth/login";
             }
         })
     }

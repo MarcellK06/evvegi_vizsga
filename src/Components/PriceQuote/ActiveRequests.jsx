@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import CONFIG from "../../config.json";
 import Cookie from 'js-cookie';
+import Request from "./Request";
+import $ from 'jquery';
 
 function ActiveRequests() {
     var API = CONFIG.API;
@@ -48,6 +50,7 @@ constructor(title, description, vin, answered) {
 
     return (<>
     {requests.map((i) => RequestEntry(i))}
+    <Request/>
 </>);
 }
 

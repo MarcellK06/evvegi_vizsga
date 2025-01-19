@@ -25,16 +25,18 @@ function CreateCommunityPost() {
                 images: images
             },
             success: function(resp) {
-                // TODO
+                window.location.reload();
             }
         });
     }
 
     return(<>
+    <div>
     <input type="text" name="title" id="title" ref={titleRef} required />
     <input type="text" name="description" id="description" ref={descriptionRef} required />
     <input type="file" name="images" id="images" ref={imagesRef} required />
     <input type="button" value="POST" onClick={CreatePost} />
+    </div>
     </>);
 
 }

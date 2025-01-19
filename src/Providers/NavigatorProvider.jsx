@@ -51,7 +51,6 @@ export const NavigatorProvider = ({children}) => {
         const footer = ReactDOM.createRoot(document.getElementById("footer"));
         header.render(_Navbar)
         footer.render(_Footer)   
-        console.log("render") 
     }, [_Navbar, _Footer])
     
     return (

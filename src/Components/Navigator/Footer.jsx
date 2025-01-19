@@ -1,6 +1,8 @@
 function Footer(){
     return (
-        <>Footer</>
+        <>
+        <a href="/contact">Kapcsolatfelvétel</a>
+        </>
     )
 }
 export default Footer;

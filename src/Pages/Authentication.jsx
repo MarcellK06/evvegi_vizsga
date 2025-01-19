@@ -11,7 +11,12 @@ function Authentication(){
             case "register": return <RegisterForm/>;
             case "login": return <LoginForm/>;
             case "password-reset": return <PasswordResetForm/>;
-           default: return <>404</>;{/* ide ki kell találni valamit*/}
+           default: return <>
+           <div style={{width: "512px", height: "512px"}}>
+           <h1 style={{position: "absolute", marginLeft: "200px", marginTop: "190px"}}>404</h1>
+            <img src="/png/checkengine.png" className="blur-5" alt="checkengine" style={{width: "512px"}} />
+           </div>
+           </>;
         }
     }
     const [form, setForm] = useState(null);
