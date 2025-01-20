@@ -34,6 +34,7 @@ class Route
     }
     private static function CheckParams($p, $r): bool
     {
+        if(count($r) == 0) return true;
 
         return $r == array_keys($p);
     }
