@@ -25,15 +25,31 @@ function CommunityPostComments(data) {
 
     }
 
+    const LikeComment = (commentid) => {
+        var userid = Cookie.get("userid");
+        $.ajax({
+            url: `${API}/community/comment/like/${commentid}`,
+            type: "post",
+            data: {
+                userid: userid
+            },
+            success: (resp) => {
+
+            }
+        })
+    }
+
     const LoadImage = (url) => {
         return (<img src={url}/>);
     }
     const commentEntry = (i) => {
         var comment = i.comment;
         var username = i.username;
+        var liked = i.liked == 1;
         var images = i.images.includes(',') ? i.images.split(',') : [];
         return (<>
         <p>{username}: {comment}</p>
+        <input type="button" value="LIKE COMMENT" onClick={() => LikeComment(i.id)} className={liked ? "liked" : ""} />
         {images.map((i) => LoadImage(i))}</>)
     }
 

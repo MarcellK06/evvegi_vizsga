@@ -13,8 +13,9 @@ function LoadCommunityPosts() {
     var API = CONFIG.API;
 
     class CommunityPost {
-       constructor(id, title, description, images, liked) {
+       constructor(id, username, title, description, images, liked) {
             this.id = id;
+            this.username = username;
             this.title = title;
             this.description = description;
             this.liked = liked;
@@ -33,6 +34,7 @@ function LoadCommunityPosts() {
 
     const PostEntry = (el) => {
         return (<>
+        <p>{el.username}</p>
         <p>{el.title}</p>
         <p>{el.description}</p>
         {el.images.map((i) => LoadImage(i))}
@@ -60,7 +62,7 @@ function LoadCommunityPosts() {
                 else {
                     posts.push([]);
                     resp.forEach((el) => {
-                    posts[posts.length-1].push(new CommunityPost(el.id, el.title, el.description, el.images, el.liked));
+                    posts[posts.length-1].push(new CommunityPost(el.id, el.name, el.title, el.description, el.images, el.liked));
                 });
                 setActivePosts(posts[i-1]);
             }
