@@ -88,3 +88,20 @@ code {
 .post .user p {
   margin-top: 7%;
 }
+
+*[id^='comments-'] {
+  padding: 5px;
+}
+
+.fs-7 {
+  font-size: 16px;
+}
+
+.fs-9 {
+  font-size: 12px;
+}
+
+.comment {
+  background: #f0f0f0;
+  margin-top: 5px;
+}
