@@ -67,7 +67,7 @@ function LoadCommunityPosts() {
                     </div>
 
                 </div>
-                <p className="mt-5 mb-4 fw-bold">{el.title}</p>
+                <p className="mt-3 mb-4 fw-bold">{el.title}</p>
                 <p>{el.description}</p>
             </div>
             <hr />
@@ -83,6 +83,7 @@ function LoadCommunityPosts() {
             <div className="container" id={`commentbox-${el.id}`}>
                 
                 <CommunityPostComments data={el} />
+                <CommentCommunityPost data={el.id}/>
             </div>
 
            

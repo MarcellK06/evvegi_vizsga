@@ -2,6 +2,8 @@ import { useRef } from "react";
 import CONFIG from "../../config.json";
 import $ from 'jquery';
 import Cookie from 'js-cookie';
+import { FaFile } from "react-icons/fa";
+import { IoMdSend } from "react-icons/io";
 
 function CommentCommunityPost(data) {
     var API = CONFIG.API;
@@ -22,16 +24,20 @@ function CommentCommunityPost(data) {
                 comment: comment
             },
             success: function(resp) {
-                // TODO
+                window.location.reload();
             }
         })
     }
 
-    return (<>
-    <input type="text" name="comment" id="comment" ref={commentRef} />
-    <input type="file" name="images" id="images" ref={imagesRef} />
-    <input type="button" value="Comment" onClick={SendComment} />
-    </>);
+    return (<div className="container d-flex my-1">
+        <div className="container w-80">
+    <input type="text" name="comment" id="comment" className="rounded border-0 commentext w-100 p-1" ref={commentRef} />
+    </div>
+    <div className="container w-10">
+    <FaFile className="comment-svgs" size={30}/></div>
+    <div className="container w-10">
+        <IoMdSend onClick={SendComment} size={30} className="comment-svgs"/></div>
+    </div>);
 
 }
 
