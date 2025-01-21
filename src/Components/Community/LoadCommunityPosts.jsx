@@ -33,9 +33,20 @@ function LoadCommunityPosts() {
     const LoadImage = (url) => {
         return (<img src={url} />);
     }
+    const ShowComments = (id) => {
+        console.log(id);
+        var el = document.getElementById(`comments-${id}`);
+        if (el.classList.contains("d-block")) {
+            el.classList.remove("d-block");
+            el.classList.add("d-none");
+        }
+        else {
+            el.classList.add("d-block");
+            el.classList.remove("d-none");
+        }
+    }
 
     const PostEntry = (el) => {
-        console.log(el);
         return (<>
 
 
@@ -64,13 +75,14 @@ function LoadCommunityPosts() {
                 <div className="d-flex"> 
                     <LikeCommunityPost data={el} />
                     <div className="ms-2">{el.likes}</div>
+                    
                 </div>
-                <div className="d-flex">
-               
-                <CommunityPostComments data={el.id} />
-                <div className="ms-2">{el.comments}</div>
-                </div>
-            
+                <div onClick={() => ShowComments(el.id)} className="d-flex" ><FaRegCommentDots />
+                                <div className="ms-2">{el.comments}</div></div>
+            </div>
+            <div className="container" id={`commentbox-${el.id}`}>
+                
+                <CommunityPostComments data={el} />
             </div>
 
            

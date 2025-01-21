@@ -9,7 +9,9 @@ function CommunityPostComments(data) {
     var API = CONFIG.API;
 
     const [comments, setComments] = useState([]);
-    var postid = data.data;
+    var postid = data.data.id;
+    var commentsCount = data.data.comments;
+
 
     const LoadComments = () => {
         var token = Cookie.get("token");
@@ -55,22 +57,14 @@ function CommunityPostComments(data) {
 
     const ShowComments = () => {
         LoadComments();
-        var el = document.getElementById(`comments-${postid}`);
-        if (el.classList.contains("d-block")) {
-            el.classList.remove("d-block");
-            el.classList.add("d-none");
-        }
-        else {
-            el.classList.add("d-block");
-            el.classList.remove("d-none");
-        }
     }
 
+    useEffect(() => {
+        ShowComments()
+    }, []);
+
 return (<>
-<div onClick={ShowComments} ><FaRegCommentDots /></div>
-
-
-<div className="d-none" id={`comments-${postid}`}>
+<div className="d-none w-100" id={`comments-${postid}`}>
 {comments.map((i) => commentEntry(i))}
 </div>
 </>)
