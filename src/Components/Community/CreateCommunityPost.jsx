@@ -18,6 +18,7 @@ function CreateCommunityPost() {
         var userid = Cookie.get("userid");
         $.ajax({
             url: `${API}/community/create-post`,
+            type: "post",
             data: {
                 userid: userid,
                 title: title,

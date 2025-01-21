@@ -3,30 +3,32 @@ import CONFIG from "../../config.json";
 import Cookie from 'js-cookie';
 import $ from 'jquery';
 
-function LikeCommunityPost(postid) {
+function LikeCommunityPost(data) {
     var API = CONFIG.API;
-
+    var postid = data.data.id;
+    var liked = data.data.liked == 1;
+    console.log(data);
     const LikePost = () => {
         var userid = Cookie.get("userid");
         var el = document.getElementById(`like-${postid}`);
         $.ajax({
             url: `${API}/community/like`,
+            type: "post",
             data: {
-                userid: userid,
-                postid: postid
+                postid: postid,
+                userid: userid
             },
             success: (resp) => {
                 el.classList.add("liked");
             },
-            error: (resp) => { // Adjon vissza errort, ha már likolt a post, és adatbázisból törölje a likeot.
-                if (el.classList.contains("liked"))
-                    el.classList.remove("liked");
+            error: (resp) => {
+                el.classList.remove("liked");
             }
         });
     }
 
     return (<>
-    <button value="LIKE" id={`like-${postid}`} onClick={LikePost}/>
+    <input type="button" value="LIKE" id={`like-${postid}`} className={liked ? "liked" : ""} onClick={LikePost}/>
     </>);
 
 }

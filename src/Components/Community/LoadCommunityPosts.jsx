@@ -3,6 +3,8 @@ import CONFIG from "../../config.json";
 import $ from 'jquery';
 import LikeCommunityPost from "./LikeCommunityPost";
 import CommentCommunityPost from "./CommentCommunityPost";
+import Cookie from 'js-cookie';
+import CommunityPostComments from "./CommunityPostComments";
 
 
 function LoadCommunityPosts() {
@@ -11,15 +13,20 @@ function LoadCommunityPosts() {
     var API = CONFIG.API;
 
     class CommunityPost {
-       constructor(title, description, images) {
+       constructor(id, title, description, images, liked) {
+            this.id = id;
             this.title = title;
             this.description = description;
-            this.images = images;
+            this.liked = liked;
+            if (images.includes(","))
+                this.images = images.split(',');
+            else
+                this.images = []
         }
     }
 
     var posts = [];
-    var activeposts = [];
+    var [activeposts, setActivePosts] = useState([]);
     const LoadImage = (url) => {
         return (<img src={url}/>);
     }
@@ -29,26 +36,33 @@ function LoadCommunityPosts() {
         <p>{el.title}</p>
         <p>{el.description}</p>
         {el.images.map((i) => LoadImage(i))}
-        <LikeCommunityPost postid={el.id}/>
-        <CommentCommunityPost postid={el.id}/>
+        <LikeCommunityPost data={el}/>
+        <CommunityPostComments data={el.id}/>
+        <CommentCommunityPost data={el.id}/>
         </>);
     }
 
     const LoadPosts = () => {
+        var token = Cookie.get("token");
+        var userid = Cookie.get("userid");
         $.ajax({
-            url: `${API}/community/load-posts`,
+            url: `${API}/community/load-posts/${i}`,
+            type: 'post',
+            headers: {
+                token: token
+            },
             data: {
-                page: i
+                userid: userid
             },
             success: function(resp) {
                 if (i < posts.length)
-                    activeposts = posts[i-1];
+                    setActivePosts(activeposts = posts[i-1]);
                 else {
                     posts.push([]);
-                    resp.posts.forEach((el) => {
-                    posts[posts.length-1].push(new CommunityPost(el.title, el.description, el.images));
+                    resp.forEach((el) => {
+                    posts[posts.length-1].push(new CommunityPost(el.id, el.title, el.description, el.images, el.liked));
                 });
-                activeposts = posts[i-1];
+                setActivePosts(posts[i-1]);
             }
         }});
     }
@@ -61,7 +75,7 @@ function LoadCommunityPosts() {
     return(<>
     <input type="button" value="Previous" onClick={(e) => {setI(i-1)}} disabled={i <= 1}/>
     <div>
-        {activeposts.map((i) => PostEntry(i))}
+        {activeposts.map((i) => (PostEntry(i)))}
     </div>
     <input type="button" value="Next" onClick={(e) => {setI(i+1)}}/>
     </>);

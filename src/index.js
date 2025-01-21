@@ -10,6 +10,8 @@ import Contact from "./Pages/Contact";
 import Requests from "./Pages/Requests";
 import OwnCars from "./Pages/OwnCars";
 import Community from "./Pages/Community";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap";
 //192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -15,3 +15,48 @@ code {
 .blur-5 {
   filter: blur(5px);
 }
+.login-form .login-button{
+  border: none;
+  padding: 10px;
+  border-radius: 1px;
+  background: #01003d;
+  color: #fff;
+}
+.register-form .register-button{
+  border: none;
+  padding: 10px;
+  border-radius: 1px;
+  background: #b35600;
+  color: #fff;
+}
+.login-form input, .register-form input {
+  border-radius: 1px;
+  padding: 10px;
+}
+.messagebox{
+  padding: 20px;
+  margin-bottom: 2%;
+  margin-top: 2%;
+
+}
+.login-form a{
+  color: orangered;
+  text-decoration: underline;
+}
+.messagebox-error{
+  background-color: rgba(255, 0, 0, 0.486);
+
+}
+.messagebox-info{
+  
+}
+.messagebox-success{
+  
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.liked {
+  background-color: red;
+}

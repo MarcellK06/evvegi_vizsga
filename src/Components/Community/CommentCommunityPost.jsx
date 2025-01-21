@@ -3,22 +3,23 @@ import CONFIG from "../../config.json";
 import $ from 'jquery';
 import Cookie from 'js-cookie';
 
-function CommentCommunityPost(postid) {
+function CommentCommunityPost(data) {
     var API = CONFIG.API;
-    const descriptionRef = useRef();
+    const commentRef = useRef();
     const imagesRef = useRef();
 
     const SendComment = () => {
-        var description = descriptionRef.current.value;
+        var comment = commentRef.current.value;
         var images = imagesRef.current.value;
         var userid = Cookie.get("userid");
+        var postid = data.data;
         $.ajax({
             url: `${API}/community/comment`,
+            type: 'post',
             data: {
                 postid: postid,
                 userid: userid,
-                description: description,
-                images: images
+                comment: comment
             },
             success: function(resp) {
                 // TODO
@@ -27,8 +28,8 @@ function CommentCommunityPost(postid) {
     }
 
     return (<>
-    <input type="text" name="description" id="description" />
-    <input type="file" name="images" id="images" />
+    <input type="text" name="comment" id="comment" ref={commentRef} />
+    <input type="file" name="images" id="images" ref={imagesRef} />
     <input type="button" value="Comment" onClick={SendComment} />
     </>);
 

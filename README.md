@@ -14,5 +14,6 @@
     Átvételre Kész: A jármű szerelése kész, átvételre, és fizetésre vár.
 - Marketplace <br/>
     Felhasználók hírdethetnek használt alkatrészt, opcionális adattal: Amely járműből kijött, annak adatai megadásával
+
 - Közösségi oldal <br/>
     Közösségi oldal, ahol felhasználók tudnak saját járműveikről postot készíteni, vagy segítség kérési lehetőségként használni. Like, Comment rendszer.
