@@ -10,7 +10,7 @@ use Application\Database\DB;
 use Application\Assets\Header\HttpHeadersInterface\HttpHeadersInterface;
 use Application\Assets\Header\HttpHeadersManager\HttpHeadersManager;
 
-Route::post("/User/register", ["fullName", "email", "phone", "password"], function ($params){
+Route::post("/user/register", ["fullName", "email", "phone", "password"], function ($params){
     //tesztelt
     HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
     $fullName = $params["fullName"];
@@ -43,7 +43,7 @@ Route::post("/User/register", ["fullName", "email", "phone", "password"], functi
         ]);
     }
 });
-Route::post("/User/login", ["email", "password"], function ($params){
+Route::post("/user/login", ["email", "password"], function ($params){
     //tesztelt
     HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
     $email = $params["email"];
