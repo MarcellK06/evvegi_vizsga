@@ -4,6 +4,7 @@ import $, { map } from 'jquery';
 import LikeCommunityPost from "./LikeCommunityPost";
 import CommentCommunityPost from "./CommentCommunityPost";
 import Cookie from 'js-cookie';
+import { FaRegCommentDots } from "react-icons/fa";
 function CommunityPostComments(data) {
     var API = CONFIG.API;
 
@@ -18,7 +19,6 @@ function CommunityPostComments(data) {
                 token: token
             },
             success: function(resp) {
-                console.log(resp);
                 setComments(resp);
             }
         });
@@ -67,7 +67,9 @@ function CommunityPostComments(data) {
     }
 
 return (<>
-<input type="button" value="Kommentek" onClick={ShowComments} />
+<div onClick={ShowComments} ><FaRegCommentDots /></div>
+
+
 <div className="d-none" id={`comments-${postid}`}>
 {comments.map((i) => commentEntry(i))}
 </div>

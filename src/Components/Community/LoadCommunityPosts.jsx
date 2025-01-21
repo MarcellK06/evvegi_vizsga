@@ -5,20 +5,22 @@ import LikeCommunityPost from "./LikeCommunityPost";
 import CommentCommunityPost from "./CommentCommunityPost";
 import Cookie from 'js-cookie';
 import CommunityPostComments from "./CommunityPostComments";
-
-
+import { CiClock2 } from "react-icons/ci";
+import { FaRegCommentDots } from "react-icons/fa";
 function LoadCommunityPosts() {
-    
+
     const [i, setI] = useState(1);
     var API = CONFIG.API;
 
     class CommunityPost {
-       constructor(id, username, title, description, images, liked) {
+        constructor(id, username, title, description, images, liked, likes, comments) {
             this.id = id;
             this.username = username;
             this.title = title;
             this.description = description;
             this.liked = liked;
+            this.likes = likes;
+            this.comments = comments
             if (images.includes(","))
                 this.images = images.split(',');
             else
@@ -29,18 +31,58 @@ function LoadCommunityPosts() {
     var posts = [];
     var [activeposts, setActivePosts] = useState([]);
     const LoadImage = (url) => {
-        return (<img src={url}/>);
+        return (<img src={url} />);
     }
 
     const PostEntry = (el) => {
+        console.log(el);
         return (<>
-        <p>{el.username}</p>
-        <p>{el.title}</p>
-        <p>{el.description}</p>
-        {el.images.map((i) => LoadImage(i))}
-        <LikeCommunityPost data={el}/>
-        <CommunityPostComments data={el.id}/>
-        <CommentCommunityPost data={el.id}/>
+
+
+            <div className="post w-100 my-4">
+                <div className="row">
+                    <div className="col-sm-1">
+                        <div className="avatar"></div>
+                    </div>
+                    <div className="col-sm-3" style={{ marginTop: "1.1%" }}>
+                        {el.username}
+                    </div>
+                    <div className="col-sm ">
+                        <div className="d-flex justify-content-end">
+                            <CiClock2 size={20} style={{ marginTop: '0.5%' }} />
+                            <div className="ms-2">3 órája</div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <p className="mt-5 mb-4 fw-bold">{el.title}</p>
+                <p>{el.description}</p>
+            </div>
+            <hr />
+            <div className="d-flex justify-content-between">
+                <div className="d-flex"> 
+                    <LikeCommunityPost data={el} />
+                    <div className="ms-2">{el.likes}</div>
+                </div>
+                <div className="d-flex">
+               
+                <CommunityPostComments data={el.id} />
+                <div className="ms-2">{el.comments}</div>
+                </div>
+            
+            </div>
+
+           
+
+            {/*      <p></p>
+            <p>{el.description}</p>
+            {el.images.map((i) => LoadImage(i))}
+           
+          
+            <CommentCommunityPost data={el.id} />*/}
+
+
         </>);
     }
 
@@ -56,17 +98,18 @@ function LoadCommunityPosts() {
             data: {
                 userid: userid
             },
-            success: function(resp) {
+            success: function (resp) {
                 if (i < posts.length)
-                    setActivePosts(activeposts = posts[i-1]);
+                    setActivePosts(activeposts = posts[i - 1]);
                 else {
                     posts.push([]);
                     resp.forEach((el) => {
-                    posts[posts.length-1].push(new CommunityPost(el.id, el.name, el.title, el.description, el.images, el.liked));
-                });
-                setActivePosts(posts[i-1]);
+                        posts[posts.length - 1].push(new CommunityPost(el.id, el.name, el.title, el.description, el.images, el.liked, el.likes, el.comments));
+                    });
+                    setActivePosts(posts[i - 1]);
+                }
             }
-        }});
+        });
     }
 
     useEffect(() => {
@@ -74,12 +117,22 @@ function LoadCommunityPosts() {
     }, [i]);
 
 
-    return(<>
-    <input type="button" value="Previous" onClick={(e) => {setI(i-1)}} disabled={i <= 1}/>
+    return (<>
+        <div className="container">
+            <div className="row">
+                <div className="col-sm-6 mx-auto"> {activeposts.map((i) => (PostEntry(i)))}</div>
+            </div>
+
+        </div>
+
+
+        {  /*    <input type="button" value="Previous" onClick={(e) => {setI(i-1)}} disabled={i <= 1}/>
     <div>
-        {activeposts.map((i) => (PostEntry(i)))}
+        
     </div>
-    <input type="button" value="Next" onClick={(e) => {setI(i+1)}}/>
+    
+    <input type="button" value="Next" onClick={(e) => {setI(i+1)}}/>*/}
+
     </>);
 
 }

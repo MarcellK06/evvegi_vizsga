@@ -15,48 +15,76 @@ code {
 .blur-5 {
   filter: blur(5px);
 }
-.login-form .login-button{
+
+.login-form .login-button {
   border: none;
   padding: 10px;
   border-radius: 1px;
   background: #01003d;
   color: #fff;
 }
-.register-form .register-button{
+
+.register-form .register-button {
   border: none;
   padding: 10px;
   border-radius: 1px;
   background: #b35600;
   color: #fff;
 }
-.login-form input, .register-form input {
+
+.login-form input,
+.register-form input {
   border-radius: 1px;
   padding: 10px;
 }
-.messagebox{
+
+.messagebox {
   padding: 20px;
   margin-bottom: 2%;
   margin-top: 2%;
 
 }
-.login-form a{
+
+.login-form a {
   color: orangered;
   text-decoration: underline;
 }
-.messagebox-error{
+
+.messagebox-error {
   background-color: rgba(255, 0, 0, 0.486);
 
 }
-.messagebox-info{
-  
-}
-.messagebox-success{
-  
-}
-.cursor-pointer{
+
+.messagebox-info {}
+
+.messagebox-success {}
+
+.cursor-pointer {
   cursor: pointer;
 }
 
 .liked {
-  background-color: red;
+  color: red;
+}
+
+.post {
+  place-self: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+.post .avatar {
+  height: 40px;
+  width: 40px;
+  background: gray;
+  border-radius: 50%;
+  margin-right: 1%;
+}
+
+.post .user {}
+
+.post .user p {
+  margin-top: 7%;
 }
