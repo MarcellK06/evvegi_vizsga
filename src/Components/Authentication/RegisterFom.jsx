@@ -1,9 +1,11 @@
 import { useRef } from "react";
 import CONFIG from "../../config.json";
 import $ from 'jquery';
+import { useNavigate } from "react-router-dom";
 
 function RegisterForm() {
     var API = CONFIG.API;
+    const navigator = useNavigate();
 
     const emailRef = useRef();
     const nameRef = useRef();
@@ -25,7 +27,10 @@ function RegisterForm() {
                 password: password
             },
             success: function (resp) {
-                window.location = "/auth/login";
+                navigator("/auth/login");
+            },
+            error: function(resp){
+                
             }
         })
     }

@@ -20,7 +20,8 @@ function LoginForm() {
                 password: password
             },
             success: function (resp) {
-                Cookie.set("token", resp[1].token);
+                Cookie.set("token", resp.token);
+                Cookie.set("userid", resp.user.id);
             }
         })
     }

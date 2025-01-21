@@ -2,7 +2,6 @@ import CONFIG from "../../config.json";
 import $ from 'jquery';
 import Cookie from 'js-cookie';
 import { useEffect } from "react";
-import AddOwnCar from "./AddOwnCar";
 
 function ListOwnCars() {
     var API = CONFIG.API;
@@ -56,7 +55,6 @@ function ListOwnCars() {
 
     return (<>
     {owncars.map((i) => OwnCarEntry(i))}
-    <AddOwnCar/>
     </>);
 }
 
