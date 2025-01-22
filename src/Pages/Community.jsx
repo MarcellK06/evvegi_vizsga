@@ -4,7 +4,7 @@ import LoadCommunityPosts from "../Components/Community/LoadCommunityPosts";
 function Community() {
 
     return (<>
-    {/*<CreateCommunityPost/> */}
+    <CreateCommunityPost/>
     <LoadCommunityPosts/>
     </>)
 

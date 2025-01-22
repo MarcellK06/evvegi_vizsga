@@ -37,7 +37,6 @@ function CommunityPostComments(data) {
         var userid = Cookie.get("userid");
         var el = 
         document.getElementById(`comment-${commentid}`);
-        console.log(el);
         $.ajax({
             url: `${API}/community/comment/like/${commentid}`,
             type: "post",
@@ -60,6 +59,28 @@ function CommunityPostComments(data) {
         var comment = i.comment;
         var username = i.username;
         var liked = i.liked == 1;
+        var postedat = i.postedat;
+        var postedat_text = "";
+        var psplit = postedat.split('-');
+        var now = new Date();
+        if (psplit[1][0] == "0")
+            psplit[1] = psplit[1][1];
+
+        if (parseInt(psplit[2].split(" ")[0]) != now.getDate())
+            postedat_text = `${now.getDate()-parseInt(psplit[2])} napja`;
+        if (parseInt(psplit[1]) != now.getMonth()+1)
+            postedat_text = `${now.getMonth()-parseInt(psplit[1])} hó`;
+        if (parseInt(psplit[0]) != now.getFullYear())
+            postedat_text = `${now.getFullYear()-parseInt(psplit[0])} éve`;
+        psplit = postedat.split(" ")[1].split(":");
+        if (postedat_text == "") {
+            if (parseInt(psplit[2]) != now.getSeconds())
+                postedat_text = `${now.getSeconds()-parseInt(psplit[2])} mp`;
+            if (parseInt(psplit[1]) != now.getMinutes())
+                postedat_text = `${now.getMinutes()-parseInt(psplit[1])} p`;
+        if (parseInt(psplit[0]) != now.getHours())
+            postedat_text = `${now.getHours()-parseInt(psplit[0])} ó`;
+    }
         var images = i.images.includes(',') ? i.images.split(',') : [];
         return (<>
         <div className="d-flex p-3 comment">
@@ -70,8 +91,9 @@ function CommunityPostComments(data) {
             <p className="fs-9">{comment}</p>
             </p>
             </div>
-            <div className="d-flex">
-                <div className="d-flex align-items-center" id={`comment-${i.id}`} onClick={() => LikeComment(i.id)}>
+            <div className="d-flex flex-column">
+            <p className="fs-9">{postedat_text}</p>
+                <div className="d-flex align-items-center mx-auto" id={`comment-${i.id}`} onClick={() => LikeComment(i.id)}>
             {liked ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-heart-fill liked" viewBox="0 0 16 16">
             <path fill-rule="evenodd" className="" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
         </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-heart" viewBox="0 0 16 16">

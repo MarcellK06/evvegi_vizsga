@@ -13,11 +13,12 @@ function LoadCommunityPosts() {
     var API = CONFIG.API;
 
     class CommunityPost {
-        constructor(id, username, title, description, images, liked, likes, comments) {
+        constructor(id, username, title, description, images, postedat, liked, likes, comments) {
             this.id = id;
             this.username = username;
             this.title = title;
             this.description = description;
+            this.postedat = postedat;
             this.liked = liked;
             this.likes = likes;
             this.comments = comments
@@ -34,7 +35,6 @@ function LoadCommunityPosts() {
         return (<img src={url} />);
     }
     const ShowComments = (id) => {
-        console.log(id);
         var el = document.getElementById(`comments-${id}`);
         if (el.classList.contains("d-block")) {
             el.classList.remove("d-block");
@@ -47,6 +47,29 @@ function LoadCommunityPosts() {
     }
 
     const PostEntry = (el) => {
+        
+        var postedat = el.postedat;
+        var postedat_text = "";
+        var psplit = postedat.split('-');
+        var now = new Date();
+        if (psplit[1][0] == "0")
+            psplit[1] = psplit[1][1];
+
+        if (parseInt(psplit[2].split(" ")[0]) != now.getDate())
+            postedat_text = `${now.getDate()-parseInt(psplit[2])} napja`;
+        if (parseInt(psplit[1]) != now.getMonth()+1)
+            postedat_text = `${now.getMonth()-parseInt(psplit[1])} hó`;
+        if (parseInt(psplit[0]) != now.getFullYear())
+            postedat_text = `${now.getFullYear()-parseInt(psplit[0])} éve`;
+        psplit = postedat.split(" ")[1].split(":");
+        if (postedat_text == "") {
+            if (parseInt(psplit[2]) != now.getSeconds())
+                postedat_text = `${now.getSeconds()-parseInt(psplit[2])} mp`;
+            if (parseInt(psplit[1]) != now.getMinutes())
+                postedat_text = `${now.getMinutes()-parseInt(psplit[1])} p`;
+        if (parseInt(psplit[0]) != now.getHours())
+            postedat_text = `${now.getHours()-parseInt(psplit[0])} ó`;
+    }
         return (<>
 
 
@@ -61,7 +84,7 @@ function LoadCommunityPosts() {
                     <div className="col-sm ">
                         <div className="d-flex justify-content-end">
                             <CiClock2 size={20} style={{ marginTop: '0.5%' }} />
-                            <div className="ms-2">3 órája</div>
+                            <div className="ms-2">{postedat_text}</div>
                         </div>
 
                     </div>
@@ -74,7 +97,6 @@ function LoadCommunityPosts() {
             <div className="d-flex justify-content-between">
                 <div className="d-flex"> 
                     <LikeCommunityPost data={el} />
-                    <div className="ms-2">{el.likes}</div>
                     
                 </div>
                 <div onClick={() => ShowComments(el.id)} className="d-flex" ><FaRegCommentDots />
@@ -117,7 +139,7 @@ function LoadCommunityPosts() {
                 else {
                     posts.push([]);
                     resp.forEach((el) => {
-                        posts[posts.length - 1].push(new CommunityPost(el.id, el.name, el.title, el.description, el.images, el.liked, el.likes, el.comments));
+                        posts[posts.length - 1].push(new CommunityPost(el.id, el.name, el.title, el.description, el.images, el.postedat, el.liked, el.likes, el.comments));
                     });
                     setActivePosts(posts[i - 1]);
                 }

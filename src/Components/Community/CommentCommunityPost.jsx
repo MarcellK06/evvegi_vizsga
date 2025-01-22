@@ -12,7 +12,8 @@ function CommentCommunityPost(data) {
 
     const SendComment = () => {
         var comment = commentRef.current.value;
-        var images = imagesRef.current.value;
+        if (comment == "")
+            return;
         var userid = Cookie.get("userid");
         var postid = data.data;
         $.ajax({

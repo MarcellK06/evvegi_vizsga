@@ -5,7 +5,7 @@ import ListListings from "../Components/Marketplace/ListListings";
 function Marketplace(){
     return (
         <>
-        <CreateListing/>
+        {/*<CreateListing/>*/}
         <ListListings/>
         </>
     );

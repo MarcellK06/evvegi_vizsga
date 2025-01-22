@@ -100,7 +100,16 @@ code {
 .fs-9 {
   font-size: 12px;
 }
+.fs-12 {
+  font-size: 7px;
+}
 
+.fs-7 {
+  font-size: 20px;
+}
+.fs-11 {
+  font-size: 15px;
+}
 .comment {
   background: #f0f0f0;
   margin-top: 5px;
@@ -127,4 +136,33 @@ code {
   font-family: "Poppins", serif;
   font-weight: 400;
   font-style: normal;
+}
+
+.footer{
+
+}
+.footer * {
+  text-decoration: none;
+  color:rgb(240, 240, 240);
+  text-align: center;
+}
+nav a{
+  cursor: pointer;
+}
+nav .active-link{
+  color: darkblue
+}
+
+.buttoncolor {
+  background: #0069be;
+  padding:5px;
+  color: white;
+}
+.text{
+  border-radius: 30px;
+}
+
+.marketplace-listing-image {
+  background-size: contain;
+  background-repeat: no-repeat;
 }
