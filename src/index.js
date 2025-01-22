@@ -12,6 +12,7 @@ import Contact from "./Pages/Contact";
 import Requests from "./Pages/Requests";
 import OwnCars from "./Pages/OwnCars";
 import Community from "./Pages/Community";
+import Marketplaceitem from "./Pages/Marketplaceitem";
 //192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -25,6 +26,7 @@ root.render(
         <Route path="/own-cars" element={<OwnCars />} />
         <Route path="/community" element={<Community />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/marketplace-item/:id" element={<Marketplaceitem/>} />
         <Route path="/auth/:type" element={<Authentication />} />
       </Routes>
     </BrowserRouter></NavigatorProvider>

@@ -60,7 +60,7 @@ function RegisterForm() {
         </>
     }
     return (<>
-        <div className="container register-form">
+        <div className="container register-form mt-5">
             <div className="row">
                 <div className="col-sm-4 mx-auto">
                     <div>
