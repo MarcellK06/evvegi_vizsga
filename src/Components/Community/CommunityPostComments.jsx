@@ -106,7 +106,7 @@ function CommunityPostComments(data) {
                 </div>
                 <div className="row d-flex justify-content-end ms-auto p-0">
                   <div
-                    className="d-flex align-items-center mx-auto"
+                    className="d-flex align-items-center mx-auto pointer"
                     id={`comment-${i.id}`}
                     onClick={() => LikeComment(i.id)}
                   >
