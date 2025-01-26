@@ -34,7 +34,7 @@ function LikeCommunityPost(data) {
 
   return (
     <>
-      <div id={`like-${postid}`} className="pointed" onClick={LikePost}>
+      <div id={`like-${postid}`} className="pointer" onClick={LikePost}>
         {" "}
         {liked ? (
           <svg
