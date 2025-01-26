@@ -54,12 +54,6 @@ code {
   background-color: rgba(255, 0, 0, 0.486);
 }
 
-.messagebox-info {
-}
-
-.messagebox-success {
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -94,10 +88,6 @@ code {
   margin-right: 1%;
   background-size: contain;
 }
-
-.post .user {
-}
-
 .post .user p {
   margin-top: 7%;
 }
@@ -186,8 +176,6 @@ nav .active-link {
 .marketplace-listing-image {
   background-size: contain;
   background-repeat: no-repeat;
-}
-.appointment {
 }
 .appointment .arrow {
   background-color: aqua;
