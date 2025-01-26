@@ -5,58 +5,64 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 export const NavigatorContext = createContext();
 
-export const NavigatorProvider = ({children}) => {
+export const NavigatorProvider = ({ children }) => {
+  const [_Navbar, _setNavbar] = useState(<Navbar />);
+  const [_Footer, _setFooter] = useState(<Footer />);
 
-    const [_Navbar, _setNavbar] = useState(<Navbar/>)
-    const [_Footer, _setFooter] = useState(<Footer/>)
-    class Navigator {
-        type = "" //navbar / footer
-        Navbar(){
-            this.type = "NAVBAR";
-            return this;
-        }
-        Footer(){
-            this.type = "FOOTER";
-            return this;
-        }
-        disable(){
-            this.#set(false);
-            console.info(this.type+" => disabled")
-        }
-        enable(){
-            this.#set(true);
-            console.info(this.type+" => enabled")
-        }
-        #set(eD){ //private method
-            if(eD){
-                if(this.type == "NAVBAR"){
-                    _setNavbar(<Navbar/>)
-                }
-                else if(this.type == "FOOTER"){
-                    _setFooter(<Footer/>)
-                }
-            } else {
-                if(this.type == "NAVBAR"){
-                    _setNavbar(null)
-                }
-                else if(this.type == "FOOTER"){
-                    _setFooter(null)
-                }
-            }
-        }  
+  const [FooterFixed, setFooterFixed] = useState(false);
+  class Navigator {
+    type = ""; //navbar / footer
+    Navbar() {
+      this.type = "NAVBAR";
+      return this;
     }
-    const _Navigator = new Navigator();
-    useEffect(() => {
-        const header = ReactDOM.createRoot(document.getElementById("header"));
-        const footer = ReactDOM.createRoot(document.getElementById("footer"));
-       header.render(_Navbar)
-       footer.render(_Footer)   
-    }, [_Navbar, _Footer])
-    
-    return (
-        <NavigatorContext.Provider value={{_Navigator}}>{children}</NavigatorContext.Provider>
-    )
-}
+    Footer() {
+      this.type = "FOOTER";
+      return this;
+    }
+    disable() {
+      this.#set(false);
+      console.info(this.type + " => disabled");
+    }
+    enable() {
+      this.#set(true);
+      console.info(this.type + " => enabled");
+    }
+    #set(eD) {
+      //private method
+      if (eD) {
+        if (this.type == "NAVBAR") {
+          _setNavbar(<Navbar />);
+        } else if (this.type == "FOOTER") {
+          _setFooter(<Footer />);
+        }
+      } else {
+        if (this.type == "NAVBAR") {
+          _setNavbar(null);
+        } else if (this.type == "FOOTER") {
+          _setFooter(null);
+        }
+      }
+    }
+    footerFix() {
+      document.getElementById("footer").style.position = "absolute";
+      document.getElementById("footer").style.bottom = "0";
+    }
+  }
+  const _Navigator = new Navigator();
+  useEffect(() => {
+    const header = ReactDOM.createRoot(document.getElementById("header"));
+    const footer = ReactDOM.createRoot(document.getElementById("footer"));
+    header.render(_Navbar);
+    footer.render(_Footer);
+  }, [_Navbar, _Footer]);
+
+  return (
+    <NavigatorContext.Provider value={{ _Navigator }}>
+      {children}
+    </NavigatorContext.Provider>
+  );
+};
 //ötlet: ha lenne telefonra más navbar akkor pl : _Navigator.phone();
 
 /* 

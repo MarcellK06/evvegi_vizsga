@@ -1,14 +1,15 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -42,7 +43,6 @@ code {
   padding: 20px;
   margin-bottom: 2%;
   margin-top: 2%;
-
 }
 
 .login-form a {
@@ -52,12 +52,13 @@ code {
 
 .messagebox-error {
   background-color: rgba(255, 0, 0, 0.486);
-
 }
 
-.messagebox-info {}
+.messagebox-info {
+}
 
-.messagebox-success {}
+.messagebox-success {
+}
 
 .cursor-pointer {
   cursor: pointer;
@@ -75,21 +76,33 @@ code {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 }
 
-.post .avatar {
+.post .avatar,
+.comment-avatar {
   height: 40px;
   width: 40px;
   background: gray;
   border-radius: 50%;
   margin-right: 1%;
+  background-size: contain;
 }
 
-.post .user {}
+.profile-avatar {
+  height: 120px;
+  width: 120px;
+  background: gray;
+  border-radius: 50%;
+  margin-right: 1%;
+  background-size: contain;
+}
+
+.post .user {
+}
 
 .post .user p {
   margin-top: 7%;
 }
 
-*[id^='comments-'] {
+*[id^="comments-"] {
   padding: 5px;
 }
 
@@ -108,7 +121,7 @@ code {
   font-size: 20px;
 }
 .fs-11 {
-  font-size: 15px;
+  font-size: 19px;
 }
 .comment {
   background: #f0f0f0;
@@ -120,10 +133,10 @@ code {
 }
 
 .w-80 {
-  width:80%;
+  width: 80%;
 }
 .w-10 {
-  width:10%;
+  width: 10%;
 }
 
 .comment-svgs {
@@ -134,35 +147,130 @@ code {
 
 * {
   font-family: "Poppins", serif;
-  font-weight: 400;
+  font-weight: 300;
   font-style: normal;
 }
 
-.footer{
-
+.footer {
+  position: relative;
+  bottom: 0;
 }
 .footer * {
   text-decoration: none;
-  color:rgb(240, 240, 240);
+  color: rgb(240, 240, 240);
   text-align: center;
 }
-nav a{
+nav a {
   cursor: pointer;
 }
-nav .active-link{
-  color: darkblue
+nav .active-link {
+  color: darkblue;
 }
 
 .buttoncolor {
   background: #0069be;
-  padding:5px;
+  padding: 5px;
   color: white;
 }
-.text{
+
+.buttoncolor:hover {
+  cursor: pointer;
+  background: #0060af;
+  padding: 5px;
+  color: white;
+}
+.text {
   border-radius: 30px;
 }
 
 .marketplace-listing-image {
   background-size: contain;
   background-repeat: no-repeat;
+}
+.appointment {
+}
+.appointment .arrow {
+  background-color: aqua;
+  border-radius: 50%;
+  height: 3vh;
+  width: 3vh;
+  color: #ffff;
+  font-weight: bold;
+  font-size: 25px;
+}
+.appointment .arrow div {
+  margin-top: -4px;
+  margin-left: -5px;
+}
+/*
+.appointment .col-2{
+  border-left: 1px solid black;
+}
+.appointment .row{
+  border-bottom:1px solid black ;
+}
+*/
+
+.appointment .ido {
+  background: #009196;
+  border-radius: 15px;
+  padding: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+}
+.appointment .foglalt {
+  background: #ff5e00 !important;
+}
+.bds {
+  z-index: 95558;
+  backdrop-filter: blur(1px);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+._modal {
+  position: fixed;
+  background: #ffffff !important;
+  z-index: 95559;
+  margin: 0;
+  top: 40%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 3vh;
+  border-radius: 20px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.btn-close:hover,
+.btn-close-red:hover {
+  cursor: pointer;
+}
+.own-cars {
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 20px;
+}
+
+.btn-close-red {
+  width: 3em;
+}
+
+.hoverbutton:hover {
+  background-color: #e9e9e9;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.noselect {
+  user-select: none;
 }

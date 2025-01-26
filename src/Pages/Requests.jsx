@@ -1,9 +1,11 @@
 import ActiveRequests from "../Components/PriceQuote/ActiveRequests";
 
 function Requests() {
-    return(<>
-    <ActiveRequests/>
-    </>)
+  return (
+    <>
+      <ActiveRequests />
+    </>
+  );
 }
 
 export default Requests;

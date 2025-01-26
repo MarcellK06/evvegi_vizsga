@@ -41,7 +41,7 @@ function CreateCommunityPost() {
             <div className="post w-100 mt-5">
               <h5>Bejegyzés létrehozása</h5>
               <div>
-                <label htmlFor="title" className="text-center">
+                <label htmlFor="title" className="text-center noselect">
                   Cím
                 </label>
                 <input
@@ -52,7 +52,7 @@ function CreateCommunityPost() {
                   required
                   className="my-1 border-0 rounded post w-100 mx-auto h-50 bg-white"
                 />
-                <label htmlFor="description" className="text-center">
+                <label htmlFor="description" className="text-center noselect">
                   Törzs
                 </label>
                 <textarea
@@ -63,28 +63,26 @@ function CreateCommunityPost() {
                 ></textarea>
               </div>
               <div className="container-fluid d-flex justify-content-end mt-3">
-                
                 <div className="d-flex text-center">
                   <div
-                    className="buttoncolor text p-1 pt-1 ps-3 ms-1"
+                    className="buttoncolor text p-1 pt-1 ps-3 ms-1 noselect"
                     style={{ marginRigth: "30px" }}
                   >
                     Fájlok csatolása{" "}
                     <FaFile
-                    className=" ms-autoborder-0 rounded-circle buttoncolor"
-                    size={30}
-                 
+                      className=" ms-autoborder-0 rounded-circle buttoncolor"
+                      size={30}
                     />
                   </div>
                 </div>
                 <div className="d-flex text-center">
                   <div
-                    className="buttoncolor text p-1 pt-1 ps-3 ms-1"
+                    className="buttoncolor text p-1 pt-1 ps-3 ms-1 noselect"
+                    onClick={CreatePost}
                     style={{ marginRigth: "30px" }}
                   >
                     Küldés{" "}
                     <IoMdSend
-                      onClick={CreatePost}
                       className="ms-auto border-0 rounded-circle buttoncolor"
                       size={30}
                     />

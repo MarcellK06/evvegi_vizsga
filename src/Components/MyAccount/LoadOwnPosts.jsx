@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import CONFIG from "../../config.json";
 import $ from "jquery";
-import LikeCommunityPost from "./LikeCommunityPost";
-import CommentCommunityPost from "./CommentCommunityPost";
 import Cookie from "js-cookie";
-import CommunityPostComments from "./CommunityPostComments";
 import { CiClock2 } from "react-icons/ci";
-import { FaRegCommentDots } from "react-icons/fa";
-function LoadCommunityPosts() {
-  const [i, setI] = useState(1);
+function LoadOwnPosts() {
   var API = CONFIG.API;
+  var posts = [];
+  const [i, setI] = useState(1);
+  const [activePosts, setActivePosts] = useState([]);
 
   class CommunityPost {
     constructor(
@@ -38,23 +36,42 @@ function LoadCommunityPosts() {
     }
   }
 
-  var posts = [];
-  var [activeposts, setActivePosts] = useState([]);
-  const LoadImage = (url) => {
-    return <img src={url} />;
-  };
-  const ShowComments = (id) => {
-    var el = document.getElementById(`comments-${id}`);
-    if (el.classList.contains("d-block")) {
-      el.classList.remove("d-block");
-      el.classList.add("d-none");
-    } else {
-      el.classList.add("d-block");
-      el.classList.remove("d-none");
-    }
+  const Get = () => {
+    const userid = Cookie.get("userid");
+    $.ajax({
+      url: `${API}/community/load-posts/${i}`,
+      type: "post",
+      data: {
+        userid: userid,
+        profilepage: 1,
+      },
+      success: (resp) => {
+        if (i < posts.length) setActivePosts((activePosts = posts[i - 1]));
+        else {
+          posts.push([]);
+          resp.forEach((el) => {
+            posts[posts.length - 1].push(
+              new CommunityPost(
+                el.id,
+                el.name,
+                el.title,
+                el.description,
+                el.images,
+                el.postedat,
+                el.liked,
+                el.likes,
+                el.comments,
+                el.avatar
+              )
+            );
+          });
+          setActivePosts(posts[i - 1]);
+        }
+      },
+    });
   };
 
-  const PostEntry = (el) => {
+  const OwnPostEntry = (el) => {
     var avatar = el.avatar;
     var postedat = el.postedat;
     var postedat_text = "";
@@ -97,88 +114,77 @@ function LoadCommunityPosts() {
               </div>
             </div>
           </div>
-          <p className="mt-3 mb-4 fw-bold">{el.title}</p>
-          <p>{el.description}</p>
+          <div className="row">
+            <p className="mt-3 mb-4 fw-bold">{el.title}</p>
+          </div>
+          <div className="row">
+            <p>{el.description}</p>
+          </div>
+          <div className="row d-flex justify-content-end p-3 ">
+            <div className="btn-close-red" onClick={() => DeletePost(el)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="red"
+              >
+                <path d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z" />
+              </svg>
+            </div>
+          </div>
         </div>
         <hr />
-        <div className="d-flex justify-content-between">
-          <div className="d-flex">
-            <LikeCommunityPost data={el} />
-          </div>
-          <div onClick={() => ShowComments(el.id)} className="d-flex pointer">
-            <FaRegCommentDots />
-            <div className="ms-2 noselect">{el.comments}</div>
-          </div>
-        </div>
-        <div className="container" id={`commentbox-${el.id}`}>
-          <CommunityPostComments data={el} />
-          <CommentCommunityPost data={el.id} />
-        </div>
       </>
     );
   };
 
-  const LoadPosts = () => {
-    var token = Cookie.get("token");
+  const DeletePost = (i) => {
     var userid = Cookie.get("userid");
+    var postid = i.id;
     $.ajax({
-      url: `${API}/community/load-posts/${i}`,
+      url: `${API}/community/posts/delete`,
       type: "post",
-      headers: {
-        token: token,
-      },
       data: {
         userid: userid,
+        postid: postid,
       },
-      success: function (resp) {
-        if (i < posts.length) setActivePosts((activeposts = posts[i - 1]));
-        else {
-          posts.push([]);
-          resp.forEach((el) => {
-            posts[posts.length - 1].push(
-              new CommunityPost(
-                el.id,
-                el.name,
-                el.title,
-                el.description,
-                el.images,
-                el.postedat,
-                el.liked,
-                el.likes,
-                el.comments,
-                el.avatar
-              )
-            );
-          });
-          setActivePosts(posts[i - 1]);
-        }
+      success: (resp) => {
+        window.location.reload();
       },
     });
   };
 
   useEffect(() => {
-    LoadPosts();
-  }, [i]);
-
+    Get();
+  }, []);
+  const NoPosts = () => {
+    return (
+      <>
+        <p className="fs-4 text-center">Nincs bejegyzésed!</p>
+      </>
+    );
+  };
   return (
     <>
-      <div className="container">
+      <div className="container my-2">
+        <div className="row">
+          <div className="col-sm-6 mx-auto text-center">
+            <p className="fs-3">Saját Bejegyzések</p>
+            <p>Saját bejegyzéseidet itt találhatod!</p>
+          </div>
+        </div>
         <div className="row">
           <div className="col-sm-6 mx-auto">
             {" "}
-            {activeposts.map((i) => PostEntry(i))}
+            {activePosts.length == 0 ? (
+              <NoPosts />
+            ) : (
+              activePosts.map((i) => OwnPostEntry(i))
+            )}
           </div>
         </div>
       </div>
-
-      {/*    <input type="button" value="Previous" onClick={(e) => {setI(i-1)}} disabled={i <= 1}/>
-    <div>
-        
-    </div>
-    
-    <input type="button" value="Next" onClick={(e) => {setI(i+1)}}/>*/}
     </>
   );
 }
 
-export default LoadCommunityPosts;
+export default LoadOwnPosts;

@@ -1,16 +1,13 @@
+import { useEffect, useState } from "react";
 import $ from "jquery";
-import Cookie from "js-cookie";
 import CONFIG from "../../config.json";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-function ListListings() {
+import Cookie from "js-cookie";
+function LoadOwnListings() {
   var API = CONFIG.API;
   const [i, setI] = useState(1);
   const [activeListings, setActiveListings] = useState([]);
-  const brandFilterRef = useRef();
-  const modelFilterRef = useRef();
-  const engineCodeFilterRef = useRef();
+
+  var listings = [];
 
   class ListingStruct {
     constructor(
@@ -31,26 +28,22 @@ function ListListings() {
       this.listed_at = listed_at;
     }
   }
-  const navigator = useNavigate();
-  var listings = [];
 
-  const LoadListings = () => {
+  const Get = () => {
     var userid = Cookie.get("userid");
     $.ajax({
       url: `${API}/marketplace/listings/load/${i}`,
       type: "post",
       data: {
-        filters: [
-          brandFilterRef.current.value,
-          modelFilterRef.current.value,
-          engineCodeFilterRef.current.value,
-        ],
+        userid: userid,
       },
-      success: function (resp) {
+      success: (resp) => {
         if (i < listings.length) setActiveListings(listings[i - 1]);
         else {
           listings.push([]);
-          var respJson = JSON.parse(resp)[0];
+          if (!Array.isArray(resp)) var respJson = JSON.parse(resp)[0];
+          else var respJson = resp[0];
+
           respJson.forEach((el) => {
             listings[listings.length - 1].push(
               new ListingStruct(
@@ -63,20 +56,6 @@ function ListListings() {
                 el.listed_at
               )
             );
-            if (typeof el.data != "undefined") {
-              var car = JSON.parse(el.data);
-              if (!brandFilterRef.current.innerHTML.includes(car.brand))
-                brandFilterRef.current.innerHTML += `<option value="${car.brand}">${car.brand}</option>`;
-              if (!modelFilterRef.current.innerHTML.includes(car.model))
-                modelFilterRef.current.innerHTML += `<option value="${car.model.replace(
-                  " ",
-                  "-"
-                )}">${car.model}</option>`;
-              if (
-                !engineCodeFilterRef.current.innerHTML.includes(car.engineCode)
-              )
-                engineCodeFilterRef.current.innerHTML += `<option value="${car.engineCode}">${car.engineCode}</option>`;
-            }
           });
           setActiveListings(listings[i - 1]);
         }
@@ -84,7 +63,23 @@ function ListListings() {
     });
   };
 
-  const ListingEntry = (el) => {
+  const DeleteListing = (el) => {
+    var listingid = el.id;
+    var userid = Cookie.get("userid");
+    $.ajax({
+      url: `${API}/marketplace/listings/delete`,
+      type: "post",
+      data: {
+        userid: userid,
+        listingid: listingid,
+      },
+      success: (resp) => {
+        window.location.reload();
+      },
+    });
+  };
+
+  const OwnListingEntry = (el) => {
     if (!el.itemname) return;
     var vehicle_data = "";
 
@@ -132,64 +127,40 @@ function ListListings() {
         <div className="row">
           <div className="col-10"></div>
           <div className="col-2 mt-auto">
-            <input
-              type="button"
-              value="Megtekintés"
-              className="btn btn-primary mb-2"
-              onClick={() => navigator(`/marketplace-item/${el.id}`)}
-            />
+            <div
+              className="btn-close-red ms-auto d-flex justify-content-end m-3"
+              style={{ width: "1.5rem" }}
+              onClick={() => DeleteListing(el)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="red"
+              >
+                <path d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
     );
   };
-
   useEffect(() => {
-    LoadListings();
+    Get();
   }, []);
   return (
-    <>
+    <div className="text-center">
       <div className="row">
-        <div className="container col-sm-3 my-2">
-          <div className="d-flex justify-content-center mt-5">
-            <div className="col-2"></div>
-            <div className="col-8 post d-flex justify-content-center flex-column text-center">
-              <p className="fs-4 fw-bold mt-2 mb-2">Szűrők</p>
-              <div className="m-2">
-                <label htmlFor="">Gyártó</label>
-                <select ref={brandFilterRef} className="form-control">
-                  <option value="-">-</option>
-                </select>
-              </div>
-              <div className="m-2">
-                <label htmlFor="">Gyártmány</label>
-                <select ref={modelFilterRef} className="form-control">
-                  <option value="-">-</option>
-                </select>
-              </div>
-              <div className="m-2">
-                <label htmlFor="">Motorkód</label>
-                <select ref={engineCodeFilterRef} className="form-control">
-                  <option value="-">-</option>
-                </select>
-              </div>
-              <input
-                type="button"
-                value="Szűrés"
-                className="form-control mt-2 mb-4 hoverbutton"
-                onClick={LoadListings}
-              />
-            </div>
-            <div className="col-2"></div>
-          </div>
-        </div>
-        <div className="container col-sm-7 my-2">
-          {activeListings.map((i) => ListingEntry(i))}
-        </div>
-        <div className="col-sm-2 p-0"></div>
+        <p className="fs-3">Saját Hírdetések</p>
+        <p>Saját hírdetéseit itt megtalálhatja.</p>
       </div>
-    </>
+      <div className="row">
+        <div className="container col-sm-7 my-2">
+          {activeListings.map((i) => OwnListingEntry(i))}
+        </div>
+      </div>
+    </div>
   );
 }
 
-export default ListListings;
+export default LoadOwnListings;

@@ -1,61 +1,113 @@
 import CONFIG from "../../config.json";
-import $ from 'jquery';
-import Cookie from 'js-cookie';
-import { useEffect } from "react";
+import $ from "jquery";
+import Cookie from "js-cookie";
+import { useEffect, useState } from "react";
 
 function ListOwnCars() {
-    var API = CONFIG.API;
+  var API = CONFIG.API;
 
-    
-    class OwnCar {
-        constructor(brand, model, year, licenseplate, vin, images) {
-            this.brand = brand;
-            this.model = model;
-            this.year = year;
-            this.licenseplate = licenseplate;
-            this.vin = vin;
-            this.images = images;
-        }
+  var szotar = {
+    km: "Kilóméteróra állás",
+    brand: "Gyártó",
+    model: "Gyártmány",
+    engineCode: "Motorkód",
+    licensePlate: "Rendszám",
+    year: "Évjárat",
+  };
+
+  const [ownCars, setOwnCars] = useState([]);
+  class OwnCar {
+    constructor(id, data, vin, images, status) {
+      this.id = id;
+      this.data = data;
+      this.vin = vin;
+      this.images = images;
+      this.status = status;
     }
-    var owncars = []
+  }
 
-    const LoadOwnCars = () => {
-        var userid = Cookie.get("userid");
-        $.ajax({
-            url: `${API}/car/load/all`,
-            data: {
-                userid: userid
-            },
-            success: function(resp) {
-                resp.cars.forEach((el) => {
-                    owncars.push(new OwnCar(el.brand, el.model, el.year, el.licenseplate, el.vin, el.images));
-                });
-            }
+  const LoadOwnCars = () => {
+    var userid = Cookie.get("userid");
+    $.ajax({
+      url: `${API}/car/load/all/${userid}`,
+      success: function (resp) {
+        var c = [];
+        resp.forEach((el) => {
+          var car = JSON.parse(el.data);
+          c.push(new OwnCar(el.id, car, el.vin, el.images, el.status));
         });
-    }
+        setOwnCars(c);
+      },
+    });
+  };
 
-    const OwnCarEntry = (el) => {
-        return(<>
-        <p>{el.brand}</p>
-        <p>{el.model}</p>
-        <p>{el.year}</p>
-        <p>{el.licenseplate}</p>
-        <p>{el.vin}</p>
-        <p>Jármű Állapota: <b>OK</b></p>
+  const JsonEntry = (i, el) => {
+    return (
+      <div className="d-flex">
+        <p>{szotar[i]}:&emsp;</p>
+        <p className="fw-bold">{el[i]}</p>
+      </div>
+    );
+  };
+
+  const HandleDelete = (el) => {
+    var userid = Cookie.get("userid");
+    var carid = el.id;
+    $.ajax({
+      url: `${API}/car/delete`,
+      type: "post",
+      data: {
+        userid: userid,
+        carid: carid,
+      },
+      success: function (resp) {
+        window.location.reload();
+      },
+    });
+  };
+
+  const OwnCarEntry = (el) => {
+    return (
+      <div className="post my-3">
+        {Object.keys(el.data).map((i) => JsonEntry(i, el.data))}
+        <div className="d-flex">
+          <p>Alvázszám:&emsp;</p>
+          <p className="fw-bold">{el.vin}</p>
+        </div>
+        <div className="d-flex">
+          <p>Jármű Állapota:&emsp;</p>
+          <p className="fw-bold">{el.status}</p>
+        </div>
         <img src={el.images[0]} alt="Forgalmi Kép 1. Oldal" />
         <img src={el.images[1]} alt="Forgalmi Kép 2. Oldal" />
         <img src={el.images[2]} alt="Jármű Alvázszám Kép" />
-        <input type="button" value="Törlés" />
-        </>)
-    } 
+        <div className="row">
+          <div className="col-12 d-flex justify-content-end">
+            <input
+              type="button"
+              value="Törlés"
+              className="form-control m-3"
+              onClick={() => HandleDelete(el)}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
 
-    useEffect(() => {
-        LoadOwnCars();
-    }, []);
+  useEffect(() => {
+    LoadOwnCars();
+  }, []);
 
-    return (<>
-    {owncars.map((i) => OwnCarEntry(i))}
-    </>);
+  return (
+    <div>
+      <div className="row">
+        <div className="col-2"></div>
+        <div className="col-8">{ownCars.map((i) => OwnCarEntry(i))}</div>
+        <div className="col-2"></div>
+      </div>
+    </div>
+  );
 }
 
 export default ListOwnCars;
