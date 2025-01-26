@@ -36,20 +36,19 @@ function ListListings() {
 
   const LoadListings = () => {
     var userid = Cookie.get("userid");
+    var rankid = Cookie.get("rank");
     $.ajax({
-      url: `${API}/marketplace/listings/load/${i}`,
+      url: `${API}/marketplace/listings/load/admin/${i}`,
       type: "post",
       data: {
-        filters: [
-          brandFilterRef.current.value,
-          modelFilterRef.current.value,
-          engineCodeFilterRef.current.value,
-        ],
+        userid: userid,
+        rankid: rankid,
       },
       success: function (resp) {
         if (i < listings.length) setActiveListings(listings[i - 1]);
         else {
           listings.push([]);
+          resp = JSON.stringify(resp);
           var respJson = JSON.parse(resp)[0];
           respJson.forEach((el) => {
             listings[listings.length - 1].push(
@@ -104,6 +103,27 @@ function ListListings() {
       else if (el.images.length > 0) el.images = [el.images];
       else el.images = [];
     }
+
+    const ApproveListing = (i) => {
+      var userid = Cookie.get("userid");
+      var rankid = Cookie.get("rank");
+      var listingid = i.id;
+      $.ajax({
+        url: `${API}/marketplace/listings/approve`,
+        type: "post",
+        data: {
+          userid: userid,
+          rankid: rankid,
+          listingid: listingid,
+        },
+        success: (resp) => {
+          window.location.reload();
+        },
+      });
+    };
+
+    const DeclineListing = (i) => {};
+
     return (
       <div className="post my-3 w-100">
         <div className="row">
@@ -129,14 +149,20 @@ function ListListings() {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-10"></div>
-          <div className="col-2 mt-auto">
+        <div className="row d-flex justify-content-end">
+          <div className="col-9"></div>
+          <div className="col-3 mt-auto d-flex justify-content-end">
             <input
               type="button"
-              value="Megtekintés"
-              className="btn btn-primary mb-2"
-              onClick={() => navigator(`/marketplace-item/${el.id}`)}
+              value="Megerősítés"
+              className="btn btn-primary mb-2 mx-1"
+              onClick={() => ApproveListing(el)}
+            />
+            <input
+              type="button"
+              value="Elutasítás"
+              className="btn btn-danger mb-2 mx-1"
+              onClick={() => DeclineListing(el)}
             />
           </div>
         </div>
@@ -176,7 +202,7 @@ function ListListings() {
               <input
                 type="button"
                 value="Szűrés"
-                className="form-control mt-2 mb-4 hoverbutton"
+                className="form-control mt-2 mb-4"
                 onClick={LoadListings}
               />
             </div>

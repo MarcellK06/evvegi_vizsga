@@ -1,57 +1,66 @@
 import { useEffect } from "react";
 import CONFIG from "../../config.json";
-import Cookie from 'js-cookie';
+import Cookie from "js-cookie";
 import Request from "./Request";
-import $ from 'jquery';
+import $ from "jquery";
 
 function ActiveRequests() {
-    var API = CONFIG.API;
+  var API = CONFIG.API;
 
-    
-    class RequestStruct {
-constructor(title, description, vin, answered) {
-    this.title = title;
-    this.description = description;
-    this.vin = vin;
-    this.answered = answered;
-}
+  class RequestStruct {
+    constructor(title, description, vin, answered) {
+      this.title = title;
+      this.description = description;
+      this.vin = vin;
+      this.answered = answered;
     }
+  }
 
-    var requests = [];
+  var requests = [];
 
-    const LoadRequests = () => {
-        var userid = Cookie.get("userid");
-        $.ajax({
-            url: `${API}/pricerequests/get-all`,
-            data: {
-                userid: userid
-            },
-            success: function(resp) {
-                resp.requests.forEach((el) => {
-                    requests.push(new RequestStruct(el.title, el.description, el.vin, el.answered));
-                });
-            }
+  const LoadRequests = () => {
+    var userid = Cookie.get("userid");
+    $.ajax({
+      url: `${API}/pricerequests/get-all`,
+      data: {
+        userid: userid,
+      },
+      success: function (resp) {
+        resp.requests.forEach((el) => {
+          requests.push(
+            new RequestStruct(el.title, el.description, el.vin, el.answered)
+          );
         });
-    }
+      },
+    });
+  };
 
-    const RequestEntry = (el) => {
-        return (<div style={{backgroundColor: el.answered ? "green":"red"}}>
+  const RequestEntry = (el) => {
+    return (
+      <div style={{ backgroundColor: el.answered ? "green" : "red" }}>
         <p>{el.title}</p>
         <p>{el.description}</p>
         <p>{el.vin}</p>
         <p>Válaszolva: {el.answered ? "Igen" : "Nem"}</p>
-        <input type="button" value="Válasz Mutatása" style={{display: el.answered ? "block" : "none"}} />
-        </div>);
-    }
+        <input
+          type="button"
+          value="Válasz Mutatása"
+          style={{ display: el.answered ? "block" : "none" }}
+        />
+      </div>
+    );
+  };
 
-    useEffect(() => {
-        LoadRequests();
-    }, []);
+  useEffect(() => {
+    LoadRequests();
+  }, []);
 
-    return (<>
-    {requests.map((i) => RequestEntry(i))}
-    <Request/>
-</>);
+  return (
+    <>
+      {requests.map((i) => RequestEntry(i))}
+      <Request />
+    </>
+  );
 }
 
 export default ActiveRequests;
