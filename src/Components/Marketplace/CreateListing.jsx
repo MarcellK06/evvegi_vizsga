@@ -153,7 +153,18 @@ function CreateListing() {
           <div className="col-1"></div>
         </div>
 
-        <input type="button" value="Közzététel" onClick={HandleCreateListing} />
+        <div className="row">
+          <div className="col-2"></div>
+          <div className="col-8">
+            <input
+              type="button"
+              value="Közzététel"
+              onClick={HandleCreateListing}
+              className="form-control mx-auto hoverbutton my-3"
+            />
+          </div>
+          <div className="col-2"></div>
+        </div>
       </>
     );
   };
