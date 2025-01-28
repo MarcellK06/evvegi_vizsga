@@ -39,6 +39,46 @@ function LoadProfileData() {
     Get();
   }, []);
 
+  const AdminPanel = () => {
+    if (profile[0].rank == "admin")
+      return (<>
+      <div className="row">
+        <div className="col-2"></div>
+        <div className="col-8">
+          <div className="row text-center border-bottom">
+            <p className="fs-3">Admin Panel</p>
+          </div>
+          <div className="row my-2">
+            <div className="col-3"></div>
+            <div className="col-6">
+              <input
+                type="button"
+                value="Bejegyzések"
+                onClick={() => (window.location.href = "/posts/admin")}
+                className="form-control my-3 hoverbutton"
+              />
+              <input
+                type="button"
+                value="Hírdetések"
+                onClick={() => (window.location.href = "/marketplace/admin")}
+                className="form-control my-3 hoverbutton"
+              />
+              <input
+                type="button"
+                value="Árajánlat kérések"
+                onClick={() => (window.location.href = "/requests/admin")}
+                className="form-control my-3 hoverbutton"
+              />
+            </div>
+            <div className="col-3"></div>
+          </div>
+        </div>
+        <div className="col-2"></div>
+      </div></>);
+      else
+        return (<></>);
+  }
+
   const profileEntry = (el) => {
     var name = el.name;
     var email = el.email;
@@ -60,7 +100,7 @@ function LoadProfileData() {
               </div>
               <div className="col-8">
                 <p className="fs-3 mb-0">{name}</p>
-                <p className="ms-3">{rank}</p>
+                <p className="ms-3 fw-bold">{rank}</p>
               </div>
               <div className="col-2"></div>
             </div>
@@ -101,6 +141,7 @@ function LoadProfileData() {
           </div>
           <div className="col-2"></div>
         </div>
+        <AdminPanel/>
       </>
     );
   };
