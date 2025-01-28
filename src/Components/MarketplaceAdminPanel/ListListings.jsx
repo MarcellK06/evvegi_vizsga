@@ -120,9 +120,25 @@ function ListListings() {
           window.location.reload();
         },
       });
-    };
+    }
 
-    const DeclineListing = (i) => {};
+    const DeclineListing = (i) => {
+      var userid = Cookie.get("userid");
+      var rankid = Cookie.get("rank");
+      var listingid = i.id;
+      $.ajax({
+        url: `${API}/marketplace/listings/decline`,
+        type: "post",
+        data: {
+          userid: userid,
+          rankid: rankid,
+          listingid: listingid,
+        },
+        success: (resp) => {
+          window.location.reload();
+        },
+      });
+    };
 
     return (
       <div className="post my-3 w-100">

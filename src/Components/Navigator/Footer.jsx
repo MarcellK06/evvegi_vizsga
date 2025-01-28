@@ -47,7 +47,7 @@ function Footer({ f = false }) {
             <div>
               <MdEmail /> info@Szalkacar.hu
               <br />
-              <FaPhone /> 06301235467
+              <FaPhone /> 06303926004
               <br />
               <HiOfficeBuilding /> 4700, Mátászalka KölcseY utca 3
             </div>

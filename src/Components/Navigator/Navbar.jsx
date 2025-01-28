@@ -118,6 +118,10 @@ function Navbar() {
                 </div>
                 <div className="mt-1 mx-2 fw-bold">Autóim</div>
               </div>
+              <div className="ms-5 mt-2 fw-bold d-flex justofx-content-end">
+                <div className="open-close close mt-2"></div>
+                <div className="text-light ms-2">Jelenleg Zárva</div>
+              </div>
             </div>
           </div>
         </div>

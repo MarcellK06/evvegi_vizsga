@@ -70,6 +70,10 @@ code {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 }
 
+.postcolor {
+  background-color: #f0f0f0;
+}
+
 .post .avatar,
 .comment-avatar {
   height: 40px;
@@ -78,6 +82,8 @@ code {
   border-radius: 50%;
   margin-right: 1%;
   background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 
 .profile-avatar {
@@ -261,4 +267,31 @@ nav .active-link {
 
 .noselect {
   user-select: none;
+}
+
+.bg{
+  position: absolute;
+  width: 30%;
+  transform: rotate(-30deg);
+  margin-top: -3%;
+  opacity: 10%;
+  margin-left: 3%;
+}
+.h-btn{
+  border: none;
+  background-color: #04020f;
+  color: #fff;
+  padding: 5px;
+  border-radius: 2px;
+}
+.open-close{
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+}
+.open{
+  background-color: green;
+}
+.close{
+  background-color: red;
 }

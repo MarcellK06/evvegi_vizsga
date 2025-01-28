@@ -18,13 +18,19 @@ function MyAccount() {
               <input
                 type="button"
                 value="Bejegyzések"
-                onClick={() => (window.location.href = "/my-account/listings")}
+                onClick={() => (window.location.href = "/my-account/posts")}
                 className="form-control my-3 hoverbutton"
               />
               <input
                 type="button"
                 value="Hírdetések"
-                onClick={() => (window.location.href = "/my-account/posts")}
+                onClick={() => (window.location.href = "/my-account/listings")}
+                className="form-control my-3 hoverbutton"
+              />
+              <input
+                type="button"
+                value="Árajánlatok"
+                onClick={() => (window.location.href = "/my-account/requests")}
                 className="form-control my-3 hoverbutton"
               />
             </div>

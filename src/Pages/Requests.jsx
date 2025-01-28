@@ -1,11 +1,11 @@
-import ActiveRequests from "../Components/PriceQuote/ActiveRequests";
+import Request from "../Components/PriceQuote/Request";
 
 function Requests() {
   return (
     <>
-      <ActiveRequests />
+      <Request />
     </>
   );
 }
 
-export default Requests;
+export default Requests;  
