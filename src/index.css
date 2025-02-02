@@ -276,6 +276,7 @@ nav .active-link {
   margin-top: -3%;
   opacity: 10%;
   margin-left: 3%;
+  pointer-events: none;
 }
 .h-btn{
   border: none;

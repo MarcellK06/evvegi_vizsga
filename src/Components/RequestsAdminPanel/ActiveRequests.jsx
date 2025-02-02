@@ -16,6 +16,16 @@ function ActiveRequests() {
       this.data = data;
       this.vin = vin;
       this.answered = answered;
+      this.email = "USER";
+    }
+  }
+  class AnonRequestStruct {
+    constructor(id, title, description, answered, email) {
+      this.id = id;
+      this.title = title;
+      this.description = description;
+      this.answered = answered;
+      this.email = email;
     }
   }
 
@@ -32,6 +42,7 @@ function ActiveRequests() {
       success: function (resp) {
         var rs = [];
         resp.forEach((el) => {
+          if (el.email == "USER") {
           var id = el.id;
           var title = el.title;
           var description = el.description;
@@ -39,6 +50,13 @@ function ActiveRequests() {
           var vin = el.vin;
           var replied = el.replied;
           rs.push(new RequestStruct(id, title, description, jsondata, vin, replied));
+        } else {
+          var id = el.id;
+          var title = el.title;
+          var description = el.description;
+          var email = el.email;
+          rs.push(new AnonRequestStruct(id, title, description, 0, email));
+        }
         });
         setRequests(rs);
       },
@@ -93,7 +111,9 @@ function ActiveRequests() {
   }
 
   const RequestEntry = (el) => {
-    console.log(el.data);
+    console.log(el);
+    if (el.email == "USER") {
+      console.log("a");
     return (
       <div className="row my-3">
         <div className="col-2"></div>
@@ -162,7 +182,44 @@ function ActiveRequests() {
       </div></div>
       <div className="col-2"></div></div>
     );
+  }
+    else {
+    
+    return (
+      <div className="row my-3">
+        <div className="col-2"></div>
+        <div className="col-8">
+      <div className="post">
+        <div className="row">
+          <div className="col-1"></div>
+          <div className="col-10">
+            <div className="row my-2">
+          <label htmlFor="title">Email cím</label>
+        <textarea rows={2} value={el.email} name="email" id="email" className="form-control" disabled/>
+        </div>
+            <div className="row my-2">
+          <label htmlFor="title">Fej</label>
+        <textarea rows={2} value={el.title} name="title" id="title" className="form-control" disabled/>
+        </div>
+        <div className="row my-2">
+          <label htmlFor="description">Törzs</label>
+          <textarea rows={5} value={el.description} name="description" id="description" className="form-control" disabled/></div>
+          </div>
+          </div>
+        <div className="row d-flex text-center">
+        <p className="fw-bold mx-auto">{el.answered ? "Válaszolva" : "Válaszra Vár"}</p>
+        </div>
+        <input
+          type="button"
+          value="Válaszolás"
+          className="form-control hoverbutton"
+          onClick={() => CreateModal(<p className="mx-auto">Árajánlás válaszolás</p>, AnswerRequest(el), true)}
+        />
+      </div></div>
+      <div className="col-2"></div></div>
+    );
   };
+}
 
   useEffect(() => {
     LoadRequests();

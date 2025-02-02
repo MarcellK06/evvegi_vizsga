@@ -50,7 +50,11 @@ function ListListings() {
         if (i < listings.length) setActiveListings(listings[i - 1]);
         else {
           listings.push([]);
-          var respJson = JSON.parse(resp)[0];
+          if (typeof resp == "string")
+            var respJson = resp;
+          else
+            var respJson = JSON.stringify(resp);
+          respJson = JSON.parse(respJson)[0];
           respJson.forEach((el) => {
             listings[listings.length - 1].push(
               new ListingStruct(
@@ -89,6 +93,9 @@ function ListListings() {
     var vehicle_data = "";
 
     var car = el.data;
+    var desc = el.itemdescription;
+    if (desc.length > 575)
+      desc = `${desc.substr(0, 575)}...`;
     var vehicle_data = [];
     if (el.data != undefined) {
       if (car.year) vehicle_data.push(car.year);
@@ -118,7 +125,7 @@ function ListListings() {
           <div className="col-8 g-3">
             <div className="d-flex flex-column my-2">
               <p className="fs-4 fw-bold">{el.itemname}</p>
-              <p className="fs-7 mt-3">{el.itemdescription}</p>
+              <p className="fs-7 mt-3">{desc}</p>
               <p className="fs-11 mt-1">
                 <u className="fw-bold">{`${el.itemprice}`}</u>Ft
               </p>

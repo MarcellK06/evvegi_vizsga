@@ -61,6 +61,7 @@ function LoadCommunityPosts() {
     var psplit = postedat.split("-");
     var now = new Date();
     if (psplit[1][0] == "0") psplit[1] = psplit[1][1];
+    var then = new Date(parseInt(psplit[0].split(" ")[0]), parseInt(psplit[1].split(" ")[0]), parseInt(psplit[2].split(" ")[0]), postedat.split(" ")[1].split(':'[0]), postedat.split(" ")[1].split(':'[1]), postedat.split(" ")[1].split(':'[2]));
 
     if (parseInt(psplit[2].split(" ")[0]) != now.getDate())
       postedat_text = `${now.getDate() - parseInt(psplit[2])} n`;
@@ -158,7 +159,7 @@ function LoadCommunityPosts() {
 
   useEffect(() => {
     LoadPosts();
-  }, [i]);
+  }, []);
 
   return (
     <>

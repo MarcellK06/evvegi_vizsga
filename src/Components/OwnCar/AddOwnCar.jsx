@@ -22,6 +22,10 @@ function AddOwnCar() {
     var year = yearRef.current.value;
     var licenseplate = licenseplateRef.current.value;
     var vin = vinRef.current.value;
+    if (brand == "" || model == "" || year == "" || licenseplate == "" || vin == "") {
+      CreateModal(<p className="fs-3">A jármű hozzáadása sikertelen!</p>, <p>Kérjük elenőrizze adatait, hogy mindent jól adott meg!</p>, true);
+      return;
+    }
     var registration = ""; //registrationRef.current.value;
     $.ajax({
       url: `${API}/car/add`,
@@ -34,8 +38,9 @@ function AddOwnCar() {
         vin: vin,
         registration: registration,
       },
+      type: "post",
       success: function (resp) {
-        // TODO
+        CreateModal(<p className="fs-3">Sikeres jármű hozzadás</p>, <p>Kérjük várjon, míg egy adminisztrátor átnézi jármű adatait és jováhagyja!</p>, true);
       },
     });
   };
@@ -162,7 +167,7 @@ function AddOwnCar() {
                 true
               )
             }
-            className="form-control my-3"
+            className="form-control my-3 postcolor hoverbutton"
           />
         </div>
         <div className="col-5"></div>

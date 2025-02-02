@@ -23,7 +23,7 @@ function Navbar() {
   };
   const navLinks = [
     new NavLink("Főoldal", "/", false),
-    new NavLink("Áranjánlat", "/requests", true),
+    new NavLink("Áranjánlat", "/requests", false),
     new NavLink("Időpont foglalás", "/appointment", true),
     new NavLink("Marketplace", "/marketplace", false),
     new NavLink("Közösség", "/community", true),
