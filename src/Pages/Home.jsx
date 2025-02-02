@@ -6,7 +6,7 @@ function Home() {
   const { CreateModal } = useContext(ModalContext);
 
   return (
-    <>
+    <div>
       <div className="row">
         <div className="col-sm-5 mx-auto">
           <div></div>
@@ -25,7 +25,7 @@ function Home() {
             <div className="d-flex">
               <button className="h-btn">Foglalj időpontot</button>
               <div className="fw-bold ms-3 mt-1">
-                Hívj minket: <a href="tel:06301234567">06301234567</a>
+                Hívj minket: <a href="tel:+36303926004">+36303926004</a>
               </div>
             </div>
           </div>
@@ -37,7 +37,7 @@ function Home() {
           <img src={Header} alt="" className="img-fluid" />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 export default Home;

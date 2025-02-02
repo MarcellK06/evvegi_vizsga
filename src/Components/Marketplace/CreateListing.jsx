@@ -19,18 +19,24 @@ function CreateListing() {
     var itemName = itemNameRef.current.value;
     var itemDescription = itemDescriptionRef.current.value;
     var itemPrice = itemPriceRef.current.value;
+    var userid = Cookie.get("userid");
     var car = carRef.current.value;
+    if (itemName == "" || itemDescription == "" || itemPrice == "" || car == "SELECT") {
+      CreateModal(<><p className="fs-3 fw-bold">Hibás Hírdetés!</p><hr/></>, <p className="fs-4">Kérem Töltsön ki minden mezőt!</p>, true);
+
+    }
     $.ajax({
       url: `${API}/marketplace/listings/create`,
       type: "post",
       data: {
+        userid: userid,
         itemname: itemName,
         itemdescription: itemDescription,
         itemprice: itemPrice,
         car: car,
       },
       success: function (resp) {
-        window.location.reload();
+        CreateModal(<><p className="fs-3 fw-bold">Sikeres Hírdetés Létrehozás!</p><hr/></>, <p className="fs-4">Kérem várjon türelemmel, míg adminisztrátoraink feldolgozzák hírdetését.</p>, true);
       },
     });
   };
@@ -144,6 +150,7 @@ function CreateListing() {
                     className="form-control"
                     ref={carRef}
                   >
+        <option value={"SELECT"}>Válasszon járművet</option>
                     {ownCars.map((i) => ownCarEntry(i))}
                   </select>
                 </div>
@@ -184,7 +191,7 @@ function CreateListing() {
                 true
               )
             }
-            className="form-control my-3 hoverbutton"
+            className="form-control my-3 hoverbutton postcolor"
           />
         </div>
         <div className="col-5"></div>

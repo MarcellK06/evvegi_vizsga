@@ -26,7 +26,7 @@ import MyAccountRequests from "./Pages/MyAccountRequests";
 //192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <>
+  <div style={{minHeight: "65.7vh"}}>
     <NavigatorProvider>
       <ModalProvider>
         <BrowserRouter>
@@ -59,5 +59,5 @@ root.render(
         </BrowserRouter>
       </ModalProvider>
     </NavigatorProvider>
-  </>
+  </div>
 );

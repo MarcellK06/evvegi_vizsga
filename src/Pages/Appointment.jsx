@@ -15,7 +15,6 @@ function Appointment() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [times, setTimes] = useState({});
   const [ownCars, setOwnCars] = useState([]);
-
   class TimeClass {
     constructor(id, date, time, taken) {
       this.id = id;
@@ -26,9 +25,16 @@ function Appointment() {
   }
 
   const FormatDate = (date) => {
+    if (typeof date != "object") {
+    date = date.toString();
+    var year = parseInt(date.split('-')[0]);
+    var month = parseInt(date.split('-')[1]);
+    var day = parseInt(date.split('-')[2]);
+    } else {
     var year = date.getFullYear();
     var month = date.getMonth()+1;
     var day = date.getDate();
+    }
     if (month < 10)
       month = `0${month}`
     if (day < 10)
@@ -98,6 +104,7 @@ function Appointment() {
     );
   };
 
+
   useEffect(() => {
     LoadOwnCars();
   }, []);
@@ -110,7 +117,10 @@ function Appointment() {
     var userid = Cookie.get("userid");
     var complaint = complaintRef.current.value;
     var stepstorep = problemReplicationRef.current.value;
-    var carid = ownCarRef.current.value;
+    if (stepstorep == "" || complaint == ""){
+      CreateModal(<><p className="fw-3 fw-bold">Hibás időpont foglalás!</p><hr /></>, <p>Ellenőrizze adatait!</p>, true);
+      return;
+    }var carid = ownCarRef.current.value;
     var date = FormatDate(date);
     var timeid = i.id;
     $.ajax({
@@ -125,7 +135,7 @@ function Appointment() {
         timeid: timeid,
       },
       success: function (resp) {
-        window.location.reload();
+        CreateModal(<><p className="fw-3 fw-bold">Sikeres időpont foglalás!</p><hr /></>, <p>Sikeresen foglalt időpontot a következő időre: {date} {i.time}</p>, true);
       },
     });
   };

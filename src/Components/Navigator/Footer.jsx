@@ -4,7 +4,7 @@ import { HiOfficeBuilding } from "react-icons/hi";
 import Logo from "../../Media/logo.png";
 function Footer({ f = false }) {
   return (
-    <>
+    <footer>
       <div
         className={`container-fluid bg-dark w-100 footer py-2 mt-3 mt-5 ${
           f ? "postion-absolute button-0" : ""
@@ -14,12 +14,12 @@ function Footer({ f = false }) {
           <div className="col-3 mx-auto">
             <img src={Logo} alt="SzalkaCarLogo" style={{ width: "40%" }} />
             <h5 className="text-uppercase fw-bold mt-4 mb-2">Támogató cégek</h5>
-            <div>
+            <div><a href="https://www.motul.com/hu/hu">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Motul_logo.svg/1280px-Motul_logo.svg.png"
                 alt=""
                 style={{ width: "20%" }}
-              />
+              /></a>
             </div>
           </div>
 
@@ -54,7 +54,7 @@ function Footer({ f = false }) {
           </div>
         </div>
       </div>
-    </>
+    </footer>
   );
 }
 export default Footer;
