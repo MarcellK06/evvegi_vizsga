@@ -49,7 +49,7 @@ Route::post("/user/login", ["email", "password"], function ($params){
     $email = $params["email"];
     $pass = $params["password"];
 
-    $user = DB::table("user")->select()->where("email", "like", "$email")->get();
+    $user = DB::runSql("SELECT *, rank.type FROM user INNER JOIN user_rank ON user_rank.userid = user.id INNER JOIN rank ON user_rank.rankid = rank.id WHERE email LIKE '$email'");
     if(count($user) == 0){
         http_response_code(401);
         echo DB::arrayToJson([
@@ -67,4 +67,14 @@ Route::post("/user/login", ["email", "password"], function ($params){
         return;
     }
     echo DB::arrayToJson(["status" => 200, "token" => getenv("TOKEN"), "user" => $user[0]]);
+});
+
+
+Route::get("/user/profile-data/{userid}", [], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+
+    $userid = $params["userid"];
+    $data = DB::runSql("SELECT `name`, `email`, `phone`, `type`, `avatar` FROM `user` LEFT JOIN user_rank ON user_rank.userid = user.id LEFT JOIN rank ON user_rank.rankid = rank.id WHERE user.id=".$userid);
+    http_response_code(200);
+    echo DB::arrayToJson($data);
 });
