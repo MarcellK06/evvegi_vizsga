@@ -54,3 +54,10 @@ Route::post("/car/add", ["userid", "brand", "model", "year", "licenseplate", "vi
 
     echo DB::arrayToJson(["status" => 200, "Message" => "SUCCESS"]);
 });
+
+Route::post("/car/change/status", ["carid", "status"], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+
+    $status = $params["status"];
+    DB::runSql("UPDATE car SET status='$status' WHERE id=$carid");
+});
