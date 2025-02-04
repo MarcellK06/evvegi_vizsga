@@ -5,11 +5,14 @@ require_once "application/assets/Mysql/DB.php";
 require_once "application/assets/Header/HttpHeadersManager.php";
 require_once "application/assets/Header/HttpHeadersInterface.php";
 require_once "APIAuth/Authentication.php";
+require_once "application/Mailer/Mailer.php";
 
 use Application\Route\Route;
 use Application\Database\DB;
 use Application\Assets\Header\HttpHeadersInterface\HttpHeadersInterface;
 use Application\Assets\Header\HttpHeadersManager\HttpHeadersManager;
+use Application\Mail\Mailer;
+
 
 Route::post("/appointments/get", ["date"], function($params) {
     HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
@@ -63,3 +66,17 @@ Route::post("/appointments/set-car-state/{carid}", [], function($params){
     DB::runSql("UPDATE car SET status = '$newStatus' WHERE id like $id");
    
 });
+
+
+
+//TESZT
+
+Route::get("/mail", [], function($a){
+   
+  Mailer::Send("paragh.tibor71@gmail.com", "asd", Mailer::MailTamplate("asd", "asd"));
+ include "emailtemplate.html";
+
+  
+}
+
+);

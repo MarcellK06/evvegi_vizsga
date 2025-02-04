@@ -4,11 +4,14 @@ require_once "application/assets/Mysql/DB.php";
 require_once "application/assets/Header/HttpHeadersManager.php";
 require_once "application/assets/Header/HttpHeadersInterface.php";
 require_once "APIAuth/Authentication.php";
+require_once "application/Mailer/Mailer.php";
 
 use Application\Route\Route;
 use Application\Database\DB;
 use Application\Assets\Header\HttpHeadersInterface\HttpHeadersInterface;
 use Application\Assets\Header\HttpHeadersManager\HttpHeadersManager;
+use Application\Mail\Mailer;
+
 
 Route::post("/user/register", ["fullName", "email", "phone", "password"], function ($params){
     //tesztelt
@@ -30,6 +33,8 @@ Route::post("/user/register", ["fullName", "email", "phone", "password"], functi
             return;
         } 
         DB::table("user")->insert([["name" => $fullName, "email" => $email,"phone"=> $phone,"password"=> $password_hashed]], true)->getLastInsertId();
+
+        Mailer::Send($email, "SzalkaAutó regisztráció", Mailer::MailTamplate("Sikeres regisztáció", "<h4>Üdvözöljük a weboldalon, ".$fullName." !</h4><p>Ha kérdése van cégünkkel kapcsolatba, várjuk emailét szeretettel az <a href='mailto:support@szalkauto.paraghtibor.hu'>itt</a> látható címen!</p>"));
         echo DB::arrayToJson([
             "status" => 201,
             "Message" => "Sikeres regisztráció!"

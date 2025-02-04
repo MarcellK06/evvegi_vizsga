@@ -4,12 +4,13 @@ require_once "application/assets/Mysql/DB.php";
 require_once "application/assets/Header/HttpHeadersManager.php";
 require_once "application/assets/Header/HttpHeadersInterface.php";
 require_once "APIAuth/Authentication.php";
+require_once "application/Mailer/Mailer.php";
 
 use Application\Route\Route;
 use Application\Database\DB;
 use Application\Assets\Header\HttpHeadersInterface\HttpHeadersInterface;
 use Application\Assets\Header\HttpHeadersManager\HttpHeadersManager;
-
+use Application\Mail\Mailer;
 
 Route::post("/marketplace/listings/load/{page}", [], function ($params){
     HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
