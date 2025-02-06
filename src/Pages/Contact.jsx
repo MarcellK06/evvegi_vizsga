@@ -8,7 +8,7 @@ function Contact() {
         E-Mail:{" "}
         <a href="mailto:contact@autoszerviz.hu">contact@autoszerviz.hu</a>
       </p>
-      <p>Székhely: 4700, Mátészalka, Kölcsey Ú. 12. </p>
+      <p>Székhely: 4700, Mátészalka, Kölcsey ú. 12. </p>
     </>
   );
 }

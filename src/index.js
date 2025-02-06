@@ -27,6 +27,7 @@ import AppointmentsAdminPanel from "./Components/AppointmentsAdmin/AppointmentsA
 import About from "./Pages/About";
 import Mailer from "./Pages/Mailer";
 import GDPR from "./Pages/GDPR";
+import Aszf from "./Pages/Aszf";
 //192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -57,6 +58,7 @@ root.render(
               path="/GDPR"
               element={<GDPR />}
             />
+            <Route path="/aszf" element={<Aszf />} />
             <Route
               path="/my-account/listings"
               element={<MyAccountListings />}

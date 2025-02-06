@@ -47,7 +47,7 @@ function Home() {
             <p className="fw-bold fs-4">Üdvözöllek a SzalkaAutónál!</p>
             <p>Autód nálunk garantáltan jó kezekben lesz.</p>
 
-            <div className="d-flex" id="contact">
+            <div className="d-flex post" id="contact">
               <button className="h-btn">Foglalj időpontot</button>
               <div className="fw-bold ms-3 mt-1">
                 Hívj minket: <a href="tel:+36303926004">+36303926004</a>
@@ -156,15 +156,25 @@ function Home() {
         <br />
         <br />
         <h2 className="my-4 text-center mt-5">Szolgáltatásaink</h2>
-        <div>
-          {/* 
-          - Általános javítások - karbantartás
-          - Autó külső -belső
-          - Gumiabroncs javítás / csere
-          - Diagnosztika
-        
-    
-          */}
+        <div className="d-flex justify-content-center">
+          <div className="row justify-content-center">
+            <div className="col-3">
+          <div className="container mx-auto text-center why-choose-us-card h-100">
+          <p className="fs-4">Általános javítások- és karbantartás</p>
+          </div></div>
+            <div className="col-3">
+          <div className="container mx-auto text-center why-choose-us-card h-100">
+          <p className="fs-4">Autó külső- és belső</p>
+          </div></div>
+            <div className="col-3">
+          <div className="container mx-auto text-center why-choose-us-card h-100">
+          <p className="fs-4">Gumiabroncs javítás / csere</p>
+          </div></div>
+            <div className="col-3">
+          <div className="container mx-auto text-center why-choose-us-card h-100">
+          <p className="fs-4">Diagnosztika</p>
+          </div></div>
+          </div>
            
         </div>
         <br />

@@ -42,6 +42,9 @@ function Footer({ f = false }) {
               <div>
                 <a href="/GDPR">GDPR</a>
               </div>
+              <div>
+                <a href="/aszf">ASZF</a>
+              </div>
             </div>
           </div>
           <div className="col-3 mx-auto">
@@ -54,7 +57,7 @@ function Footer({ f = false }) {
               <br />
               <FaPhone /> 06303926004
               <br />
-              <HiOfficeBuilding /> 4700, Mátászalka KölcseY utca 3
+              <HiOfficeBuilding /> 4700, Mátászalka Kölcsey út 12
             </div>
           </div>
         </div>
