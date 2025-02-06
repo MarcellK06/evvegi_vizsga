@@ -26,22 +26,20 @@ function Appointment() {
 
   const FormatDate = (date) => {
     if (typeof date != "object") {
-    date = date.toString();
-    var year = parseInt(date.split('-')[0]);
-    var month = parseInt(date.split('-')[1]);
-    var day = parseInt(date.split('-')[2]);
+      date = date.toString();
+      var year = parseInt(date.split("-")[0]);
+      var month = parseInt(date.split("-")[1]);
+      var day = parseInt(date.split("-")[2]);
     } else {
-    var year = date.getFullYear();
-    var month = date.getMonth()+1;
-    var day = date.getDate();
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
     }
-    if (month < 10)
-      month = `0${month}`
-    if (day < 10)
-      day = `0${day}`
+    if (month < 10) month = `0${month}`;
+    if (day < 10) day = `0${day}`;
     const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
-  }
+  };
 
   const getWeekDates = () => {
     const vweekDates = [];
@@ -104,7 +102,6 @@ function Appointment() {
     );
   };
 
-
   useEffect(() => {
     LoadOwnCars();
   }, []);
@@ -117,10 +114,18 @@ function Appointment() {
     var userid = Cookie.get("userid");
     var complaint = complaintRef.current.value;
     var stepstorep = problemReplicationRef.current.value;
-    if (stepstorep == "" || complaint == ""){
-      CreateModal(<><p className="fw-3 fw-bold">Hibás időpont foglalás!</p><hr /></>, <p>Ellenőrizze adatait!</p>, true);
+    if (stepstorep == "" || complaint == "") {
+      CreateModal(
+        <>
+          <p className="fw-3 fw-bold">Hibás időpont foglalás!</p>
+          <hr />
+        </>,
+        <p>Ellenőrizze adatait!</p>,
+        true
+      );
       return;
-    }var carid = ownCarRef.current.value;
+    }
+    var carid = ownCarRef.current.value;
     var date = FormatDate(date);
     var timeid = i.id;
     $.ajax({
@@ -135,7 +140,16 @@ function Appointment() {
         timeid: timeid,
       },
       success: function (resp) {
-        CreateModal(<><p className="fw-3 fw-bold">Sikeres időpont foglalás!</p><hr /></>, <p>Sikeresen foglalt időpontot a következő időre: {date} {i.time}</p>, true);
+        CreateModal(
+          <>
+            <p className="fw-3 fw-bold">Sikeres időpont foglalás!</p>
+            <hr />
+          </>,
+          <p>
+            Sikeresen foglalt időpontot a következő időre: {date} {i.time}
+          </p>,
+          true
+        );
       },
     });
   };
@@ -220,7 +234,7 @@ function Appointment() {
   const getTimes = () => {
     weekDates.forEach((dateObj) => {
       const formattedDate = dateObj;
-  
+
       $.ajax({
         url: `${API}/appointments/get`,
         type: "post",
@@ -230,7 +244,7 @@ function Appointment() {
             const isTaken = resp[1].some((j) => j.timeid === t.id);
             return new TimeClass(t.id, t.date, t.time, isTaken ? 1 : 0);
           });
-  
+
           // Use functional state update for immutability
           setTimes((prev) => ({
             ...prev,
@@ -243,9 +257,8 @@ function Appointment() {
   const WeekDay = (date) => {
     const formattedDate = `${date}`;
 
-  
     const timesForDay = times[formattedDate] || []; // Default to empty array if no data
-  
+
     return (
       <div className="col-2 mx-auto">
         <div className="fs-4 text-center">{date}</div>
@@ -259,8 +272,6 @@ function Appointment() {
       </div>
     );
   };
-  
-  
 
   useEffect(() => {
     getTimes();
@@ -280,7 +291,10 @@ function Appointment() {
               <div>{"<"}</div>
             </div>
             {weekDates.map((date, index) => WeekDay(date, index))}
-            <div className="col-1 mx-auto arrow" onClick={() => handleNextWeek()}>
+            <div
+              className="col-1 mx-auto arrow"
+              onClick={() => handleNextWeek()}
+            >
               <div>{">"}</div>
             </div>
           </div>

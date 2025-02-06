@@ -1,6 +1,6 @@
-import Cookie from 'js-cookie';
+import Cookie from "js-cookie";
 import { useEffect } from "react";
-import ActiveRequests from '../Components/RequestsAdminPanel/ActiveRequests';
+import ActiveRequests from "../Components/RequestsAdminPanel/ActiveRequests";
 
 function RequestsAdminPanel() {
   const CheckUser = () => {
@@ -11,9 +11,11 @@ function RequestsAdminPanel() {
   useEffect(() => {
     CheckUser();
   }, []);
-    return(<>
-    <ActiveRequests/>
-    </>)
+  return (
+    <>
+      <ActiveRequests />
+    </>
+  );
 }
 
 export default RequestsAdminPanel;

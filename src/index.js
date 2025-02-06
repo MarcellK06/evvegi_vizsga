@@ -23,10 +23,14 @@ import MyAccount from "./Pages/MyAccount";
 import MyAccountListings from "./Pages/MyAccountListings";
 import MyAccountPosts from "./Pages/MyAccountPosts";
 import MyAccountRequests from "./Pages/MyAccountRequests";
+import AppointmentsAdminPanel from "./Components/AppointmentsAdmin/AppointmentsAdminPanel";
+import About from "./Pages/About";
+import Mailer from "./Pages/Mailer";
+import GDPR from "./Pages/GDPR";
 //192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <div style={{minHeight: "65.7vh"}}>
+  <div style={{ minHeight: "65.7vh" }}>
     <NavigatorProvider>
       <ModalProvider>
         <BrowserRouter>
@@ -42,18 +46,30 @@ root.render(
             <Route path="/requests/admin" element={<RequestsAdminPanel />} />
             <Route path="/own-cars" element={<OwnCars />} />
             <Route path="/community" element={<Community />} />
-            <Route path="/community/admin" element={<CommunityAdminPanel/>}/>
+            <Route path="/community/admin" element={<CommunityAdminPanel />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/my-account" element={<MyAccount />} />
+            <Route
+              path="/appointments/admin"
+              element={<AppointmentsAdminPanel />}
+            />
+            <Route
+              path="/GDPR"
+              element={<GDPR />}
+            />
             <Route
               path="/my-account/listings"
               element={<MyAccountListings />}
             />
-            <Route path="/my-account/requests"
-            element={<MyAccountRequests/>}/>
+            <Route
+              path="/my-account/requests"
+              element={<MyAccountRequests />}
+            />
             <Route path="/my-account/posts" element={<MyAccountPosts />} />
             <Route path="/marketplace-item/:id" element={<Marketplaceitem />} />
             <Route path="/auth/:type" element={<Authentication />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/admin/mails" element={<Mailer />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
