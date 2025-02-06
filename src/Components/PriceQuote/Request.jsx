@@ -60,7 +60,7 @@ function Request() {
           <p className="fs-3 fw-bold">Hibás árajánlat kérés!</p>
           <hr />
         </>,
-        <p className="fs-4">Kérem Töltsön ki minden mezőt!</p>,
+        <p className="fs-4">Kérem töltse ki az összes mezőt!</p>,
         true
       );
       return;
