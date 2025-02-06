@@ -50,10 +50,8 @@ function ListListings() {
         if (i < listings.length) setActiveListings(listings[i - 1]);
         else {
           listings.push([]);
-          if (typeof resp == "string")
-            var respJson = resp;
-          else
-            var respJson = JSON.stringify(resp);
+          if (typeof resp == "string") var respJson = resp;
+          else var respJson = JSON.stringify(resp);
           respJson = JSON.parse(respJson)[0];
           respJson.forEach((el) => {
             listings[listings.length - 1].push(
@@ -94,8 +92,7 @@ function ListListings() {
 
     var car = el.data;
     var desc = el.itemdescription;
-    if (desc.length > 575)
-      desc = `${desc.substr(0, 575)}...`;
+    if (desc.length > 575) desc = `${desc.substr(0, 575)}...`;
     var vehicle_data = [];
     if (el.data != undefined) {
       if (car.year) vehicle_data.push(car.year);

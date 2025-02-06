@@ -21,9 +21,20 @@ function CreateListing() {
     var itemPrice = itemPriceRef.current.value;
     var userid = Cookie.get("userid");
     var car = carRef.current.value;
-    if (itemName == "" || itemDescription == "" || itemPrice == "" || car == "SELECT") {
-      CreateModal(<><p className="fs-3 fw-bold">Hibás Hírdetés!</p><hr/></>, <p className="fs-4">Kérem Töltsön ki minden mezőt!</p>, true);
-
+    if (
+      itemName == "" ||
+      itemDescription == "" ||
+      itemPrice == "" ||
+      car == "SELECT"
+    ) {
+      CreateModal(
+        <>
+          <p className="fs-3 fw-bold">Hibás Hírdetés!</p>
+          <hr />
+        </>,
+        <p className="fs-4">Kérem Töltsön ki minden mezőt!</p>,
+        true
+      );
     }
     $.ajax({
       url: `${API}/marketplace/listings/create`,
@@ -36,7 +47,17 @@ function CreateListing() {
         car: car,
       },
       success: function (resp) {
-        CreateModal(<><p className="fs-3 fw-bold">Sikeres Hírdetés Létrehozás!</p><hr/></>, <p className="fs-4">Kérem várjon türelemmel, míg adminisztrátoraink feldolgozzák hírdetését.</p>, true);
+        CreateModal(
+          <>
+            <p className="fs-3 fw-bold">Sikeres Hírdetés Létrehozás!</p>
+            <hr />
+          </>,
+          <p className="fs-4">
+            Kérem várjon türelemmel, míg adminisztrátoraink feldolgozzák
+            hírdetését.
+          </p>,
+          true
+        );
       },
     });
   };
@@ -150,7 +171,7 @@ function CreateListing() {
                     className="form-control"
                     ref={carRef}
                   >
-        <option value={"SELECT"}>Válasszon járművet</option>
+                    <option value={"SELECT"}>Válasszon járművet</option>
                     {ownCars.map((i) => ownCarEntry(i))}
                   </select>
                 </div>

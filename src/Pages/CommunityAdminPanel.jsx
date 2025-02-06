@@ -1,4 +1,4 @@
-import Cookie from 'js-cookie';
+import Cookie from "js-cookie";
 import { useEffect } from "react";
 
 function CommunityAdminPanel() {
@@ -10,8 +10,7 @@ function CommunityAdminPanel() {
   useEffect(() => {
     CheckUser();
   }, []);
-    return (<>
-    </>)
+  return <></>;
 }
 
 export default CommunityAdminPanel;

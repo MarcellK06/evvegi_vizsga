@@ -120,7 +120,7 @@ function ListListings() {
           window.location.reload();
         },
       });
-    }
+    };
 
     const DeclineListing = (i) => {
       var userid = Cookie.get("userid");

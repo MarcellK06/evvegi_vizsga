@@ -14,12 +14,14 @@ function Footer({ f = false }) {
           <div className="col-3 mx-auto">
             <img src={Logo} alt="SzalkaCarLogo" style={{ width: "40%" }} />
             <h5 className="text-uppercase fw-bold mt-4 mb-2">Támogató cégek</h5>
-            <div><a href="https://www.motul.com/hu/hu">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Motul_logo.svg/1280px-Motul_logo.svg.png"
-                alt=""
-                style={{ width: "20%" }}
-              /></a>
+            <div>
+              <a href="https://www.motul.com/hu/hu">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Motul_logo.svg/1280px-Motul_logo.svg.png"
+                  alt=""
+                  style={{ width: "20%" }}
+                />
+              </a>
             </div>
           </div>
 
@@ -28,7 +30,7 @@ function Footer({ f = false }) {
             <div className="my-2">
               <div>
                 {" "}
-                <a href="">Rólunk</a>
+                <a href="/about">Rólunk</a>
               </div>
               <div>
                 <a href="">Gyakran ismételt kérdések</a>
@@ -36,6 +38,9 @@ function Footer({ f = false }) {
               <div>
                 {" "}
                 <a href="">Adatkezelési tájékoztatót</a>
+              </div>
+              <div>
+                <a href="/GDPR">GDPR</a>
               </div>
             </div>
           </div>
