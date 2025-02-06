@@ -13,7 +13,7 @@ function AddOwnCar() {
   const yearRef = useRef();
   const licenseplateRef = useRef();
   const vinRef = useRef();
-  const registrationRef = useRef();
+  const requiredImagesRef = useRef();
 
   const HandleCarAdd = () => {
     var userid = Cookie.get("userid");
@@ -25,9 +25,9 @@ function AddOwnCar() {
     if (
       brand == "" ||
       model == "" ||
-      year == "" ||
-      licenseplate == "" ||
-      vin == ""
+      year == "" || year.length < 4 ||
+      licenseplate == "" || licenseplate.length < 6 ||
+      vin == "" || vin.length < 17
     ) {
       CreateModal(
         <p className="fs-3">A jármű hozzáadása sikertelen!</p>,
@@ -36,25 +36,38 @@ function AddOwnCar() {
       );
       return;
     }
-    var registration = ""; //registrationRef.current.value;
+    var requiredImages = requiredImagesRef.current.files;
+    if (!requiredImages) {
+      CreateModal(<div><p className="fs-3">Hibás adatbevitel</p><hr /></div>, <><p className="fs-4">Kérem, adja meg a kötelező képeket.</p></>, true);
+      return;
+    }
+    if (requiredImages.length != 3)
+    {
+      CreateModal(<div><p className="fs-3">Hibás adatbevitel</p><hr /></div>, <><p className="fs-4">Kérem, adja meg az összes szükséges képet! Ez maximum 3 fájl lehet.</p></>, true);
+      return;
+    }
+    var data = new FormData();
+    data.append("userid", userid);
+    data.append("brand", brand);
+    data.append("model", model);
+    data.append("year", year);
+    data.append("licenseplate", licenseplate);
+    data.append("vin", vin);
+    data.append("registration_file_1", requiredImages[0]);
+    data.append("registration_file_2", requiredImages[1]);
+    data.append("registration_file_3", requiredImages[2]);
     $.ajax({
       url: `${API}/car/add`,
-      data: {
-        userid: userid,
-        brand: brand,
-        model: model,
-        year: year,
-        licenseplate: licenseplate,
-        vin: vin,
-        registration: registration,
-      },
+      data: data,
+      processData: false,
+      contentType: false,
       type: "post",
       success: function (resp) {
         CreateModal(
           <p className="fs-3">Sikeres jármű hozzadás</p>,
           <p>
             Kérjük várjon, míg egy adminisztrátor átnézi jármű adatait és
-            jováhagyja!
+            jováhagyja azt!
           </p>,
           true
         );
@@ -151,6 +164,8 @@ function AddOwnCar() {
                 name="images"
                 id="images"
                 className="form-control"
+                ref={requiredImagesRef}
+                multiple
               />
             </div>
           </div>

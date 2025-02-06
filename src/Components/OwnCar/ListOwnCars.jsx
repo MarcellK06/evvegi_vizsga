@@ -1,7 +1,8 @@
 import CONFIG from "../../config.json";
 import $ from "jquery";
 import Cookie from "js-cookie";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ModalContext } from "../../Providers/ModalProvider";
 
 function ListOwnCars() {
   var API = CONFIG.API;
@@ -16,6 +17,7 @@ function ListOwnCars() {
   };
 
   const [ownCars, setOwnCars] = useState([]);
+  const {CreateModal} = useContext(ModalContext);
   class OwnCar {
     constructor(id, data, vin, images, status) {
       this.id = id;
@@ -34,6 +36,11 @@ function ListOwnCars() {
         var c = [];
         resp.forEach((el) => {
           var car = JSON.parse(el.data);
+          if (el.images != "NINCS") {
+          el.images = el.images.split(",");
+          for(var k = 0; k < el.images.length; k++)
+            el.images[k] = `${API}/car/images/${el.id}/${k}`;
+        }
           c.push(new OwnCar(el.id, car, el.vin, el.images, el.status));
         });
         setOwnCars(c);
@@ -78,9 +85,17 @@ function ListOwnCars() {
           <p>Jármű Állapota:&emsp;</p>
           <p className="fw-bold">{el.status}</p>
         </div>
-        <img src={el.images[0]} alt="Forgalmi Kép 1. Oldal" />
-        <img src={el.images[1]} alt="Forgalmi Kép 2. Oldal" />
-        <img src={el.images[2]} alt="Jármű Alvázszám Kép" />
+        <div className="row justify-content-between d-flex" style={{width: "50vw"}}>
+          <div className="col-4 mx-auto d-flex">
+            <img src={el.images[0]} alt="" className="object-fit-contain mx-auto hoverbutton" style={{height: "30vh"}} onClick={() => CreateModal(<div><p className="fs-3">Fénykép Megtekintés</p><hr /></div>, <img src={el.images[0]} style={{height: "70vh"}}/>, true)} />
+        </div>
+        <div className="col-4 mx-auto d-flex">
+        <img src={el.images[1]} alt="" className="object-fit-contain mx-auto hoverbutton" style={{height: "30vh"}} onClick={() => CreateModal(<div><p className="fs-3">Fénykép Megtekintés</p><hr /></div>, <img src={el.images[1]} style={{height: "70vh"}}/>, true)} />
+        </div>
+        <div className="col-4 mx-auto d-flex">
+        <img src={el.images[2]} alt="" className="object-fit-contain mx-auto hoverbutton" style={{height: "30vh"}} onClick={() => CreateModal(<div><p className="fs-3">Fénykép Megtekintés</p><hr /></div>, <img src={el.images[2]} style={{height: "70vh"}}/>, true)} />
+        </div>
+        </div>
         <div className="row">
           <div className="col-12 d-flex justify-content-end">
             <input

@@ -15,6 +15,7 @@ function LoadCommunityPosts() {
     constructor(
       id,
       username,
+      userid,
       title,
       description,
       images,
@@ -26,6 +27,7 @@ function LoadCommunityPosts() {
     ) {
       this.id = id;
       this.username = username;
+      this.userid = userid;
       this.title = title;
       this.description = description;
       this.postedat = postedat;
@@ -40,9 +42,6 @@ function LoadCommunityPosts() {
 
   var posts = [];
   var [activeposts, setActivePosts] = useState([]);
-  const LoadImage = (url) => {
-    return <img src={url} />;
-  };
   const ShowComments = (id) => {
     var el = document.getElementById(`comments-${id}`);
     if (el.classList.contains("d-block")) {
@@ -58,6 +57,7 @@ function LoadCommunityPosts() {
     var avatar = el.avatar;
     var postedat = el.postedat;
     var postedat_text = "";
+    var userid = el.userid;
     var psplit = postedat.split("-");
     var now = new Date();
     if (psplit[1][0] == "0") psplit[1] = psplit[1][1];
@@ -73,7 +73,7 @@ function LoadCommunityPosts() {
     if (parseInt(psplit[2].split(" ")[0]) != now.getDate())
       postedat_text = `${now.getDate() - parseInt(psplit[2])} n`;
     if (parseInt(psplit[1]) != now.getMonth() + 1)
-      postedat_text = `${now.getMonth() - parseInt(psplit[1])} h`;
+      postedat_text = `${now.getMonth()+1 - parseInt(psplit[1])} h`;
     if (parseInt(psplit[0]) != now.getFullYear())
       postedat_text = `${now.getFullYear() - parseInt(psplit[0])} é`;
     psplit = postedat.split(" ")[1].split(":");
@@ -85,28 +85,29 @@ function LoadCommunityPosts() {
       if (parseInt(psplit[0]) != now.getHours())
         postedat_text = `${now.getHours() - parseInt(psplit[0])} ó`;
     }
+    console.log(`${API}/user/avatar/${userid}`);
     return (
       <>
         <div className="post w-100 my-4">
           <div className="row">
-            <div className="col-sm-1">
+            <div className="col-sm-1 mb-0">
               <div
-                className="avatar"
-                style={{ backgroundImage: `url(${avatar})` }}
+                className="avatar mb-0"
+                style={{ backgroundImage: `url(${API}/user/avatar/${userid})` }}
               ></div>
             </div>
-            <div className="col-sm-3" style={{ marginTop: "1.1%" }}>
-              {el.username}
+            <div className="col-sm-4 mb-0" style={{ marginTop: "1.1%" }}>
+              <p className="fs-7 mb-0 mx-2">{el.username}</p>
             </div>
-            <div className="col-sm ">
-              <div className="d-flex justify-content-end">
+            <div className="col-sm mb-0">
+              <div className="d-flex justify-content-end mb-0">
                 <CiClock2 size={20} style={{ marginTop: "0.5%" }} />
-                <div className="ms-2">{postedat_text}</div>
+                <div className="ms-2 mb-0">{postedat_text}</div>
               </div>
             </div>
           </div>
-          <p className="mt-3 mb-4 fw-bold">{el.title}</p>
-          <p>{el.description}</p>
+          <p className="mt-2 mb-3 fw-bold fs-8">{el.title}</p>
+          <p className="fs-9">{el.description}</p>
         </div>
         <hr />
         <div className="d-flex justify-content-between">
@@ -147,6 +148,7 @@ function LoadCommunityPosts() {
               new CommunityPost(
                 el.id,
                 el.name,
+                el.userid,
                 el.title,
                 el.description,
                 el.images,

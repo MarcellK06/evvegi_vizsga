@@ -54,10 +54,7 @@ root.render(
               path="/appointments/admin"
               element={<AppointmentsAdminPanel />}
             />
-            <Route
-              path="/GDPR"
-              element={<GDPR />}
-            />
+            <Route path="/GDPR" element={<GDPR />} />
             <Route path="/aszf" element={<Aszf />} />
             <Route
               path="/my-account/listings"

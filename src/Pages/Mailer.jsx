@@ -9,7 +9,7 @@ function Mailer() {
   const { CreateModal } = useContext(ModalContext);
 
   const previewTitle = useRef();
-  const previewBody= useRef();
+  const previewBody = useRef();
   const PreviewElement = () => {
     return (
       <>
@@ -36,9 +36,7 @@ function Mailer() {
               marginRight: "auto",
             }}
             ref={previewTitle}
-          >
-           
-          </h2>
+          ></h2>
           <div
             style={{
               padding: "0 15px",
@@ -65,14 +63,12 @@ function Mailer() {
       </>
     );
   };
-  const [Preview, setPreview] = useState(PreviewElement("", ""))
-
+  const [Preview, setPreview] = useState(PreviewElement("", ""));
 
   const toRef = useRef();
   const subjectRef = useRef();
   const messageBody = useRef();
   const titleRef = useRef();
-
 
   const MailWriter = (title, message) => {
     return (
@@ -80,13 +76,29 @@ function Mailer() {
         <div className="row">
           <div className="col-sm">
             <div className="input-group mb-2">
-              <input type="" placeholder="Címzett" className="form-control" ref={toRef}  />
+              <input
+                type=""
+                placeholder="Címzett"
+                className="form-control"
+                ref={toRef}
+              />
             </div>
             <div className="input-group mb-2">
-              <input type="" placeholder="Tárgy" className="form-control" ref={subjectRef} />
+              <input
+                type=""
+                placeholder="Tárgy"
+                className="form-control"
+                ref={subjectRef}
+              />
             </div>
             <div className="input-group mb-2">
-              <input type="" placeholder="Cím" className="form-control" ref={titleRef} onInput={() => DataChanged()} />
+              <input
+                type=""
+                placeholder="Cím"
+                className="form-control"
+                ref={titleRef}
+                onInput={() => DataChanged()}
+              />
             </div>
             <div className="input-group mb-2">
               <textarea
@@ -97,13 +109,14 @@ function Mailer() {
               ></textarea>
             </div>
             <div className="input-group mb-2">
-             <button className="btn btn-dark" onClick={SendMail}>Küldés</button>
+              <button className="btn btn-dark" onClick={SendMail}>
+                Küldés
+              </button>
             </div>
           </div>
           <div className="col-sm">
             Preview
             {Preview}
-
           </div>
         </div>
       </>
@@ -111,13 +124,8 @@ function Mailer() {
   };
   const DataChanged = () => {
     previewTitle.current.innerText = titleRef.current.value;
-    previewBody.current.innerHTML = messageBody.current.value
-    
-  }
-
-
-
-  
+    previewBody.current.innerHTML = messageBody.current.value;
+  };
 
   useEffect(() => {
     $.ajax({
@@ -134,46 +142,50 @@ function Mailer() {
     });
   }, []);
 
-
-  const SendMail = () =>{
+  const SendMail = () => {
     $.ajax({
       url: `${API.API}/mailer/send`,
       type: "post",
       headers: {
-        token: API.TOKEN
+        token: API.TOKEN,
       },
       data: {
         to: toRef.current.value,
         subject: subjectRef.current.value,
         title: titleRef.current.value,
-        body: messageBody.current.value
-
+        body: messageBody.current.value,
       },
-      success: function(res){
-        CreateModal("Sikeres küldés", <>
-        <hr />
-        <h5>Az email sikersen elküldve!</h5>
-        </>,true)
-      }
-    })
-
-  }
+      success: function (res) {
+        CreateModal(
+          "Sikeres küldés",
+          <>
+            <hr />
+            <h5>Az email sikersen elküldve!</h5>
+          </>,
+          true
+        );
+      },
+    });
+  };
 
   const EmailViewer = (item) => {
-
     const HTML = () => {
-    return (
-      <>
-        <div className="mt-5">
-          <p>Feladó: <b>{item.from}</b></p>
-          <p>Tárgy: <b>{item.subject}</b></p>
-          <p className="mt-4">{item.body}</p>
-        </div>
-      </>
-    )
-  }
-    CreateModal("Email megtekintése", HTML, true)
-  }
+      return (
+        <>
+          <div className="mt-5">
+            <p>
+              Feladó: <b>{item.from}</b>
+            </p>
+            <p>
+              Tárgy: <b>{item.subject}</b>
+            </p>
+            <p className="mt-4">{item.body}</p>
+          </div>
+        </>
+      );
+    };
+    CreateModal("Email megtekintése", HTML, true);
+  };
 
   return (
     <>
@@ -203,7 +215,15 @@ function Mailer() {
               <div className="d-flex" onClick={() => EmailViewer(i)}>
                 <div className="ms-2">{i.from}</div>
                 <div className="ms-2">{i.subject}</div>
-                <div className="ms-auto">{new Date(i.date).toISOString().split("T").join(" ").split('.')[0]}</div>
+                <div className="ms-auto">
+                  {
+                    new Date(i.date)
+                      .toISOString()
+                      .split("T")
+                      .join(" ")
+                      .split(".")[0]
+                  }
+                </div>
               </div>
               <hr />
             </>

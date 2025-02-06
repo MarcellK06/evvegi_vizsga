@@ -58,6 +58,7 @@ function CommunityPostComments(data) {
     var comment = i.comment;
     var username = i.username;
     var avatar = i.avatar;
+    var userid = i.userid;
     var liked = i.liked == 1;
     var postedat = i.postedat;
     var postedat_text = "";
@@ -68,7 +69,7 @@ function CommunityPostComments(data) {
     if (parseInt(psplit[2].split(" ")[0]) != now.getDate())
       postedat_text = `${now.getDate() - parseInt(psplit[2])} n`;
     if (parseInt(psplit[1]) != now.getMonth() + 1)
-      postedat_text = `${now.getMonth() - parseInt(psplit[1])} h`;
+      postedat_text = `${now.getMonth()+1 - parseInt(psplit[1])} h`;
     if (parseInt(psplit[0]) != now.getFullYear())
       postedat_text = `${now.getFullYear() - parseInt(psplit[0])} é`;
     psplit = postedat.split(" ")[1].split(":");
@@ -89,15 +90,15 @@ function CommunityPostComments(data) {
               <div className="col-1 d-flex p-0">
                 <div
                   className="comment-avatar p-0"
-                  style={{ backgroundImage: `url(${avatar})` }}
+                  style={{ backgroundImage: `url(${API}/user/avatar/${userid})` }}
                 ></div>
               </div>
               <div className="col-10">
-                <div className="row">
-                  <p className="fs-7">{username}</p>
+                <div className="row mb-0">
+                  <p className="fs-7 mb-0">{username}</p>
                 </div>
-                <div className="row">
-                  <p className="fs-9">{comment}</p>
+                <div className="row mb-0">
+                  <p className="fs-9 mb-0">{comment}</p>
                 </div>
               </div>
               <div className="col-1 ms-auto d-flex flex-column p-0">

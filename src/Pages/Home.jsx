@@ -159,23 +159,26 @@ function Home() {
         <div className="d-flex justify-content-center">
           <div className="row justify-content-center">
             <div className="col-3">
-          <div className="container mx-auto text-center why-choose-us-card h-100">
-          <p className="fs-4">Általános javítások- és karbantartás</p>
-          </div></div>
+              <div className="container mx-auto text-center why-choose-us-card h-100">
+                <p className="fs-4">Általános javítások- és karbantartás</p>
+              </div>
+            </div>
             <div className="col-3">
-          <div className="container mx-auto text-center why-choose-us-card h-100">
-          <p className="fs-4">Autó külső- és belső</p>
-          </div></div>
+              <div className="container mx-auto text-center why-choose-us-card h-100">
+                <p className="fs-4">Autó külső- és belső</p>
+              </div>
+            </div>
             <div className="col-3">
-          <div className="container mx-auto text-center why-choose-us-card h-100">
-          <p className="fs-4">Gumiabroncs javítás / csere</p>
-          </div></div>
+              <div className="container mx-auto text-center why-choose-us-card h-100">
+                <p className="fs-4">Gumiabroncs javítás / csere</p>
+              </div>
+            </div>
             <div className="col-3">
-          <div className="container mx-auto text-center why-choose-us-card h-100">
-          <p className="fs-4">Diagnosztika</p>
-          </div></div>
+              <div className="container mx-auto text-center why-choose-us-card h-100">
+                <p className="fs-4">Diagnosztika</p>
+              </div>
+            </div>
           </div>
-           
         </div>
         <br />
         <br />

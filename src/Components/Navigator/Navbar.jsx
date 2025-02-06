@@ -29,7 +29,6 @@ function Navbar() {
     new NavLink("Közösség", "/community", true),
   ];
 
-  
   const OpenClose = () => {
     const hours = {
       Mon: "7:00-18:00",
@@ -40,11 +39,11 @@ function Navbar() {
       Sat: "9:00-12:00",
       Sun: "Zárva",
     };
-  
+
     const d = new Date();
-    const day = d.toLocaleString('en-US', { weekday: 'short' });
+    const day = d.toLocaleString("en-US", { weekday: "short" });
     const openClose = hours[day];
-  
+
     if (openClose === "Zárva") {
       return (
         <>
@@ -53,14 +52,14 @@ function Navbar() {
         </>
       );
     }
-  
+
     const [openTime, closeTime] = openClose.split("-");
     const now = d.toTimeString().split(" ")[0].split(":").slice(0, 2).join(":");
-    
+
     const [nowHour, nowMin] = now.split(":").map(Number);
     const [oHour, oMin] = openTime.split(":").map(Number);
     const [cHour, cMin] = closeTime.split(":").map(Number);
-  
+
     if (nowHour < oHour || (nowHour === oHour && nowMin < oMin)) {
       return (
         <>
@@ -69,7 +68,7 @@ function Navbar() {
         </>
       );
     }
-  
+
     if (nowHour > cHour || (nowHour === cHour && nowMin >= cMin)) {
       return (
         <>
@@ -78,7 +77,7 @@ function Navbar() {
         </>
       );
     }
-  
+
     return (
       <>
         <div className="open-close open mt-2"></div>
@@ -86,7 +85,7 @@ function Navbar() {
       </>
     );
   };
-  
+
   return (
     <>
       <nav class="navbar navbar-expand-lg bg-black p-3">
