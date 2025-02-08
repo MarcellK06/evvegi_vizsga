@@ -120,6 +120,7 @@ function ListOwnCars() {
     var model = el.data.model;
     var year = el.data.year;
     var approved = el.approved;
+    var engineCode = el.data.engineCode;
     return (<>
     <div className="row postcolor my-3 p-2 rounded">
       <div className="col-4">
@@ -128,6 +129,7 @@ function ListOwnCars() {
         <p className="fs-9 mx-2 fw-bold">{year}</p>
         <p className="fs-9 mx-2 fw-bold">{brand}</p>
         <p className="fs-9 mx-2 fw-bold">{model}</p>
+        <p className="fs-9 mx-2 fw-bold">{engineCode}</p>
         </div>
         </div>
         <div className="col-5"></div>
