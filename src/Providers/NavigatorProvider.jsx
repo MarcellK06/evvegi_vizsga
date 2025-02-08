@@ -45,8 +45,6 @@ export const NavigatorProvider = ({ children }) => {
       }
     }
     footerFix() {
-      document.getElementById("footer").style.position = "absolute";
-      document.getElementById("footer").style.bottom = "0";
     }
   }
   const _Navigator = new Navigator();
