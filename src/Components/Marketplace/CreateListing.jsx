@@ -3,6 +3,7 @@ import CONFIG from "../../config.json";
 import $ from "jquery";
 import Cookie from "js-cookie";
 import { ModalContext } from "../../Providers/ModalProvider";
+import Cookies from "js-cookie";
 
 function CreateListing() {
   var API = CONFIG.API;
@@ -12,6 +13,8 @@ function CreateListing() {
   const itemDescriptionRef = useRef();
   const itemPriceRef = useRef();
   const carRef = useRef();
+  const imagesRef = useRef();
+  const showEmailRef = useRef();
 
   const [ownCars, setOwnCars] = useState([]);
 
@@ -19,7 +22,8 @@ function CreateListing() {
     var itemName = itemNameRef.current.value;
     var itemDescription = itemDescriptionRef.current.value;
     var itemPrice = itemPriceRef.current.value;
-    var userid = Cookie.get("userid");
+    var showemail = showEmailRef.current.value;
+    var images = imagesRef.current.files;
     var car = carRef.current.value;
     if (
       itemName == "" ||
@@ -36,16 +40,26 @@ function CreateListing() {
         true
       );
     }
+
+    var userid = Cookies.get("userid");
+
+    var data = new FormData();
+    data.append("userid", userid);
+    data.append("itemname", itemName);
+    data.append("itemdescription", itemDescription);
+    data.append("itemprice", itemPrice);
+    data.append("car", car);
+    data.append("showemail", showemail);
+    for(var k = 0; k < images.length; k++) {
+      data.append(`images-${k}`, images[k]);
+    }
+
     $.ajax({
       url: `${API}/marketplace/listings/create`,
       type: "post",
-      data: {
-        userid: userid,
-        itemname: itemName,
-        itemdescription: itemDescription,
-        itemprice: itemPrice,
-        car: car,
-      },
+      data: data,
+      processData: false,
+      contentType: false,
       success: function (resp) {
         CreateModal(
           <>
@@ -177,6 +191,22 @@ function CreateListing() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="col-1"></div>
+        </div>
+
+        <div className="row">
+          <div className="col-1"></div>
+          <div className="col-10">
+            <div className="row my-3">
+            <label htmlFor="images">Fotók csatolása..</label>
+            <input type="file" className="form-control" name="images" id="images" ref={imagesRef} multiple accept="image/png, image/jpeg"/>
+            </div>
+            <div className="row my-2">
+              <div className="form-check">
+              <input type="checkbox" className="form-check-input" name="showemail" id="showemail" ref={showEmailRef} />
+              <label htmlFor="showemail" className="form-check-label">Email megjelenítése a hirdetésen</label>
+            </div></div>
           </div>
           <div className="col-1"></div>
         </div>

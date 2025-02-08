@@ -114,7 +114,7 @@ function ListListings() {
           <div className="col-4 g-5">
             <div className="row h-100">
               <div
-                style={{ backgroundImage: `url(${el.images[0]})` }}
+                style={{ backgroundImage: `url(${API}/marketplace/images/${el.id}/0)` }}
                 className="marketplace-listing-image m-2"
               ></div>
             </div>
