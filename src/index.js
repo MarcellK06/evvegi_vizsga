@@ -28,6 +28,7 @@ import About from "./Pages/About";
 import Mailer from "./Pages/Mailer";
 import GDPR from "./Pages/GDPR";
 import Aszf from "./Pages/Aszf";
+import CarsAdminPanel from "./Pages/CarsAdminPanel";
 //192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -46,6 +47,7 @@ root.render(
             <Route path="/requests" element={<Requests />} />
             <Route path="/requests/admin" element={<RequestsAdminPanel />} />
             <Route path="/own-cars" element={<OwnCars />} />
+            <Route path="/cars/admin" element={<CarsAdminPanel />} />
             <Route path="/community" element={<Community />} />
             <Route path="/community/admin" element={<CommunityAdminPanel />} />
             <Route path="/contact" element={<Contact />} />

@@ -96,6 +96,12 @@ function LoadProfileData() {
                     onClick={() => (window.location.href = "/requests/admin")}
                     className="form-control my-3 hoverbutton"
                   />
+                  <input
+                    type="button"
+                    value="Ellenörzésre váró járművek"
+                    onClick={() => (window.location.href = "/cars/admin")}
+                    className="form-control my-3 hoverbutton"
+                  />
                 </div>
                 <div className="col-3"></div>
               </div>

@@ -41,9 +41,6 @@ function CommentCommunityPost(data) {
         />
       </div>
       <div className="container w-10">
-        <FaFile className="comment-svgs hoverbutton" size={30} />
-      </div>
-      <div className="container w-10">
         <IoMdSend
           onClick={SendComment}
           size={30}

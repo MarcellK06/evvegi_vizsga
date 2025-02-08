@@ -8,6 +8,7 @@ import { ModalContext } from "../../Providers/ModalProvider";
 function AddOwnCar() {
   const { CreateModal } = useContext(ModalContext);
   var API = CONFIG.API;
+  const nicknameRef = useRef();
   const brandRef = useRef();
   const modelRef = useRef();
   const yearRef = useRef();
@@ -17,17 +18,19 @@ function AddOwnCar() {
 
   const HandleCarAdd = () => {
     var userid = Cookie.get("userid");
+    var nickname = nicknameRef.current.value;
     var brand = brandRef.current.value;
     var model = modelRef.current.value;
     var year = yearRef.current.value;
     var licenseplate = licenseplateRef.current.value;
     var vin = vinRef.current.value;
     if (
+      nickname == "" ||
       brand == "" ||
       model == "" ||
       year == "" || year.length < 4 ||
       licenseplate == "" || licenseplate.length < 6 ||
-      vin == "" || vin.length < 17
+      vin == "" || vin.length != 17
     ) {
       CreateModal(
         <p className="fs-3">A jármű hozzáadása sikertelen!</p>,
@@ -48,6 +51,7 @@ function AddOwnCar() {
     }
     var data = new FormData();
     data.append("userid", userid);
+    data.append("nickname", nickname);
     data.append("brand", brand);
     data.append("model", model);
     data.append("year", year);
@@ -84,6 +88,23 @@ function AddOwnCar() {
           Járművét feltöltése után egyik adminisztrátorunknak jóva kell hagynia,
           ez egy napig is eltarthat!
         </p>
+        <div className="row my-2">
+          <div className="col-12 mx-auto d-flex justify-content-center">
+            <div className="row d-flex justify-content-center">
+              <div className="col-12 d-flex flex-column">
+                <label htmlFor="nickname">Jármű azonositója</label>
+                <input
+                  type="text"
+                  name="nickname"
+                  id="nickname"
+                  className="form-control"
+                  ref={nicknameRef}
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="row my-2">
           <div className="col-1"></div>
           <div className="col-10 mx-auto d-flex justify-content-center">
@@ -165,6 +186,8 @@ function AddOwnCar() {
                 id="images"
                 className="form-control"
                 ref={requiredImagesRef}
+                required
+                accept="image/png, image/jpeg"
                 multiple
               />
             </div>
