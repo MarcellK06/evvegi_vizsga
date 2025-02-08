@@ -83,3 +83,118 @@ Route::get("/user/profile-data/{userid}", [], function($params) {
     http_response_code(200);
     echo DB::arrayToJson($data);
 });
+
+Route::post("/user/get-password-recovery", ["email"], function($params){
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+
+    $email = $params["email"];
+
+    $user = DB::runSql("SELECT * from user WHERE email like '$email'")[0];
+
+    
+
+    $userid = $user->id;
+    $token = bin2hex(random_bytes(8));
+    $date = new DateTime();
+    $date->modify('+2 hours');
+    $expiry = $date->format('Y-m-d H:i:s');
+    DB::runSql("INSERT INTO password_recovery (userid, token, expiry) VALUES ($userid, '$token', '$expiry')");
+    
+
+    Mailer::Send($email, "SzalkaAutó jelszó visszaállítás", Mailer::MailTamplate("Jelszó visszaáálítás", "
+        <p>A visszaállító kódja:  <b>".$token."</b></p>
+        <p>A kód eddig érvényes: ".$expiry."</p>
+    "));
+    http_response_code(200);
+   echo DB::arrayToJson(["message" => "A kódot sikeresen elküldtünk a '$email' címre."]);
+});
+Route::post("/user/get-password-recovery/verify", ["email", "token"], function($params){
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+    $email = $params["email"];
+    $token = $params["token"];
+    $verify = DB::runSql("SELECT * from user INNER JOIN password_recovery ON password_recovery.userid = user.id WHERE user.email like '$email' 
+    and token like '$token' and password_recovery.expiry > NOW() and password_recovery.success not like 1");
+    if (count($verify) > 0) {
+        echo json_encode(["status" => "passed"]);
+    } else {
+        http_response_code(401);
+        echo json_encode(["status" => "failed"]);
+        return;
+    }
+
+    http_response_code(200);
+});
+
+Route::post("/user/reset-password", ["email",  "password","token"], function($params){
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+    $email = $params["email"];
+    $token = $params["token"];
+    $newPassword = password_hash($params["password"], PASSWORD_DEFAULT);
+    $verify = DB::runSql("SELECT * from user INNER JOIN password_recovery ON password_recovery.userid = user.id WHERE user.email like '$email' 
+    and token like '$token' and password_recovery.expiry > NOW() and password_recovery.success not like 1");
+
+    if (count($verify) > 0) {
+
+        DB::runSql("UPDATE user SET password = '$newPassword' WHERE email like '$email'");
+        DB::runSql("UPDATE password_recovery SET success = 1 WHERE token like '$token'");
+        
+        echo json_encode(["status" => "password changed"]);
+        $date = new DateTime();
+        $date->modify('+1 hours');
+        $now= $date->format('Y-m-d H:i:s');
+        Mailer::Send($email,"Jelszó visszaállítás", Mailer::MailTamplate("Jelszó visszaállítása sikersen megtörtént!", "
+        <p>Jelszava visszaállításának időpontja: '$now'</p>
+        
+        "));
+    } else {
+        http_response_code(401);
+        echo json_encode(["status" => "failed"]);
+        return;
+    }
+
+    http_response_code(200);
+});
+
+Route::post("/user/upload_avatar", [], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+
+    $userid = intval($params["userid"]);
+    $file = $_FILES["avatar"];
+    $randomnumber = rand(1, 999999999);
+    $saveto = "./avatars/$randomnumber.jpg";
+    if(move_uploaded_file($file['tmp_name'], $saveto)) {
+    $saveto = substr($saveto, 2, strlen($saveto)-1);
+    DB::runSql("UPDATE user SET avatar ='$saveto' WHERE id=$userid");
+    http_response_code(200);
+    DB::arrayToJson([
+        "status" => 200,
+        "Message" => "Success"
+    ]);
+} else {
+    
+    http_response_code(406);
+    DB::arrayToJson([
+        "status" => 406,
+        "Message" => "Error"
+    ]);
+}
+});
+
+Route::get("/user/avatar/{userid}", [], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+    
+    $userid = intval($params["userid"]);
+
+    $avatar = DB::runSql("SELECT avatar FROM user WHERE id=$userid")[0]->avatar;
+    if (str_contains("bing", $avatar)) {
+        http_response_code(200);
+        echo $avatar;
+        return;
+    }
+
+    $filename = $avatar;
+    $file = fopen($filename, 'rb');
+    header("Content-Type: image/png");
+    header("Content-Length: " . filesize($filename));
+    fpassthru($file);
+});

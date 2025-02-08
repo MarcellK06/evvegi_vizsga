@@ -61,10 +61,10 @@ class Route
                 if ($i->authClass != null) {
                     $headers = getallheaders();
 
-                    if (!($i->authClass::Authenticate($headers["Token"]))) {
+                    if (!($i->authClass::Authenticate($headers["token"]))) {
                         http_response_code(401);
                         header('Content-Type: application/json');
-                        echo json_encode(["401" => "Unauthorized", "clinet_ip" => $_SERVER['REMOTE_ADDR'], "request_recorded" => true]);
+                        echo json_encode(["401" => "Unauthorized"]);
                         // ha valaki majd ide keveredne          
                         return;
                     }

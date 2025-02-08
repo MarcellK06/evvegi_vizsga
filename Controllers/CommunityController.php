@@ -13,7 +13,6 @@ use Application\Assets\Header\HttpHeadersManager\HttpHeadersManager;
 
 Route::post("/community/load-posts/{page}", [], function ($params){
     HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
-    //tesztelt
     try{
         $userid = intval($params['userid']);
         $profilepage = intval($params['profilepage']);
@@ -21,9 +20,9 @@ Route::post("/community/load-posts/{page}", [], function ($params){
         $limit = 15;
         $offset = 0;
         if ($profilepage == 1)
-        $posts = DB::runSql('SELECT community_posts.id AS "id", community_posts.title AS "title", community_posts.description AS "description", community_posts.images, community_posts.posted_at AS "postedat", COUNT(DISTINCT community_post_likes.id) AS "likes", (SELECT COUNT(*) FROM community_post_likes WHERE userid='.$userid.' AND postid=community_posts.id) AS "liked", COUNT(DISTINCT community_posts_comments.id) AS "comments", user.name AS "name", user.avatar AS "avatar" FROM community_posts LEFT JOIN community_post_likes ON community_posts.id = community_post_likes.postid LEFT JOIN community_posts_comments ON community_posts.id = community_posts_comments.postid LEFT JOIN user ON community_posts.userid = user.id WHERE community_posts.userid = '.$userid.' GROUP BY community_posts.id, community_posts.title, community_posts.description, community_posts.images ORDER BY id desc;');
+        $posts = DB::runSql('SELECT community_posts.id AS "id", user.id as "userid", community_posts.title AS "title", community_posts.description AS "description", community_posts.images, community_posts.posted_at AS "postedat", COUNT(DISTINCT community_post_likes.id) AS "likes", (SELECT COUNT(*) FROM community_post_likes WHERE userid='.$userid.' AND postid=community_posts.id) AS "liked", COUNT(DISTINCT community_posts_comments.id) AS "comments", community_posts.images, user.name AS "name", user.avatar AS "avatar" FROM community_posts LEFT JOIN community_post_likes ON community_posts.id = community_post_likes.postid LEFT JOIN community_posts_comments ON community_posts.id = community_posts_comments.postid LEFT JOIN user ON community_posts.userid = user.id WHERE community_posts.userid = '.$userid.' GROUP BY community_posts.id, community_posts.title, community_posts.description, community_posts.images ORDER BY id desc;');
         else
-        $posts = DB::runSql('SELECT community_posts.id AS "id", community_posts.title AS "title", community_posts.description AS "description", community_posts.images, community_posts.posted_at AS "postedat", COUNT(DISTINCT community_post_likes.id) AS "likes", (SELECT COUNT(*) FROM community_post_likes WHERE userid='.$userid.' AND postid=community_posts.id) AS "liked", COUNT(DISTINCT community_posts_comments.id) AS "comments", user.name AS "name", user.avatar AS "avatar" FROM community_posts LEFT JOIN community_post_likes ON community_posts.id = community_post_likes.postid LEFT JOIN community_posts_comments ON community_posts.id = community_posts_comments.postid LEFT JOIN user ON community_posts.userid = user.id GROUP BY community_posts.id, community_posts.title, community_posts.description, community_posts.images ORDER BY id desc;');
+        $posts = DB::runSql('SELECT community_posts.id AS "id", user.id as "userid", community_posts.title AS "title", community_posts.description AS "description", community_posts.images, community_posts.posted_at AS "postedat", COUNT(DISTINCT community_post_likes.id) AS "likes", (SELECT COUNT(*) FROM community_post_likes WHERE userid='.$userid.' AND postid=community_posts.id) AS "liked", COUNT(DISTINCT community_posts_comments.id) AS "comments", community_posts.images, user.name AS "name", user.avatar AS "avatar" FROM community_posts LEFT JOIN community_post_likes ON community_posts.id = community_post_likes.postid LEFT JOIN community_posts_comments ON community_posts.id = community_posts_comments.postid LEFT JOIN user ON community_posts.userid = user.id GROUP BY community_posts.id, community_posts.title, community_posts.description, community_posts.images ORDER BY id desc;');
         echo DB::arrayToJson($posts);
     }catch(\Exception $e){
         http_response_code(500);
@@ -41,7 +40,7 @@ Route::post("/community/comments", ['postid', 'userid'], function ($params) {
     try{
         $postid = intval($params["postid"]);
         $userid = intval($params['userid']);
-        $comments = DB::runSql('SELECT community_posts_comments.id as "id", community_posts_comments.comment as "comment", community_posts_comments.images as "images", community_posts_comments.posted_at as "postedat", user.name AS "username", user.avatar as "avatar", (SELECT COUNT(*) FROM community_comments_likes WHERE userid='.$userid.' AND commentid=community_posts_comments.id) AS "liked" FROM community_posts_comments INNER JOIN community_posts ON community_posts_comments.postid = community_posts.id INNER JOIN user ON community_posts_comments.userid = user.id WHERE community_posts_comments.postid ='.$postid.' GROUP BY community_posts_comments.id ORDER BY id DESC');
+        $comments = DB::runSql('SELECT community_posts_comments.id as "id", user.id AS "userid", community_posts_comments.comment as "comment", community_posts_comments.images as "images", community_posts_comments.posted_at as "postedat", user.name AS "username", user.avatar as "avatar", (SELECT COUNT(*) FROM community_comments_likes WHERE userid='.$userid.' AND commentid=community_posts_comments.id) AS "liked" FROM community_posts_comments INNER JOIN community_posts ON community_posts_comments.postid = community_posts.id INNER JOIN user ON community_posts_comments.userid = user.id WHERE community_posts_comments.postid ='.$postid.' GROUP BY community_posts_comments.id ORDER BY id DESC');
         echo DB::arrayToJson($comments);
     }catch(\Exception $e){
         http_response_code(500);
@@ -52,18 +51,28 @@ Route::post("/community/comments", ['postid', 'userid'], function ($params) {
     }
 });
 
-Route::post("/community/create-post", ["userid", "title", "description", "images"], function($params) {
+Route::post("/community/create-post", [], function($params) {
     HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
 
-    $img_route_1 = "";
-    $img_route_2 = "";
-    $img_route_3 = "";
-    $images = $img_route_1.",".$img_route_2.",".$img_route_3;
     $userid = $params['userid'];
     $title = $params['title'];
     $description = $params['description'];
+    $filenames = [];
+    if (count($_FILES) > 0)
+    {
+        for($k = 0; $k < count($_FILES); $k++) {
+            $image = $_FILES["images-$k"];
+            $randomnumber = rand(1, 999999999);
+            $saveto = "./postimages/$randomnumber.jpg";
+            move_uploaded_file($image["tmp_name"], $saveto);
+            $filenames[] = substr($saveto, 2, strlen($saveto)-1);
+        }
+        $filename = implode(',', $filenames);
+        DB::runSql("INSERT INTO community_posts(userid, title, description, images, posted_at) VALUES('".$userid."','".$title."','".$description."', '$filename', NOW())");
+    } else {
+        DB::runSql("INSERT INTO community_posts(userid, title, description, images, posted_at) VALUES('".$userid."','".$title."','".$description."', '', NOW())");
+    }
     try {
-    DB::runSql("INSERT INTO community_posts(userid, title, description, images, posted_at) VALUES('".$userid."','".$title."','".$description."', '', NOW())");
     http_response_code(200);
     echo DB::arrayToJson([
         "status" => 200
@@ -164,4 +173,20 @@ Route::post("/community/comment/like/{commentid}", [], function($params) {
             "status" => 418
         ]);
     }
+});
+
+Route::get("/community/postimages/{postid}/{index}", [], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+
+
+    $postid = intval($params["postid"]);
+    $index = intval($params["index"]);
+
+    $res = DB::runSql("SELECT images FROM community_posts WHERE id=$postid")[0]->images;
+    $res = explode(',', $res);
+    $filename = $res[$index];
+    $file = fopen($filename, 'rb');
+    header("Content-Type: image/png");
+    header("Content-Length: " . filesize($filename));
+    fpassthru($file);
 });

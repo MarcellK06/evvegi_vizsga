@@ -5,7 +5,7 @@ class Authentication
     {
         $token = getenv("TOKEN");
         // var_dump($clientToken);
-        return $clientToken == $token;
+        return trim($clientToken) == trim($token);
     }
     public static function init()
     {

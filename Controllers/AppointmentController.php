@@ -70,13 +70,3 @@ Route::post("/appointments/set-car-state/{carid}", [], function($params){
 
 
 //TESZT
-
-Route::get("/mail", [], function($a){
-   
-  Mailer::Send("paragh.tibor71@gmail.com", "asd", Mailer::MailTamplate("asd", "asd"));
- include "emailtemplate.html";
-
-  
-}
-
-);
