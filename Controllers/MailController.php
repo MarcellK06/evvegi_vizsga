@@ -27,19 +27,16 @@ Route::post("/mail", ["userid"], function($params){
         return;
     }
     $inbox_hostname = '{mail.nethely.hu:143/imap/notls}INBOX';
-    $sent_hostname = '{mail.nethely.hu:143/imap/notls}[Gmail]/Sent Mail'; // Az elküldött emailek mappa neve
+    $sent_hostname = '{mail.nethely.hu:143/imap/notls}[Gmail]/Sent Mail';
     $username = 'szalkacar@paraghtibor.hu';
     $password = 'asd123456789'; 
     
-    // Megnyitjuk az INBOX-t
     $inbox = imap_open($inbox_hostname, $username, $password) or die('Nem lehet csatlakozni: ' . imap_last_error());
     $sent = imap_open($sent_hostname, $username, $password) or die('Nem lehet csatlakozni: ' . imap_last_error());
     
-    // Lekérjük az emaileket az INBOX-ból
     $inbox_emails = imap_search($inbox, 'ALL');
     $mails = [];
     
-    // Kezeljük az INBOX emaileket
     if ($inbox_emails) {
         rsort($inbox_emails);     
         foreach ($inbox_emails as $email_number) {
@@ -64,7 +61,6 @@ Route::post("/mail", ["userid"], function($params){
         }
     }
     
-    // Lekérjük az emaileket az elküldött mappából
     $sent_emails = imap_search($sent, 'ALL');
     
     if ($sent_emails) {
@@ -91,7 +87,6 @@ Route::post("/mail", ["userid"], function($params){
         }
     }
     
-    // E-mailek rendezése dátum szerint
     usort($mails, function($a, $b) {
         return strtotime($b['date']) - strtotime($a['date']);
     });
@@ -114,38 +109,32 @@ Route::post("/mailer/send", [], function ($params){
 
 Route::get("/gdpr", [], function(){
  
-    // A fájl elérési útja
-    $filePath = 'gdpr.pdf'; // Cseréld ki a megfelelő elérési útra
+    $filePath = 'gdpr.pdf';
     header("Content-Type: application/pdf");
         header("Content-Disposition: inline; filename='gdpr.pdf'");
     
-    // Ellenőrizzük, hogy a fájl létezik-e
     if (file_exists($filePath)) {
         readfile($filePath);
         
         
         exit;
     } else {
-        // Ha a fájl nem található
         http_response_code(404);
         echo "A fájl nem található.";
     }
 });
 Route::get("/aszf", [], function(){
  
-    // A fájl elérési útja
-    $filePath = 'aszf.pdf'; // Cseréld ki a megfelelő elérési útra
+    $filePath = 'aszf.pdf';
     header("Content-Type: application/pdf");
         header("Content-Disposition: inline; filename='aszf.pdf'");
     
-    // Ellenőrizzük, hogy a fájl létezik-e
     if (file_exists($filePath)) {
         readfile($filePath);
         
         
         exit;
     } else {
-        // Ha a fájl nem található
         http_response_code(404);
         echo "A fájl nem található.";
     }

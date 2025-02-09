@@ -66,7 +66,7 @@ Route::post("/requests/answer", ["userid", "requestid", "response"], function($p
     $data = DB::runSql("SELECT title, description FROM requests WHERE id = $requestid");
     $title = $data[0]->title;
     $description = $data[0]->description;
-    Mailer::Send($email, "SzalkaAutó Árajánlat Válasz Érkezett", Mailer::MailTamplate("Árajánlat Válasz Levél", "<div><h2>Cím</h2><h4>$title</h4><h2>Leírás</h2><h4>$description</h4><h2>Technikus által adott válasz</h2><h4>$response</h4></div>"));
+    Mailer::Send($email, "SzalkaCar Árajánlat Válasz Érkezett", Mailer::MailTamplate("Árajánlat Válasz Levél", "<div><h2>Cím</h2><h4>$title</h4><h2>Leírás</h2><h4>$description</h4><h2>Technikus által adott válasz</h2><h4>$response</h4></div>"));
 
 
     http_response_code(200);

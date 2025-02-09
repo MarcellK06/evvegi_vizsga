@@ -20,7 +20,7 @@ Route::post("/user/register", ["fullName", "email", "phone", "password"], functi
     $email = $params["email"];
     $phone = $params["phone"];
     $password= $params["password"];
-    $token = bin2hex(random_bytes(12));
+    $token = bin2hex(random_bytes(32));
     $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
     try{
@@ -35,7 +35,7 @@ Route::post("/user/register", ["fullName", "email", "phone", "password"], functi
         } 
         $uid = DB::table("user")->insert([["name" => $fullName, "email" => $email,"phone"=> $phone,"password"=> $password_hashed, "token" => $token, "verified" => 0]], true)->getLastInsertId();
         DB::table("user_rank")->insert([["userid" => $uid, "rankid" => 2]], true);
-        Mailer::Send($email, "SzalkaAutó regisztráció", Mailer::MailTamplate("Sikeres regisztáció", "<h4>Üdvözöljük a weboldalon, ".$fullName." !</h4><p>Ha kérdése van cégünkkel kapcsolatba, várjuk emailét szeretettel az <a href='mailto:support@szalkauto.paraghtibor.hu'>itt</a> látható címen!</p><h4>Fiók megerősítés</h4><p>A fiókját megerősítheti <a href='https://code2-api.paraghtibor.hu/user/verify/$token'>itt!</a></p><p>Abban az esetben ha a fent megadott link nem működött, ezt itt is megteheti: https://code2-api.paraghtibor.hu/user/verify/$token</p>"));
+        Mailer::Send($email, "SzalkaCar regisztráció", Mailer::MailTamplate("Sikeres regisztáció", "<h4>Üdvözöljük a weboldalon, ".$fullName." !</h4><p>Ha kérdése van cégünkkel kapcsolatba, várjuk emailét szeretettel az <a href='mailto:support@szalkauto.paraghtibor.hu'>itt</a> látható címen!</p><h4>Fiók megerősítés</h4><p>A fiókját megerősítheti <a href='https://code2-api.paraghtibor.hu/user/verify/$token'>itt!</a></p><p>Abban az esetben ha a fent megadott link nem működött, ezt itt is megteheti: https://code2-api.paraghtibor.hu/user/verify/$token</p>"));
         echo DB::arrayToJson([
             "status" => 201,
             "Message" => "Sikeres regisztráció!"
@@ -111,7 +111,7 @@ Route::post("/user/get-password-recovery", ["email"], function($params){
     DB::runSql("INSERT INTO password_recovery (userid, token, expiry) VALUES ($userid, '$token', '$expiry')");
     
 
-    Mailer::Send($email, "SzalkaAutó jelszó visszaállítás", Mailer::MailTamplate("Jelszó visszaáálítás", "
+    Mailer::Send($email, "SzalkaCar jelszó visszaállítás", Mailer::MailTamplate("Jelszó visszaáálítás", "
         <p>A visszaállító kódja:  <b>".$token."</b></p>
         <p>A kód eddig érvényes: ".$expiry."</p>
     "));

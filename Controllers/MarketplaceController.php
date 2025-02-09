@@ -122,7 +122,7 @@ Route::post("/marketplace/listings/create", [], function($params) {
     $marketplaceid = DB::runSql("SELECT id as 'num' FROM marketplace ORDER BY id DESC LIMIT 1")[0]->num;
     DB::runSql("INSERT INTO user_marketplace(userid, marketplaceid) VALUES($userid, $marketplaceid);");
     $email = DB::runSql("SELECT email FROM user WHERE id=".$userid."")[0]->email;
-    Mailer::Send($email, "SzalkaAutó hírdetés létrehozása", Mailer::MailTamplate("Sikeres hírdetés létrehozás", "<h4><b>".$itemname."</b> hirdetését sikeresen létrehozta!</h4><p>Hirdetése majd abban az esetben lesz elérhető a többi felhasználó számára, ha egy adminisztrátor azt jováhagyja.</p><p>Ez egy pár órától, egy napig is eltarthat. Ha több mint 3 napba telik, kérjük vegye fel a kapcsolatot a csapatunkkal!</p><div><p>Hirdetés címe: <b>".$itemname."</b></p><p>Hirdetés leírása: <b>".$itemdescription."</b></p><p>Lista ár: <b>".$itemprice."Ft</b></p><p>Jármű azonosító: <b>".$car."</b></p></div>"));
+    Mailer::Send($email, "SzalkaCar hírdetés létrehozása", Mailer::MailTamplate("Sikeres hírdetés létrehozás", "<h4><b>".$itemname."</b> hirdetését sikeresen létrehozta!</h4><p>Hirdetése majd abban az esetben lesz elérhető a többi felhasználó számára, ha egy adminisztrátor azt jováhagyja.</p><p>Ez egy pár órától, egy napig is eltarthat. Ha több mint 3 napba telik, kérjük vegye fel a kapcsolatot a csapatunkkal!</p><div><p>Hirdetés címe: <b>".$itemname."</b></p><p>Hirdetés leírása: <b>".$itemdescription."</b></p><p>Lista ár: <b>".$itemprice."Ft</b></p><p>Jármű azonosító: <b>".$car."</b></p></div>"));
     http_response_code(200);
     echo DB::arrayToJson([
         "status" => 200
@@ -147,7 +147,7 @@ Route::post("/marketplace/listings/approve", ["userid", "rankid", "listingid"], 
     $email = DB::runSql("SELECT email FROM user LEFT JOIN marketplace ON marketplace.userid = user.id WHERE marketplace.id=".$listingid."")[0]->email;
     $data = DB::runSql("SELECT * FROM marketplace WHERE id=$listingid");
     $itemname = $data[0]->itemname;
-    Mailer::Send($email, "SzalkaAutó hirdetés jóváhagyva", Mailer::MailTamplate("Hirdetés jóváhagyva", "<h4>\"<b>".$itemname."</b>\" hirdetése jóváhagyásra került!</h4><p>Hirdetéséhez ezentúl a többi felhasználó is hozzáfér.</p>"));
+    Mailer::Send($email, "SzalkaCar hirdetés jóváhagyva", Mailer::MailTamplate("Hirdetés jóváhagyva", "<h4>\"<b>".$itemname."</b>\" hirdetése jóváhagyásra került!</h4><p>Hirdetéséhez ezentúl a többi felhasználó is hozzáfér.</p>"));
     DB::runSql("UPDATE marketplace SET approved=1 WHERE id=$listingid");
     http_response_code(200);
     echo DB::arrayToJson([
@@ -175,7 +175,7 @@ Route::post("/marketplace/listings/decline", ["userid", "rankid", "listingid"], 
     $email = DB::runSql("SELECT email FROM user LEFT JOIN marketplace ON marketplace.userid = user.id WHERE marketplace.id=".$listingid."")[0]->email;
     $data = DB::runSql("SELECT * FROM marketplace WHERE id=$listingid");
     $itemname = $data[0]->itemname;
-    Mailer::Send($email, "SzalkaAutó hirdetés elutasítva", Mailer::MailTamplate("Hirdetés elutasítva", "<h4>\"<b>".$itemname."</b>\" hirdetése elutasításra került!</h4><p>További információért vegye fel kapcsolatot cégünkkel!</p>"));
+    Mailer::Send($email, "SzalkaCar hirdetés elutasítva", Mailer::MailTamplate("Hirdetés elutasítva", "<h4>\"<b>".$itemname."</b>\" hirdetése elutasításra került!</h4><p>További információért vegye fel kapcsolatot cégünkkel!</p>"));
     
     DB::runSql("DELETE FROM user_marketplace WHERE marketplaceid=$listingid");
     DB::runSql("DELETE FROM marketplace WHERE id=$listingid");

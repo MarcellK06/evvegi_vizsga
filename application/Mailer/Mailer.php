@@ -16,7 +16,7 @@ class Mailer{
             $mail->Password   = getenv("EMAIL_PASSWORD");   
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
             $mail->Port       = 587; 
-            $mail->setFrom('szalkacar@paraghtibor.hu', "SzalkaAutó");
+            $mail->setFrom('szalkacar@paraghtibor.hu', "SzalkaCar");
             $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->CharSet = 'UTF-8';
@@ -48,7 +48,7 @@ class Mailer{
     <h2 style="text-align: center; width: 100%; margin-left: auto; margin-right: auto;">'.$title.'</h2>
     <div style="padding: 0 15px; text-align: center; width: 100%; margin-left: auto; margin-right: auto;">'. $message.'</div>
     <div style="background-color: black; display: flex; justify-content: center; padding: 5px 0; color: #fff;">
-        <p style="margin: 0;">2025 SzalkaAutó</p>
+        <p style="margin: 0;">2025 SzalkaCar</p>
     </div>
 </body>
 </html>
