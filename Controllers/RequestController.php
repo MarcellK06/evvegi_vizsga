@@ -103,3 +103,26 @@ Route::post("/requests/send/anon", ["title", "description", "email"], function($
         "Message" => "Success"
     ]);
 });
+
+Route::post("/requests/admin/delete", ["userid", "requestid"], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+    $userid = intval($params["userid"]);
+    $allowed = DB::runSql("SELECT COUNT(*) AS 'allowed' FROM user_rank WHERE userid=$userid AND rankid=1");
+    if ($allowed[0] == 0) {
+        http_response_code(405);
+        echo DB::arrayToJson([
+            "status" => 405,
+            "Message" => "NOT ALLOWED"
+        ]);
+        return;
+    }
+    $requestid = intval($params["requestid"]);
+
+    DB::runSql("DELETE FROM requests WHERE id=$requestid");
+
+    http_response_code(200);
+    echo DB::arrayToJson([
+        "status" => 200,
+        "Message" => "Success"
+    ]);
+});
