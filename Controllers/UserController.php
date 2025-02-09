@@ -20,6 +20,7 @@ Route::post("/user/register", ["fullName", "email", "phone", "password"], functi
     $email = $params["email"];
     $phone = $params["phone"];
     $password= $params["password"];
+    $token = bin2hex(random_bytes(12));
     $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
     try{
@@ -32,9 +33,9 @@ Route::post("/user/register", ["fullName", "email", "phone", "password"], functi
             ]);
             return;
         } 
-        DB::table("user")->insert([["name" => $fullName, "email" => $email,"phone"=> $phone,"password"=> $password_hashed]], true)->getLastInsertId();
-
-        Mailer::Send($email, "SzalkaAutó regisztráció", Mailer::MailTamplate("Sikeres regisztáció", "<h4>Üdvözöljük a weboldalon, ".$fullName." !</h4><p>Ha kérdése van cégünkkel kapcsolatba, várjuk emailét szeretettel az <a href='mailto:support@szalkauto.paraghtibor.hu'>itt</a> látható címen!</p>"));
+        $uid = DB::table("user")->insert([["name" => $fullName, "email" => $email,"phone"=> $phone,"password"=> $password_hashed, "token" => $token, "verified" => 0]], true)->getLastInsertId();
+        DB::table("user_rank")->insert([["userid" => $uid, "rankid" => 2]], true);
+        Mailer::Send($email, "SzalkaAutó regisztráció", Mailer::MailTamplate("Sikeres regisztáció", "<h4>Üdvözöljük a weboldalon, ".$fullName." !</h4><p>Ha kérdése van cégünkkel kapcsolatba, várjuk emailét szeretettel az <a href='mailto:support@szalkauto.paraghtibor.hu'>itt</a> látható címen!</p><h4>Fiók megerősítés</h4><p>A fiókját megerősítheti <a href='https://code2-api.paraghtibor.hu/user/verify/$token'>itt!</a></p><p>Abban az esetben ha a fent megadott link nem működött, ezt itt is megteheti: https://code2-api.paraghtibor.hu/user/verify/$token</p>"));
         echo DB::arrayToJson([
             "status" => 201,
             "Message" => "Sikeres regisztráció!"
@@ -68,6 +69,15 @@ Route::post("/user/login", ["email", "password"], function ($params){
         echo DB::arrayToJson([
             "status" => 401,
             "Message" => "Hibás email cím vagy jelszó!"
+        ]);
+        return;
+    }
+
+    if ($user[0]->verified == 0) {
+        http_response_code(401);
+        echo DB::arrayToJson([
+            "status" => 406,
+            "Message" => "A bejelentkezéshez kérjük erősítse meg fiókját!"
         ]);
         return;
     }
@@ -197,4 +207,37 @@ Route::get("/user/avatar/{userid}", [], function($params) {
     header("Content-Type: image/png");
     header("Content-Length: " . filesize($filename));
     fpassthru($file);
+});
+
+Route::post("/user/update", [], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+    
+    $userid = $params["userid"];
+    $email = $params["email"];
+    $phonenumber = $params["phonenumber"];
+
+    DB::runSql("UPDATE user SET phone='$phonenumber', email='$email' WHERE id=$userid");
+    http_response_code(200);
+    echo DB::arrayToJson([
+        "status" => 200,
+        "Message" => "SUCCESS"
+    ]);
+});
+
+Route::get("/user/verify/{token}", [], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+
+    $token = $params["token"];
+
+    $exists = DB::runSql("SELECT COUNT(*) AS 'exists' FROM user WHERE token='$token'")[0]->exists;
+
+    if ($exists == 0)
+    {
+        http_response_code(406);
+        echo DB::arrayToJson(["status" => 406, "Message" => "Invalid token!"]);
+        return;
+    }
+    DB::table("user")->update(["verified"=>1])->where("token","=",$token)->save();
+    http_response_code(200);
+    echo DB::arrayToJson(["status" => 20, "Message" => "SUCCESS"]);
 });

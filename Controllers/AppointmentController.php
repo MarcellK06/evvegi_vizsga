@@ -54,7 +54,7 @@ Route::post("/appointments/create", ["userid", "carid", "complaint", "stepstorep
 
 Route::get("/appointments/get-all", [], function($params){
     HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
-    $ap = DB::runSql("SELECT user.id as user_id, user.name , appointment.date, appointable_times.time, car.id as car_id,car.status, car.vin, car.data, appointment.complaint, appointment.stepstorep FROM user_car_appointment INNER JOIN appointment on user_car_appointment.appointmentid = appointment.id INNER JOIN user on user.id = user_car_appointment.userid INNER JOIN appointable_times ON appointable_times.id = appointment.timeid INNER JOIN car ON user_car_appointment.carid = car.id;");
+    $ap = DB::runSql("SELECT user.id as user_id, user.name , user.email, user.phone, appointment.date, appointable_times.time, car.id as car_id,car.status, car.vin, car.data, appointment.complaint, appointment.stepstorep FROM user_car_appointment INNER JOIN appointment on user_car_appointment.appointmentid = appointment.id INNER JOIN user on user.id = user_car_appointment.userid INNER JOIN appointable_times ON appointable_times.id = appointment.timeid INNER JOIN car ON user_car_appointment.carid = car.id;");
     echo DB::arrayToJson($ap);
 });
 Route::post("/appointments/set-car-state/{carid}", [], function($params){
@@ -66,7 +66,3 @@ Route::post("/appointments/set-car-state/{carid}", [], function($params){
     DB::runSql("UPDATE car SET status = '$newStatus' WHERE id like $id");
    
 });
-
-
-
-//TESZT

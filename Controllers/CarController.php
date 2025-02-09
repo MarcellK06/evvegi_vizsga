@@ -40,19 +40,22 @@ Route::post("/car/add", [], function($params) {
     $year = $params["year"];
     $licenseplate = $params["licenseplate"];
     $vin = $params["vin"];
-    $file_1 = $_FILES["registration_file_1"];
-    $file_2 = $_FILES["registration_file_2"];
-    $file_3 = $_FILES["registration_file_3"];
-    $filename1 = rand(1, 999999999);
-    $filename1 = substr($filename1, 0, 16);
-    $filename1 = "images/$filename1.jpg";
-    $filename2 = rand(1, 999999999);
-    $filename2 = substr($filename2, 0, 16);
-    $filename2 = "images/$filename2.jpg";
-    $filename3 = rand(1, 999999999);
-    $filename3 = substr($filename3, 0, 16);
-    $filename3 = "images/$filename3.jpg";
-    var_dump($_FILES);
+
+    $filenames = [];
+    for($k = 0; $k < 3; $k++) {
+        $filenameext = $k+1;
+        $file = $_FILES["registration_file_$filenameext"];
+        $filename = rand(1,999999999);
+        $filename = "images/$filename.jpg";
+        $filenames[] = $filename;
+        if (move_uploaded_file($file['tmp_name'], $filename)) {
+            //STUB
+        } else {
+            http_response_code(406);
+            echo DB::arrayToJson(["status" => 406, "Message" => "ERROR"]);
+            return;
+        }
+    }
     $km = 0;
     $engineCode = "";
     $json = array(
@@ -64,17 +67,12 @@ Route::post("/car/add", [], function($params) {
         "year" => $year
     );
     $json = json_encode($json);
-    if (move_uploaded_file($file_1['tmp_name'], $filename1) && move_uploaded_file($file_2['tmp_name'], $filename2) && move_uploaded_file($file_3['tmp_name'], $filename3)) {
-    $filenames = $filename1.",".$filename2.",".$filename3;
+    $filenames = implode(',',$filenames);
     $carid = DB::table("car")->insert([["vin" => $vin, "data" => $json, "images" => $filenames, "nickname" => $nickname]], true)->GetLastInsertId();
     DB::table("user_car")->insert([["userid" => $userid, "carid" => $carid]]);
     http_response_code(200);
 
     echo DB::arrayToJson(["status" => 200, "Message" => "SUCCESS"]);
-} else {
-    http_response_code(406);
-    echo DB::arrayToJson(["status" => 406, "Message" => "ERROR"]);
-}
 });
 
 Route::post("/car/change/status", ["carid", "status"], function($params) {
