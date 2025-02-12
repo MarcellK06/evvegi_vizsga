@@ -4,14 +4,19 @@ import $ from 'jquery';
 import CONFIG from "../config.json";
 import { ModalContext } from "../Providers/ModalProvider";
 import { FaPen } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 function CarsAdminPanel() {
     const API = CONFIG.API;
     const [cars, setCars] = useState([]);
     const {CreateModal} = useContext(ModalContext);
+    const [hasPermissions, setHasPermissions] = useState(0);
+    const navi = useNavigate();
   const CheckUser = () => {
     var rankid = Cookie.get("rank");
-    if (rankid != 1) window.location.pathname = "/";
-  };
+    if (rankid != 1) {
+      navi("/");
+  }
+};
 
 
   
@@ -53,9 +58,8 @@ function CarsAdminPanel() {
     useEffect(() => {
       CheckUser();
       GetNotApprovedVehicles();
-      console.log(cars);
     }, []);
-  
+    
     const JsonEntry = (i, el) => {
         var data = el.data;
         return (

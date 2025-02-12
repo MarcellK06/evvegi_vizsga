@@ -43,7 +43,7 @@ function LoginForm() {
           window.location.href = r;
           return;
         }
-        navigator("/");
+        window.location.href = "/";
       },
       error: function (res) {
         setLoginError(LoginError(res.responseJSON.Message));

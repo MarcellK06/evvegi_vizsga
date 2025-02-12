@@ -74,6 +74,10 @@ code {
   background-color: #f0f0f0;
 }
 
+.darkerpostcolor {
+  background-color: #d8d8d8;
+}
+
 .post .avatar,
 .comment-avatar {
   height: 50px;
@@ -390,4 +394,19 @@ nav .active-link {
 .annotationLayer,
 .textLayer {
   display: none;
+}
+input{
+  border-radius: 1px !important;
+  padding: 10px !important;
+  border: 1px solid rgba(0, 0, 0, 0.514);
+}
+.service-pictures{
+  width: 100%;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+.communityimage {
+  max-height: 20vh;
+  min-height: 20vh;
 }

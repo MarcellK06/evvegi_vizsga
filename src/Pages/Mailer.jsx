@@ -3,11 +3,19 @@ import $ from "jquery";
 import API from "../config.json";
 import Cookies from "js-cookie";
 import { ModalContext } from "../Providers/ModalProvider";
+import { useNavigate } from "react-router-dom";
 function Mailer() {
   const [mails, setMails] = useState([]);
 
   const { CreateModal } = useContext(ModalContext);
 
+    const navi = useNavigate();
+  const CheckUser = () => {
+    var rankid = Cookies.get("rank");
+    if (rankid != 1) {
+      navi("/");
+  }
+};
   const previewTitle = useRef();
   const previewBody = useRef();
   const PreviewElement = () => {
@@ -128,6 +136,7 @@ function Mailer() {
   };
 
   useEffect(() => {
+    CheckUser();
     $.ajax({
       url: `${API.API}/mail`,
 

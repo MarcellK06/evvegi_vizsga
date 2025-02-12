@@ -5,13 +5,15 @@ import {ModalContext} from "../../Providers/ModalProvider";
 import $ from "jquery";
 import { useContext } from "react";
 import Cookies from "js-cookie";
-import { FaPencilAlt } from "react-icons/fa";
-
+import { FaPencilAlt, FaThList, FaCar, FaNewspaper, FaCalendar } from "react-icons/fa";
+import { IoIosPricetags } from "react-icons/io";
 function LoadProfileData() {
   var API = CONFIG.API;
   const {CreateModal} = useContext(ModalContext);
   var avatarRef = useRef();
   var [profile, setProfile] = useState([]);
+  const phonenumberRef = useRef();
+  const emailRef = useRef();
   class profileData {
     constructor(name, email, phone, rank, avatar) {
       this.name = name;
@@ -66,44 +68,43 @@ function LoadProfileData() {
                 <p className="fs-3">Admin Panel</p>
               </div>
               <div className="row my-2">
-                <div className="col-3"></div>
-                <div className="col-6">
-                  <input
-                    type="button"
-                    value="Bejegyzések"
-                    onClick={() => (window.location.href = "/posts/admin")}
-                    className="form-control my-3 hoverbutton"
-                  />
-                  <input
-                    type="button"
-                    value="Időpont foglalások"
-                    onClick={() =>
-                      (window.location.href = "/appointments/admin")
-                    }
-                    className="form-control my-3 hoverbutton"
-                  />
-                  <input
-                    type="button"
-                    value="Hírdetések"
-                    onClick={() =>
-                      (window.location.href = "/marketplace/admin")
-                    }
-                    className="form-control my-3 hoverbutton"
-                  />
-                  <input
-                    type="button"
-                    value="Árajánlat kérések"
-                    onClick={() => (window.location.href = "/requests/admin")}
-                    className="form-control my-3 hoverbutton"
-                  />
-                  <input
-                    type="button"
-                    value="Ellenörzésre váró járművek"
-                    onClick={() => (window.location.href = "/cars/admin")}
-                    className="form-control my-3 hoverbutton"
-                  />
+                <div className="col-12 d-flex">
+
+<div className="form-control my-3 hoverbutton d-flex flex-column text-center mx-3 p-2"
+  onClick={() => (window.location.href = "/posts/admin")}>
+  <FaThList size={20} className="mx-auto"/>
+  <p className="m-0 my-1">Bejegyzések
+  </p>
+</div>
+
+<div className="form-control my-3 hoverbutton d-flex flex-column text-center mx-3 p-2"
+  onClick={() => (window.location.href = "/appointments/admin")}>
+  <FaCalendar size={20} className="mx-auto"/>
+  <p className="m-0 my-1">Foglalt Időpontok
+  </p>
+</div>
+
+<div className="form-control my-3 hoverbutton d-flex flex-column text-center mx-3 p-2"
+  onClick={() => (window.location.href = "/marketplace/admin")}>
+  <FaNewspaper size={20} className="mx-auto"/>
+  <p className="m-0 my-1">Hirdetések
+  </p>
+</div>
+
+<div className="form-control my-3 hoverbutton d-flex flex-column text-center mx-3 p-2"
+  onClick={() => (window.location.href = "/requests/admin")}>
+  <IoIosPricetags size={20} className="mx-auto"/>
+  <p className="m-0 my-1">Árajánlat kérések
+  </p>
+</div>
+
+<div className="form-control my-3 hoverbutton d-flex flex-column text-center mx-3 p-2"
+  onClick={() => (window.location.href = "/cars/admin")}>
+  <FaCar size={20} className="mx-auto"/>
+  <p className="m-0 my-1">Jármű Ellenőrzés
+  </p>
+</div>
                 </div>
-                <div className="col-3"></div>
               </div>
             </div>
             <div className="col-2"></div>
@@ -144,6 +145,9 @@ function LoadProfileData() {
         contentType: false,
         success: (resp) => {
         window.location.reload();
+        },
+        error: (err) => {
+          console.log(err);
         }
       })
     }
@@ -167,7 +171,41 @@ function LoadProfileData() {
         </div>
       </>)
     }
+
+    const changeEditMode = () => {
+      if (document.getElementById("email").disabled == false)
+        document.getElementById("email").disabled = true;
+      else
+        document.getElementById("email").disabled = false;
+      if (document.getElementById("phonenumber").disabled == false)
+        document.getElementById("phonenumber").disabled = true;
+      else
+        document.getElementById("phonenumber").disabled = false;
+
+        if (document.getElementById("savebutton").classList.contains("d-none"))
+          document.getElementById("savebutton").classList = ["form-control my-3"];
+        else
+          document.getElementById("savebutton").classList = ["d-none"];
+        
+    }
     
+    const saveData = () => {
+      var userid = Cookies.get("userid");
+      var email = emailRef.current.value;
+      var phonenumber = phonenumberRef.current.value;
+        $.ajax({
+          url: `${API}/user/update`,
+          type: "post",
+          data: {
+            "userid": userid,
+            "email": email,
+            "phonenumber": phonenumber
+          },
+          success: (resp) => {
+            window.location.reload();
+          }
+        })
+    }
     return (
       <>
         <div className="row my-3">
@@ -212,9 +250,10 @@ function LoadProfileData() {
                   type="text"
                   name="email"
                   id="email"
-                  value={email}
+                  defaultValue={email}
                   className="form-control"
                   disabled
+                  ref = {emailRef}
                 />
               </div>
               <div className="col-3"></div>
@@ -229,12 +268,16 @@ function LoadProfileData() {
                   type="text"
                   name="phonenumber"
                   id="phonenumber"
-                  value={phone}
+                  defaultValue={phone}
                   className="form-control"
                   disabled
+                  ref = {phonenumberRef}
                 />
+                <input type="button" value="Mentés" className="d-none" id="savebutton" onClick={saveData} />
               </div>
-              <div className="col-3"></div>
+              <div className="col-3">
+                <FaPencilAlt size={20} className="hoverbutton" onClick={changeEditMode}/>
+              </div>
             </div>
           </div>
           <div className="col-2"></div>

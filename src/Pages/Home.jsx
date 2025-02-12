@@ -3,6 +3,11 @@ import { ModalContext } from "../Providers/ModalProvider";
 import Header from "../Media/header.png";
 import BG from "./../Media/bg.jpg";
 import Ratings from "../Components/Rating/Ratings";
+import AltalanosJavitasok from "../Media/alt.jpg";
+import KulsoBelso from "../Media/kzm.jpg";
+import Gumiabroncs from "../Media/giabr.jpg";
+import Diagnosztika from "../Media/da.jpg";
+import { motion } from "framer-motion";
 function Home() {
   const { CreateModal } = useContext(ModalContext);
 
@@ -19,19 +24,40 @@ function Home() {
         item.style.position = "fixed";
         item.style.top = "0";
         item.classList.add("p-3");
-        item.classList.add("w-100");
+       item.classList.add("w-100");
+       item.classList.add("bg-white")
       }
+
 
       if (scrollTop < lastScrollTop && scrollTop < 240) {
         item.style.position = null;
         item.style.top = null;
         item.classList.remove("p-3");
-        item.classList.remove("w-100");
+       item.classList.remove("w-100");
+       item.classList.remove("bg-white")
       }
 
       lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     });
   }, []);
+
+ 
+  const CreateRatingModal = () => {
+
+
+    return(
+      <>
+
+      </>
+    )
+  }
+
+ 
+  
+  const CreateRating = () => {
+    CreateModal("Értékelés írása", CreateRatingModal(), true)
+
+  }
 
   return (
     <div>
@@ -47,7 +73,7 @@ function Home() {
             <p className="fw-bold fs-4">Üdvözöllek a SzalkaAutónál!</p>
             <p>Autód nálunk garantáltan jó kezekben lesz.</p>
 
-            <div className="d-flex post" id="contact">
+            <div className="d-flex " id="contact">
               <button className="h-btn">Foglalj időpontot</button>
               <div className="fw-bold ms-3 mt-1">
                 Hívj minket: <a href="tel:+36303926004">+36303926004</a>
@@ -68,7 +94,16 @@ function Home() {
       <br />
       <div className="my-5">
         <h2 className="my-4 text-center mt-5">Miért válasszon minet?</h2>
-        <div className="row mx-sm-3">
+        <motion.div
+            initial={{ opacity: 1, y: 70 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              ease: "linear",
+              duration: 1,
+              y: { duration: 0.5 },
+            }}>
+              <div className="row mx-sm-3">
           <div className="col-sm-3 mx-auto mb-2">
             <div className="why-choose-us-card">
               <div className="header">
@@ -151,34 +186,147 @@ function Home() {
             </div>
           </div>
         </div>
-        <br />
+            </motion.div>
+        
         <br />
         <br />
         <br />
         <h2 className="my-4 text-center mt-5">Szolgáltatásaink</h2>
-        <div className="d-flex justify-content-center">
-          <div className="row justify-content-center">
-            <div className="col-3">
-              <div className="container mx-auto text-center why-choose-us-card h-100">
-                <p className="fs-4">Általános javítások- és karbantartás</p>
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 1, y: 70 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              ease: "linear",
+              duration: 1,
+              y: { duration: 0.5 },
+            }}
+          >
+            <div className="row">
+              <div className="col-sm-3">
+                <img
+                  src={AltalanosJavitasok}
+                  className="img-fluid service-pictures"
+                  alt=""
+                />
+              </div>
+              <div className="col-sm">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <p className="fw-bold fs-5">
+                  Általános javítások és karbantartás{" "}
+                </p>
+                <p>
+                  Rendszeres ellenőrzések, olajcsere, fék- és futóműjavítás,
+                  valamint egyéb kopó alkatrészek cseréje a jármű megbízható
+                  működése érdekében.
+                </p>
               </div>
             </div>
-            <div className="col-3">
-              <div className="container mx-auto text-center why-choose-us-card h-100">
-                <p className="fs-4">Autó külső- és belső</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 1, y: 70 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              ease: "linear",
+              duration: 1,
+              y: { duration: 0.5 },
+            }}
+          >
+            <div className="row">
+              <div className="col-sm">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <p className="fw-bold fs-5">Autó külső és belső tisztítás</p>
+                <p>
+                  Professzionális mosás, polírozás és belső tér ápolás a jármű
+                  esztétikai és higiéniai állapotának megőrzése érdekében.
+                </p>
+              </div>
+              <div className="col-sm-3">
+                <img
+                  src={KulsoBelso}
+                  className="img-fluid service-pictures"
+                  alt=""
+                />
               </div>
             </div>
-            <div className="col-3">
-              <div className="container mx-auto text-center why-choose-us-card h-100">
-                <p className="fs-4">Gumiabroncs javítás / csere</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 1, y: 70 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true}}
+            transition={{
+              ease: "linear",
+              duration: 1,
+              y: { duration: 0.5 },
+            }}
+          >
+            <div className="row">
+              <div className="col-sm-3">
+                <img
+                  src={Gumiabroncs}
+                  className="img-fluid service-pictures"
+                  alt=""
+                />
+              </div>
+              <div className="col-sm">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <p className="fw-bold fs-5">Gumiabroncs javítás / csere</p>
+                <p>
+                  Sérült gumiabroncsok javítása vagy új abroncsok felszerelése
+                  az optimális tapadás és biztonság érdekében.
+                </p>
               </div>
             </div>
-            <div className="col-3">
-              <div className="container mx-auto text-center why-choose-us-card h-100">
-                <p className="fs-4">Diagnosztika</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 1, y: 70 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              ease: "linear",
+              duration: 1,
+              y: { duration: 0.5 },
+            }}
+          >
+            <div className="row">
+              <div className="col-sm">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <p className="fw-bold fs-5">Diagnosztika </p>
+                <p>
+                  Modern műszerekkel végzett hibakódolvasás és műszaki
+                  állapotfelmérés a jármű elektromos és mechanikai problémáinak
+                  gyors beazonosítására.
+                </p>
+              </div>
+              <div className="col-sm-3">
+                <img
+                  src={Diagnosztika}
+                  className="img-fluid service-pictures"
+                  alt=""
+                />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
         <br />
         <br />
@@ -190,7 +338,7 @@ function Home() {
           <Ratings />
         </div>
         <div className="d-flex justify-content-center">
-          <button className="rate-btn fw-bold mt-3 text-light">
+          <button className="rate-btn fw-bold mt-3 text-light" onClick={CreateRating}>
             Írj értékelést!
           </button>
         </div>

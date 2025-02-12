@@ -214,14 +214,14 @@ function Request() {
         <div className="row">
           <p className="fs-3 mx-auto text-center">Árajánlat Kérése</p>
         </div>
-        <div className="row post my-3">
-          <div className="col-2"></div>
-          <div className="col-8">
-            <div className="row my-3">
-              <label htmlFor="subject">
-                <p className="fs-3 fw-bold m-0">Cím</p>
-                <p>Írja le röviden, mit tapasztal járműve!</p>
-              </label>
+        <div className="row req my-3">
+          <div className="col-sm-5 mx-auto">
+            <label htmlFor="subject">
+            <p className="fs-3 fw-bold mt-2">Cím<span className="text-danger">*</span></p>
+              <p>Írja le röviden, mit tapasztal járműve!</p>
+            </label>
+            <div>
+              {" "}
               <input
                 type="text"
                 name="subject"
@@ -230,24 +230,27 @@ function Request() {
                 ref={subjectRef}
               />
             </div>
-            <div className="row my-3">
-              <label htmlFor="body">
-                <p className="fs-3 fw-bold m-0">Leírás</p>
-                <p>Írja le részletesebben járműve problémáját!</p>
-              </label>
-              <input
+            <label htmlFor="body">
+            <p className="fs-3 fw-bold mt-2">Leírás<span className="text-danger">*</span></p>
+              <p>Írja le részletesebben járműve problémáját!</p>
+            </label>
+            <div>
+              <textarea
                 type="text"
                 name="body"
                 id="body"
                 className="form-control"
                 ref={bodyRef}
-              />
+                rows={10}
+              >
+                </textarea>
             </div>
-            <div className="row my-3">
-              <label htmlFor="body">
-                <p className="fs-3 fw-bold m-0">Email cím</p>
-                <p>Adja meg email címét ahol elérhetjük!</p>
-              </label>
+
+            <label htmlFor="body">
+              <p className="fs-3 fw-bold mt-2">Email cím <span className="text-danger">*</span></p>
+              <p>Adja meg email címét ahol elérhetjük!</p>
+            </label>
+            <div>
               <input
                 type="text"
                 name="body"
@@ -256,14 +259,11 @@ function Request() {
                 ref={emailRef}
               />
             </div>
-            <input
-              type="button"
-              value="Árajánlat Kérése"
-              className="form-control my-3"
-              onClick={SendRequestAnon}
-            />
+            <div>
+              <button className="btn h-btn form-control mt-4 p-3"
+              onClick={SendRequestAnon}>Ajánlat kérése</button>
+            </div>
           </div>
-          <div className="col-2"></div>
         </div>
       </div>
     );

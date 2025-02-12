@@ -68,6 +68,7 @@ function Ratings() {
       </h5>
       <div className="row">
         <div className="col-sm mx-auto">
+          <br /><br /><br />
           <div className="my-5 rt">
             {ratings.length == 0 ? null : CountPerStars()}
           </div>
@@ -78,8 +79,19 @@ function Ratings() {
               ? null
               : ratings.ratings.map((i) => (
                   <div className="col-lg-3">
+                    <div className="d-flex justify-content-center">
+                    <div
+                      className="profile-avatar m-0 p-0 d-flex justify-content-end"
+                      style={{
+                        backgroundImage: `url(${API.API}/cdn/get/${btoa(
+                          i.avatar
+                        )})`,
+                      }}
+                    ></div>
+                    </div>
+                   
                     <div className="rating-card w-100 p-2">
-                      <h5 className="text-center">{i.name}</h5>
+                      <h5 className="text-center mb-2">{i.name}</h5>
                       <div className="d-flex justify-content-center">
                         <StarBuilder a={i.count} />
                       </div>

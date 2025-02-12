@@ -5,16 +5,25 @@ import "moment/locale/hu";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import $ from "jquery";
 import API from "../../config.json";
+import Cookies from "js-cookie";
 import {
   MdOutlineKeyboardArrowRight,
   MdOutlineKeyboardArrowLeft,
 } from "react-icons/md";
 import { ModalContext } from "../../Providers/ModalProvider";
+import { useNavigate } from "react-router-dom";
 function AppointmentsAdminPanel() {
   // State az események tárolására
   const [appointments, setAppointments] = useState([]);
   const localizer = momentLocalizer(moment);
   const { CreateModal } = useContext(ModalContext);
+      const navi = useNavigate();
+    const CheckUser = () => {
+      var rankid = Cookies.get("rank");
+      if (rankid != 1) {
+        navi("/");
+    }
+  };
 
   // Event hozzáadásának függvénye
   const AddEvent = (title, start, data) => {
@@ -106,6 +115,7 @@ function AppointmentsAdminPanel() {
   };
 
   useEffect(() => {
+    CheckUser();
     $.ajax({
       url: `${API.API}/appointments/get-all`,
       success: function (response) {
@@ -170,20 +180,41 @@ function AppointmentsAdminPanel() {
               Átvételre vár
             </option>
           </select>
-          <div className="mt-5">
-            <h5>Probléma</h5>
+          <div className="mt-3">
+            <div>
+            <p className="fs-4 fw-bold my-0">
+              Kapcsolattartási adatok
+            </p>
+            <div className="d-flex flex-column">
+              <p className="fw-bold my-0 mt-2">Telefonszám</p>
+              <p>{data.phone}</p>
+            </div>
+            <div className="d-flex flex-column">
+              <p className="fw-bold my-0 mt-2">Email cím</p>
+              <p>{data.email}</p>
+            </div>
+            </div>
+            <p className="fs-4 fw-bold my-0">Probléma</p>
             <p>{data.complaint}</p>
-            <h5 className="mt-2">Probléma reprodukálása</h5>
+            <p className="fs-4 fw-bold my-0" >Probléma reprodukálása</p>
             <p>{data.stepstorep}</p>
           </div>
         </div>
-        <div>
-          <h5>Autó adatai:</h5>
-          <p>Márka: {car_data.brand}</p>
-          <p>Modell: {car_data.model}</p>
-          <p>Motorkód: {car_data.engineCode}</p>
-          <p>Alvázszám: {data.vin}</p>
-        </div>
+        <p className="fs-4 fw-bold my-0">Autó adatai</p>
+        <div className="d-flex">
+<div className="d-flex flex-column mx-3 justify-content-center text-center">
+          <p className="fw-bold my-0 mt-2">Márka</p>
+            <p>{car_data.brand}</p>
+          </div><div className="d-flex flex-column mx-3 justify-content-center text-center">
+          <p className="fw-bold my-0 mt-2">Modell</p>
+          <p>{car_data.model}</p>
+          </div>  <div className="d-flex flex-column mx-3 justify-content-center text-center">
+          <p className="fw-bold my-0 mt-2">Motorkód</p>
+          <p>{car_data.engineCode}</p>
+          </div>          <div className="d-flex flex-column mx-3 justify-content-center text-center">
+          <p className="fw-bold my-0 mt-2">Alvázszám</p>
+          <p>{data.vin}</p>
+          </div>        </div>
       </>
     );
   };
@@ -208,7 +239,7 @@ function AppointmentsAdminPanel() {
           messages={messages}
           onSelectEvent={(event) => {
             var data = event.data;
-            CreateModal(`${data.name} időpontja`, View(data), true);
+            CreateModal(<><p className="my-0">{data.name} időpontja</p><hr /></>, View(data), true);
             selected.current = data.car_id;
           }}
           components={{

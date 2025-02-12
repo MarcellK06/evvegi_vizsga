@@ -3,6 +3,7 @@ import CONFIG from "../../config.json";
 import Cookie from "js-cookie";
 import $ from "jquery";
 import { ModalContext } from "../../Providers/ModalProvider";
+import Cookies from "js-cookie";
 
 function ActiveRequests() {
   var API = CONFIG.API;
@@ -57,7 +58,8 @@ function ActiveRequests() {
             var title = el.title;
             var description = el.description;
             var email = el.email;
-            rs.push(new AnonRequestStruct(id, title, description, 0, email));
+            var replied = el.replied;
+            rs.push(new AnonRequestStruct(id, title, description, replied, email));
           }
         });
         setRequests(rs);
@@ -171,6 +173,21 @@ function ActiveRequests() {
       );
   };
 
+  const DeleteRequest = (el) => {
+    var userid = Cookies.get("userid");
+    $.ajax({
+      url: `${API}/requests/admin/delete`,
+      type: "post",
+      data: {
+        userid: userid,
+        requestid: el.id
+      },
+      success: (resp) => {
+        window.location.reload();
+      }
+    })
+  }
+  
   const RequestEntry = (el) => {
     if (el.email == "USER") {
       return (
@@ -248,7 +265,7 @@ function ActiveRequests() {
                   {el.answered ? "Válaszolva" : "Válaszra Vár"}
                 </p>
               </div>
-              <input
+              {el.answered == 0 ? <input
                 type="button"
                 value="Válaszolás"
                 className="form-control hoverbutton"
@@ -259,8 +276,14 @@ function ActiveRequests() {
                     true
                   )
                 }
-                disabled={el.answered}
-              />
+              /> : <input
+              type="button"
+              value="Törlés"
+              className="form-control hoverbutton"
+              onClick={() =>
+                  DeleteRequest(el)
+              }
+            />}
             </div>
           </div>
           <div className="col-2"></div>
@@ -315,7 +338,7 @@ function ActiveRequests() {
                   {el.answered ? "Válaszolva" : "Válaszra Vár"}
                 </p>
               </div>
-              <input
+              {el.answered == 0 ? <input
                 type="button"
                 value="Válaszolás"
                 className="form-control hoverbutton"
@@ -326,7 +349,14 @@ function ActiveRequests() {
                     true
                   )
                 }
-              />
+              /> : <input
+              type="button"
+              value="Törlés"
+              className="form-control hoverbutton"
+              onClick={() =>
+                  DeleteRequest(el)
+              }
+            />}
             </div>
           </div>
           <div className="col-2"></div>

@@ -121,14 +121,21 @@ function ListListings() {
           </div>
           <div className="col-8 g-3">
             <div className="d-flex flex-column my-2">
-              <p className="fs-4 fw-bold">{el.itemname}</p>
-              <p className="fs-7 mt-3">{desc}</p>
+              <p className="fs-4 fw-bold my-0">{el.itemname}<hr className="w-25"/></p>
+              <p className="fs-7 mt-1">{desc}</p>
               <p className="fs-11 mt-1">
                 <u className="fw-bold">{`${el.itemprice}`}</u>Ft
               </p>
               <div className="d-flex justify-content-between">
-                <p className="fw-bold">{vehicle_data}</p>
-                <p className="fw-bold">{el.listed_at}</p>
+                <div className="d-flex flex-column mt-3">
+                  <p className="my-0">Címkék <hr className="my-0"/></p>
+                  <p className="fw-bold">{vehicle_data}</p>
+                </div>
+                <div className="d-flex flex-column mt-3">
+                  <p className="my-0">Közzétéve <hr className="my-0"/></p>
+                  <p className="fw-bold">{el.listed_at}</p>
+                </div>
+                
               </div>
             </div>
           </div>
