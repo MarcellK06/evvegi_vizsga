@@ -15,7 +15,7 @@ Route::get("/ratings/get", [], function($params){
     HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
     $avg = DB::runSql("SELECT AVG(count) as 'avg' FROM ratings ;")[0];
     $all = DB::runSql("SELECT COUNT(id) as 'all_ratings' FROM ratings ;")[0];
-    $ratings = DB::runSql("SELECT user.name, ratings.count, ratings.comment FROM ratings INNER JOIN user on user.id = ratings.userid ORDER BY ratings.id desc");
+    $ratings = DB::runSql("SELECT user.name, user.avatar, ratings.count, ratings.comment FROM ratings INNER JOIN user on user.id = ratings.userid ORDER BY ratings.id desc");
     $sp = DB::runSql("SELECT `count` as 'star', count(id) as 'amount'  FROM `ratings` GROUP BY `count`");
 
     echo DB::arrayToJson(["ratings" => $ratings, "avg" => $avg->avg, "all_ratings" => $all->all_ratings, "countperstars" => $sp]);

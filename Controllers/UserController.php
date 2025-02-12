@@ -168,26 +168,25 @@ Route::post("/user/reset-password", ["email",  "password","token"], function($pa
 Route::post("/user/upload_avatar", [], function($params) {
     HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
 
-    $userid = intval($params["userid"]);
+    $userid = $params["userid"];
     $file = $_FILES["avatar"];
     $randomnumber = rand(1, 999999999);
-    $saveto = "./avatars/$randomnumber.jpg";
+    $saveto = "./avatars/".strval($randomnumber).".jpg";
     if(move_uploaded_file($file['tmp_name'], $saveto)) {
-    $saveto = substr($saveto, 2, strlen($saveto)-1);
-    DB::runSql("UPDATE user SET avatar ='$saveto' WHERE id=$userid");
-    http_response_code(200);
-    DB::arrayToJson([
-        "status" => 200,
-        "Message" => "Success"
-    ]);
-} else {
-    
-    http_response_code(406);
-    DB::arrayToJson([
-        "status" => 406,
-        "Message" => "Error"
-    ]);
-}
+        $saveto = substr($saveto, 2, strlen($saveto)-1);
+        DB::runSql("UPDATE user SET avatar ='$saveto' WHERE id='$userid'");
+        http_response_code(200);
+        echo DB::arrayToJson([
+            "status" => 200,
+            "Message" => "Success"
+        ]);
+        } else {        
+            http_response_code(406);
+           echo  DB::arrayToJson([
+                    "status" => 406,
+            "Message" => "Error"
+            ]);
+    }
 });
 
 Route::get("/user/avatar/{userid}", [], function($params) {
