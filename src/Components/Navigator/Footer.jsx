@@ -11,7 +11,7 @@ function Footer({ f = false }) {
         }`}
       >
         <div className="row">
-          <div className="col-3 mx-auto">
+          <div className="col-sm-3 mx-auto mb-sm-2">
             <img src={Logo} alt="SzalkaCarLogo" style={{ width: "40%" }} />
             <h5 className="text-uppercase fw-bold mt-4 mb-2">Támogató cégek</h5>
             <div>
@@ -19,13 +19,22 @@ function Footer({ f = false }) {
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Motul_logo.svg/1280px-Motul_logo.svg.png"
                   alt=""
-                  style={{ width: "20%" }}
+                  style={{ width: "30%" }}
+                />
+              </a>
+            </div>
+            <div className="mt-2">
+              <a href="https://total.com">
+                <img
+                  src="https://cdn.worldvectorlogo.com/logos/total-logo-2.svg"
+                  alt=""
+                  style={{ width: "30%" }}
                 />
               </a>
             </div>
           </div>
 
-          <div className="col-3 mx-auto">
+          <div className="col-sm-3 mx-auto mb-sm-2">
             <h5 className="text-uppercase fw-bold">Cégünk</h5>
             <div className="my-2">
               <div>
@@ -47,10 +56,16 @@ function Footer({ f = false }) {
               </div>
             </div>
           </div>
-          <div className="col-3 mx-auto">
-            <h5 className="text-uppercase fw-bold">Állapotfelmérés</h5>
+          <div className="col-sm-3 mx-auto mb-sm-2">
+            <h5 className="text-uppercase fw-bold">Nyitvatartás</h5>
+            <div>
+
+              <p>Hetfő - Pántek | 7:00 - 18:00</p>
+              <p>Szombat | 9:00 - 12:00</p>
+              <p>Vasárnap | Zárva</p>
+            </div>
           </div>
-          <div className="col-3 mx-auto">
+          <div className="col-sm-3 mx-auto mb-sm-2">
             <h5 className="text-uppercase fw-bold">Kapcsolat</h5>
             <div>
               <MdEmail /> info@Szalkacar.hu

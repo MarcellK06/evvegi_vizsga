@@ -56,29 +56,31 @@ function Ratings() {
     );
   };
 
+ 
+
   return (
     <>
       <br />
       <br />
       <h5 className="mt-4 mb-5">
-        Szervizünk <b>{ratings.avg}</b> csillagos értékelést kapott, több mint{" "}
+        Szervizünk <b>{ratings.avg}</b> csillagos értékelést kapott, több mint
         <b>{ratings.all_ratings}</b> elégedett ügyfél visszajelzése alapján.
         Gyors, megbízható és profi autójavítás – mert számunkra az Ön biztonsága
         az első!
       </h5>
       <div className="row">
-        <div className="col-sm mx-auto">
+        <div className="col-sm-3 mx-auto mx-2">
           <br /><br /><br />
-          <div className="my-5 rt">
+          <div className="mt-4 rt">
             {ratings.length == 0 ? null : CountPerStars()}
           </div>
         </div>
-        <div className="col-sm mt-5">
+        <div className="col-sm-9 mt-5">
           <div className="row rating-container mt-5">
             {ratings.length == 0
               ? null
               : ratings.ratings.map((i) => (
-                  <div className="col-lg-3">
+                  <div className="col-lg-3 rating-card me-2">
                     <div className="d-flex justify-content-center">
                     <div
                       className="profile-avatar m-0 p-0 d-flex justify-content-end"
@@ -90,7 +92,7 @@ function Ratings() {
                     ></div>
                     </div>
                    
-                    <div className="rating-card w-100 p-2">
+                    <div className="w-100 p-2">
                       <h5 className="text-center mb-2">{i.name}</h5>
                       <div className="d-flex justify-content-center">
                         <StarBuilder a={i.count} />
