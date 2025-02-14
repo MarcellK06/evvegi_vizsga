@@ -182,7 +182,7 @@ function Home() {
         <h2 className="my-4 text-center mt-5">Szolgáltatásaink</h2>
         <div class="container">
           <div class="row service">
-            <div class="col-md-6 text">
+            <div class="col-md-6 text mx-auto">
               <p class="fw-bold fs-5">Általános javítások és karbantartás</p>
               <p>
                 Rendszeres ellenőrzések, olajcsere, fék- és futóműjavítás,
@@ -190,7 +190,8 @@ function Home() {
                 működése érdekében.
               </p>
             </div>
-            <div class="col-md-6 image">
+            {/* ide vissza kell tenni az animációt*/}
+            <div class="col-md-6 image mx-auto">
               <img
                 src={AltalanosJavitasok}
                 class="img-fluid service-pictures"
@@ -200,14 +201,14 @@ function Home() {
           </div>
 
           <div class="row service reverse">
-            <div class="col-md-6 text">
+            <div class="col-md-6 text mx-auto">
               <p class="fw-bold fs-5">Autó külső és belső tisztítás</p>
               <p>
                 Professzionális mosás, polírozás és belső tér ápolás a jármű
                 esztétikai és higiéniai állapotának megőrzése érdekében.
               </p>
             </div>
-            <div class="col-md-6 image">
+            <div class="col-md-6 image mx-auto">
               <img
                 src={KulsoBelso}
                 class="img-fluid service-pictures"
@@ -217,14 +218,14 @@ function Home() {
           </div>
 
           <div class="row service">
-            <div class="col-md-6 text">
+            <div class="col-md-6 text mx-auto">
               <p class="fw-bold fs-5">Gumiabroncs javítás / csere</p>
               <p>
                 Sérült gumiabroncsok javítása vagy új abroncsok felszerelése az
                 optimális tapadás és biztonság érdekében.
               </p>
             </div>
-            <div class="col-md-6 image">
+            <div class="col-md-6 image mx-auto">
               <img
                 src={Gumiabroncs}
                 class="img-fluid service-pictures"
@@ -234,7 +235,7 @@ function Home() {
           </div>
 
           <div class="row service reverse">
-            <div class="col-md-6 text">
+            <div class="col-md-6 text mx-auto">
               <p class="fw-bold fs-5">Diagnosztika</p>
               <p>
                 Modern műszerekkel végzett hibakódolvasás és műszaki
@@ -242,7 +243,7 @@ function Home() {
                 gyors beazonosítására.
               </p>
             </div>
-            <div class="col-md-6 image">
+            <div class="col-md-6 image mx-auto">
               <img
                 src={Diagnosztika}
                 class="img-fluid service-pictures"

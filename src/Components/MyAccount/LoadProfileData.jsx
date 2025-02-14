@@ -71,62 +71,74 @@ function LoadProfileData() {
             <div className="col-2"></div>
             <div className="col-8">
               <div className="row text-center border-bottom">
-                <p className="fs-3">Admin Panel</p>
-              </div>
-              <div className="row my-2">
-                <div className="col-12 d-flex">
-                  <div
-                    className="form-control my-3 hoverbutton d-flex flex-column text-center mx-3 p-2"
-                    onClick={() => (window.location.href = "/posts/admin")}
-                  >
-                    <FaThList size={20} className="mx-auto" />
-                    <p className="m-0 my-1">Bejegyzések</p>
-                  </div>
-
-                  <div
-                    className="form-control my-3 hoverbutton d-flex flex-column text-center mx-3 p-2"
-                    onClick={() =>
-                      (window.location.href = "/appointments/admin")
-                    }
-                  >
-                    <FaCalendar size={20} className="mx-auto" />
-                    <p className="m-0 my-1">Foglalt Időpontok</p>
-                  </div>
-
-                  <div
-                    className="form-control my-3 hoverbutton d-flex flex-column text-center mx-3 p-2"
-                    onClick={() =>
-                      (window.location.href = "/marketplace/admin")
-                    }
-                  >
-                    <FaNewspaper size={20} className="mx-auto" />
-                    <p className="m-0 my-1">Hirdetések</p>
-                  </div>
-
-                  <div
-                    className="form-control my-3 hoverbutton d-flex flex-column text-center mx-3 p-2"
-                    onClick={() => (window.location.href = "/requests/admin")}
-                  >
-                    <IoIosPricetags size={20} className="mx-auto" />
-                    <p className="m-0 my-1">Árajánlat kérések</p>
-                  </div>
-
-                  <div
-                    className="form-control my-3 hoverbutton d-flex flex-column text-center mx-3 p-2"
-                    onClick={() => (window.location.href = "/cars/admin")}
-                  >
-                    <FaCar size={20} className="mx-auto" />
-                    <p className="m-0 my-1">Jármű Ellenőrzés</p>
-                  </div>
-                </div>
+              <p className="fs-3">Admin Panel
+              </p>
               </div>
             </div>
             <div className="col-2"></div>
+            
+            <div className="row p-0 mx-auto">
+              <div className="col-2"></div>
+              <div className="col-8">
+
+              <div className="row justify-content-center">
+                <div className="col-12 col-md-4 col-lg-3 mb-3">
+                  <div
+                    className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
+                    onClick={() => (window.location.href = "/posts/admin")}
+                  >
+                    <FaThList size={20} className="mx-auto" />
+                    <p className="mb-0 pt-2">Bejegyzések</p>
+                  </div>
+                </div>
+                <div className="col-12 col-md-4 col-lg-3 mb-3">
+                  <div
+                    className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
+                    onClick={() => (window.location.href = "/appointments/admin")}
+                  >
+                    <FaCalendar size={20} className="mx-auto" />
+                    <p className="mb-0 pt-2">Foglalt Időpontok</p>
+                  </div>
+                </div>
+                <div className="col-12 col-md-4 col-lg-3 mb-3">
+                  <div
+                    className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
+                    onClick={() => (window.location.href = "/marketplace/admin")}
+                  >
+                    <FaNewspaper size={20} className="mx-auto" />
+                    <p className="mb-0 pt-2">Hirdetések</p>
+                  </div>
+                </div>
+                <div className="col-12 col-md-4 col-lg-3 mb-3">
+                  <div
+                    className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
+                    onClick={() => (window.location.href = "/requests/admin")}
+                  >
+                    <IoIosPricetags size={20} className="mx-auto" />
+                    <p className="mb-0 pt-2">Árajánlat kérések</p>
+                  </div>
+                </div>
+                <div className="col-12 col-md-4 col-lg-3 mb-3">
+                  <div
+                    className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
+                    onClick={() => (window.location.href = "/cars/admin")}
+                  >
+                    <FaCar size={20} className="mx-auto" />
+                    <p className="mb-0 pt-2">Jármű Ellenőrzés</p>
+                  </div>
+                </div>
+            </div>
           </div>
+              </div>
+              <div className="col-2">
+
+              </div>
+            </div>
         </>
       );
     else return <></>;
   };
+  
 
   const profileEntry = (el) => {
     var name = el.name;

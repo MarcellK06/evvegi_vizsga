@@ -60,7 +60,7 @@ function Footer({ f = false }) {
             <h5 className="text-uppercase fw-bold">Nyitvatartás</h5>
             <div>
 
-              <p>Hetfő - Pántek | 7:00 - 18:00</p>
+              <p>Hetfő - Péntek | 7:00 - 18:00</p>
               <p>Szombat | 9:00 - 12:00</p>
               <p>Vasárnap | Zárva</p>
             </div>
