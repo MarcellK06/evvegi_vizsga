@@ -11,7 +11,7 @@ import { json } from "react-router-dom";
 import { ModalContext } from "../../Providers/ModalProvider";
 function LoadCommunityPosts() {
   const [i, setI] = useState(1);
-  const {CreateModal} = useContext(ModalContext);
+  const { CreateModal } = useContext(ModalContext);
   var API = CONFIG.API;
 
   class CommunityPost {
@@ -57,43 +57,50 @@ function LoadCommunityPosts() {
   };
 
   const loadImage = (idx, el) => {
-    if (el.images[0] == "")
-      return;
+    if (el.images[0] == "") return;
     var postid = el.id;
-    return <>
-    <div class={`carousel-item ${idx == 0 ? "active" : ""}`}>
-      <div className="d-flex p-3">
-      <img src={`${API}/community/postimages/${postid}/${idx}`} className="h-50 w-50 mx-auto rounded"/>
-      </div>
-    </div>
-    </>;
-  }
-
+    return (
+      <>
+        <div class={`carousel-item ${idx == 0 ? "active" : ""}`}>
+          <div className="d-flex p-3">
+            <img
+              src={`${API}/community/postimages/${postid}/${idx}`}
+              className="h-50 w-50 mx-auto rounded"
+            />
+          </div>
+        </div>
+      </>
+    );
+  };
 
   const showAllImages = (el) => {
-    return (<>
-    
-              
-              
-<div id={`carousel-${el.id}`} class="carousel slide bg-dark">
-  <div class="carousel-inner">
-  {el.images.map((i, idx) => loadImage(idx, el))}
-  </div>
-  <button class="carousel-control-prev" data-bs-target={`#carousel-${el.id}`} data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" data-bs-target={`#carousel-${el.id}`} data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-              
-            
-    </>)
-  }
+    return (
+      <>
+        <div id={`carousel-${el.id}`} class="carousel slide bg-dark">
+          <div class="carousel-inner">
+            {el.images.map((i, idx) => loadImage(idx, el))}
+          </div>
+          <button
+            class="carousel-control-prev"
+            data-bs-target={`#carousel-${el.id}`}
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            data-bs-target={`#carousel-${el.id}`}
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </>
+    );
+  };
 
-  
   const PostEntry = (el) => {
     var avatar = el.avatar;
     var postedat = el.postedat;
@@ -114,7 +121,7 @@ function LoadCommunityPosts() {
     if (parseInt(psplit[2].split(" ")[0]) != now.getDate())
       postedat_text = `${now.getDate() - parseInt(psplit[2])} n`;
     if (parseInt(psplit[1]) != now.getMonth() + 1)
-      postedat_text = `${now.getMonth()+1 - parseInt(psplit[1])} h`;
+      postedat_text = `${now.getMonth() + 1 - parseInt(psplit[1])} h`;
     if (parseInt(psplit[0]) != now.getFullYear())
       postedat_text = `${now.getFullYear() - parseInt(psplit[0])} é`;
     psplit = postedat.split(" ")[1].split(":");
@@ -151,8 +158,42 @@ function LoadCommunityPosts() {
           {el.images[0] != "" ? <hr /> : <></>}
           <div>
             <div className="row">
-              {el.images[0] != "" ? <img src={`${API}/community/postimages/${el.id}/0`} className="object-fit-contain mx-auto hoverbutton" onClick={() => CreateModal(<><p className="fs-3">Képek megtekintése</p> <hr /></>, showAllImages(el), true)}/> : <></>}
-              {el.images[0] != "" ? <input type="button" value="Képek megtekintése" className="form-control mx-auto my-1 hoverbutton" style={{width: "15vw"}} onClick={() => CreateModal(<><p className="fs-3">Képek megtekintése</p> <hr /></>, showAllImages(el), true)} /> : <></>}
+              {el.images[0] != "" ? (
+                <img
+                  src={`${API}/community/postimages/${el.id}/0`}
+                  className="object-fit-contain mx-auto hoverbutton"
+                  onClick={() =>
+                    CreateModal(
+                      <>
+                        <p className="fs-3">Képek megtekintése</p> <hr />
+                      </>,
+                      showAllImages(el),
+                      true
+                    )
+                  }
+                />
+              ) : (
+                <></>
+              )}
+              {el.images[0] != "" ? (
+                <input
+                  type="button"
+                  value="Képek megtekintése"
+                  className="form-control mx-auto my-1 hoverbutton"
+                  style={{ width: "15vw" }}
+                  onClick={() =>
+                    CreateModal(
+                      <>
+                        <p className="fs-3">Képek megtekintése</p> <hr />
+                      </>,
+                      showAllImages(el),
+                      true
+                    )
+                  }
+                />
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>

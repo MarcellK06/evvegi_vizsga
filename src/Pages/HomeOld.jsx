@@ -55,8 +55,12 @@ function HomOld() {
               <br />
               <br />
               <br />
-              <br /><br /><br />
-              <br /><br /><br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
             </div>
             <p className="fw-bold fs-4">Üdvözöllek a SzalkaAutónál!</p>
             <p>Autód nálunk garantáltan jó kezekben lesz.</p>
@@ -211,11 +215,7 @@ function HomOld() {
               </p>
             </div>
             <div class="col-md-6 image mx-auto">
-              <img
-                src={KulsoBelso}
-                class="img-fluid service-pictures"
-                alt=""
-              />
+              <img src={KulsoBelso} class="img-fluid service-pictures" alt="" />
             </div>
           </div>
 

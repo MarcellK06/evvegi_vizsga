@@ -114,28 +114,36 @@ function ListListings() {
           <div className="col-4 g-5">
             <div className="row h-100">
               <div
-                style={{ backgroundImage: `url(${API}/marketplace/images/${el.id}/0)` }}
+                style={{
+                  backgroundImage: `url(${API}/marketplace/images/${el.id}/0)`,
+                }}
                 className="marketplace-listing-image m-2"
               ></div>
             </div>
           </div>
           <div className="col-8 g-3">
             <div className="d-flex flex-column my-2">
-              <p className="fs-4 fw-bold my-0">{el.itemname}<hr className="w-25"/></p>
+              <p className="fs-4 fw-bold my-0">
+                {el.itemname}
+                <hr className="w-25" />
+              </p>
               <p className="fs-7 mt-1">{desc}</p>
               <p className="fs-11 mt-1">
                 <u className="fw-bold">{`${el.itemprice}`}</u>Ft
               </p>
               <div className="d-flex justify-content-between">
                 <div className="d-flex flex-column mt-3">
-                  <p className="my-0">Címkék <hr className="my-0"/></p>
+                  <p className="my-0">
+                    Címkék <hr className="my-0" />
+                  </p>
                   <p className="fw-bold">{vehicle_data}</p>
                 </div>
                 <div className="d-flex flex-column mt-3">
-                  <p className="my-0">Közzétéve <hr className="my-0"/></p>
+                  <p className="my-0">
+                    Közzétéve <hr className="my-0" />
+                  </p>
                   <p className="fw-bold">{el.listed_at}</p>
                 </div>
-                
               </div>
             </div>
           </div>

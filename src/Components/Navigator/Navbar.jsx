@@ -112,7 +112,6 @@ function Navbar() {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {navLinks.map((i) => (
-                 
                   <li class="nav-item">
                     <a
                       class={`nav-link text-light ${
@@ -196,22 +195,23 @@ function Navbar() {
               id="navbarSupportedContent"
             >
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              {navLinks.map((i) => (
+                {navLinks.map((i) =>
                   i.path != "/own-cars" ? (
-                  <li class="nav-item">
-                    <a
-                      class={`nav-link text-light ${
-                        i.path == window.location.pathname
-                          ? "active-link fw-bold"
-                          : ""
-                      }`}
-                      aria-current="page"
-                      onClick={() => Navigate(i)}
-                    >
-                      {i.title}
-                    </a>
-                  </li>) : null
-                ))}
+                    <li class="nav-item">
+                      <a
+                        class={`nav-link text-light ${
+                          i.path == window.location.pathname
+                            ? "active-link fw-bold"
+                            : ""
+                        }`}
+                        aria-current="page"
+                        onClick={() => Navigate(i)}
+                      >
+                        {i.title}
+                      </a>
+                    </li>
+                  ) : null
+                )}
               </ul>
               <div class="d-flex">
                 <div>

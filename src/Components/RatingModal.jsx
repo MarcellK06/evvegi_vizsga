@@ -5,10 +5,7 @@ function RatingModal() {
   const [stars, setStars] = useState(5);
   const [error, setError] = useState("");
 
-
-  const Handle = () => {
-
-  }
+  const Handle = () => {};
 
   const StartSelector = ({ stars, s = 35 }) => {
     var st = [];
@@ -39,11 +36,12 @@ function RatingModal() {
           placeholder="Megjegyzés (Nem kötelező)"
         ></textarea>
         <div className="my-2">
-            <p className="text-danger text-center">{error}</p>
+          <p className="text-danger text-center">{error}</p>
         </div>
         <div className="mt-3">
-
-            <button className="rate-btn p-3 w-100" onClick={Handle}>Küldés</button>
+          <button className="rate-btn p-3 w-100" onClick={Handle}>
+            Küldés
+          </button>
         </div>
       </>
     );

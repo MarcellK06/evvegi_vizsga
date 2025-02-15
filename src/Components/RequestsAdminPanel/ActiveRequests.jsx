@@ -59,7 +59,9 @@ function ActiveRequests() {
             var description = el.description;
             var email = el.email;
             var replied = el.replied;
-            rs.push(new AnonRequestStruct(id, title, description, replied, email));
+            rs.push(
+              new AnonRequestStruct(id, title, description, replied, email)
+            );
           }
         });
         setRequests(rs);
@@ -180,14 +182,14 @@ function ActiveRequests() {
       type: "post",
       data: {
         userid: userid,
-        requestid: el.id
+        requestid: el.id,
       },
       success: (resp) => {
         window.location.reload();
-      }
-    })
-  }
-  
+      },
+    });
+  };
+
   const RequestEntry = (el) => {
     if (el.email == "USER") {
       return (
@@ -265,25 +267,27 @@ function ActiveRequests() {
                   {el.answered ? "Válaszolva" : "Válaszra Vár"}
                 </p>
               </div>
-              {el.answered == 0 ? <input
-                type="button"
-                value="Válaszolás"
-                className="form-control hoverbutton"
-                onClick={() =>
-                  CreateModal(
-                    <p className="mx-auto">Árajánlás válaszolás</p>,
-                    AnswerRequest(el),
-                    true
-                  )
-                }
-              /> : <input
-              type="button"
-              value="Törlés"
-              className="form-control hoverbutton"
-              onClick={() =>
-                  DeleteRequest(el)
-              }
-            />}
+              {el.answered == 0 ? (
+                <input
+                  type="button"
+                  value="Válaszolás"
+                  className="form-control hoverbutton"
+                  onClick={() =>
+                    CreateModal(
+                      <p className="mx-auto">Árajánlás válaszolás</p>,
+                      AnswerRequest(el),
+                      true
+                    )
+                  }
+                />
+              ) : (
+                <input
+                  type="button"
+                  value="Törlés"
+                  className="form-control hoverbutton"
+                  onClick={() => DeleteRequest(el)}
+                />
+              )}
             </div>
           </div>
           <div className="col-2"></div>
@@ -338,25 +342,27 @@ function ActiveRequests() {
                   {el.answered ? "Válaszolva" : "Válaszra Vár"}
                 </p>
               </div>
-              {el.answered == 0 ? <input
-                type="button"
-                value="Válaszolás"
-                className="form-control hoverbutton"
-                onClick={() =>
-                  CreateModal(
-                    <p className="mx-auto">Árajánlás válaszolás</p>,
-                    AnswerRequest(el),
-                    true
-                  )
-                }
-              /> : <input
-              type="button"
-              value="Törlés"
-              className="form-control hoverbutton"
-              onClick={() =>
-                  DeleteRequest(el)
-              }
-            />}
+              {el.answered == 0 ? (
+                <input
+                  type="button"
+                  value="Válaszolás"
+                  className="form-control hoverbutton"
+                  onClick={() =>
+                    CreateModal(
+                      <p className="mx-auto">Árajánlás válaszolás</p>,
+                      AnswerRequest(el),
+                      true
+                    )
+                  }
+                />
+              ) : (
+                <input
+                  type="button"
+                  value="Törlés"
+                  className="form-control hoverbutton"
+                  onClick={() => DeleteRequest(el)}
+                />
+              )}
             </div>
           </div>
           <div className="col-2"></div>

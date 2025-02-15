@@ -69,7 +69,7 @@ function CommunityPostComments(data) {
     if (parseInt(psplit[2].split(" ")[0]) != now.getDate())
       postedat_text = `${now.getDate() - parseInt(psplit[2])} n`;
     if (parseInt(psplit[1]) != now.getMonth() + 1)
-      postedat_text = `${now.getMonth()+1 - parseInt(psplit[1])} h`;
+      postedat_text = `${now.getMonth() + 1 - parseInt(psplit[1])} h`;
     if (parseInt(psplit[0]) != now.getFullYear())
       postedat_text = `${now.getFullYear() - parseInt(psplit[0])} é`;
     psplit = postedat.split(" ")[1].split(":");
@@ -90,7 +90,9 @@ function CommunityPostComments(data) {
               <div className="col-1 d-flex p-0">
                 <div
                   className="comment-avatar p-0"
-                  style={{ backgroundImage: `url(${API}/user/avatar/${userid})` }}
+                  style={{
+                    backgroundImage: `url(${API}/user/avatar/${userid})`,
+                  }}
                 ></div>
               </div>
               <div className="col-10">

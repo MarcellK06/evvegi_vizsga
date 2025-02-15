@@ -217,7 +217,9 @@ function Request() {
         <div className="row req my-3">
           <div className="col-sm-5 mx-auto">
             <label htmlFor="subject">
-            <p className="fs-3 fw-bold mt-2">Cím<span className="text-danger">*</span></p>
+              <p className="fs-3 fw-bold mt-2">
+                Cím<span className="text-danger">*</span>
+              </p>
               <p>Írja le röviden, mit tapasztal járműve!</p>
             </label>
             <div>
@@ -231,7 +233,9 @@ function Request() {
               />
             </div>
             <label htmlFor="body">
-            <p className="fs-3 fw-bold mt-2">Leírás<span className="text-danger">*</span></p>
+              <p className="fs-3 fw-bold mt-2">
+                Leírás<span className="text-danger">*</span>
+              </p>
               <p>Írja le részletesebben járműve problémáját!</p>
             </label>
             <div>
@@ -242,12 +246,13 @@ function Request() {
                 className="form-control"
                 ref={bodyRef}
                 rows={10}
-              >
-                </textarea>
+              ></textarea>
             </div>
 
             <label htmlFor="body">
-              <p className="fs-3 fw-bold mt-2">Email cím <span className="text-danger">*</span></p>
+              <p className="fs-3 fw-bold mt-2">
+                Email cím <span className="text-danger">*</span>
+              </p>
               <p>Adja meg email címét ahol elérhetjük!</p>
             </label>
             <div>
@@ -260,8 +265,12 @@ function Request() {
               />
             </div>
             <div>
-              <button className="btn h-btn form-control mt-4 p-3"
-              onClick={SendRequestAnon}>Ajánlat kérése</button>
+              <button
+                className="btn h-btn form-control mt-4 p-3"
+                onClick={SendRequestAnon}
+              >
+                Ajánlat kérése
+              </button>
             </div>
           </div>
         </div>

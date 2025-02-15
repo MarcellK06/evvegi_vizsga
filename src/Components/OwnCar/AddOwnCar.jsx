@@ -28,9 +28,12 @@ function AddOwnCar() {
       nickname == "" ||
       brand == "" ||
       model == "" ||
-      year == "" || year.length < 4 ||
-      licenseplate == "" || licenseplate.length < 6 ||
-      vin == "" || vin.length != 17
+      year == "" ||
+      year.length < 4 ||
+      licenseplate == "" ||
+      licenseplate.length < 6 ||
+      vin == "" ||
+      vin.length != 17
     ) {
       CreateModal(
         <p className="fs-3">A jármű hozzáadása sikertelen!</p>,
@@ -41,12 +44,31 @@ function AddOwnCar() {
     }
     var requiredImages = requiredImagesRef.current.files;
     if (!requiredImages) {
-      CreateModal(<div><p className="fs-3">Hibás adatbevitel</p><hr /></div>, <><p className="fs-4">Kérem, adja meg a kötelező képeket.</p></>, true);
+      CreateModal(
+        <div>
+          <p className="fs-3">Hibás adatbevitel</p>
+          <hr />
+        </div>,
+        <>
+          <p className="fs-4">Kérem, adja meg a kötelező képeket.</p>
+        </>,
+        true
+      );
       return;
     }
-    if (requiredImages.length != 3)
-    {
-      CreateModal(<div><p className="fs-3">Hibás adatbevitel</p><hr /></div>, <><p className="fs-4">Kérem, adja meg az összes szükséges képet! Ez maximum 3 fájl lehet.</p></>, true);
+    if (requiredImages.length != 3) {
+      CreateModal(
+        <div>
+          <p className="fs-3">Hibás adatbevitel</p>
+          <hr />
+        </div>,
+        <>
+          <p className="fs-4">
+            Kérem, adja meg az összes szükséges képet! Ez maximum 3 fájl lehet.
+          </p>
+        </>,
+        true
+      );
       return;
     }
     var data = new FormData();

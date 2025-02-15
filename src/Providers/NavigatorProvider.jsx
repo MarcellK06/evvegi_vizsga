@@ -44,8 +44,7 @@ export const NavigatorProvider = ({ children }) => {
         }
       }
     }
-    footerFix() {
-    }
+    footerFix() {}
   }
   const _Navigator = new Navigator();
   useEffect(() => {

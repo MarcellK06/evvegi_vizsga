@@ -9,13 +9,13 @@ function Mailer() {
 
   const { CreateModal } = useContext(ModalContext);
 
-    const navi = useNavigate();
+  const navi = useNavigate();
   const CheckUser = () => {
     var rankid = Cookies.get("rank");
     if (rankid != 1) {
       navi("/");
-  }
-};
+    }
+  };
   const previewTitle = useRef();
   const previewBody = useRef();
   const PreviewElement = () => {

@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion";
 import { Check, X, Microscope, DollarSign, Shield } from "lucide-react";
 import React from "react";
 import AltalanosJavitasok from "../Media/alt.jpg";
-import { FaWrench, FaSprayCan, FaCar, FaMicrochip } from "react-icons/fa"
+import { FaWrench, FaSprayCan, FaCar, FaMicrochip } from "react-icons/fa";
 import KulsoBelso from "../Media/kzm.jpg";
 import Gumiabroncs from "../Media/giabr.jpg";
 import Diagnosztika from "../Media/da.jpg";
@@ -216,22 +216,22 @@ function Home() {
         </div>
       </div>
       <div>
-      <section className="services-section">
-      <motion.h2
-        className="services-title"
-        initial={{ opacity: 0, y: -50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-      >
-        Szolgáltatásaink
-      </motion.h2>
-      <div className="services-container">
-        {services.map((service, index) => (
-          <ServiceCard key={index} {...service} reverse={index % 2 !== 0} />
-        ))}
-      </div>
-    </section>
+        <section className="services-section">
+          <motion.h2
+            className="services-title"
+            initial={{ opacity: 0, y: -50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            Szolgáltatásaink
+          </motion.h2>
+          <div className="services-container">
+            {services.map((service, index) => (
+              <ServiceCard key={index} {...service} reverse={index % 2 !== 0} />
+            ))}
+          </div>
+        </section>
       </div>
       <div>
         <Ratings />

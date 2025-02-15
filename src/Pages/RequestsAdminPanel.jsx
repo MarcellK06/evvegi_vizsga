@@ -7,8 +7,7 @@ function RequestsAdminPanel() {
   const navi = useNavigate();
   const CheckUser = () => {
     var rankid = Cookie.get("rank");
-    if (rankid != 1) 
-      navi("/");
+    if (rankid != 1) navi("/");
   };
 
   useEffect(() => {

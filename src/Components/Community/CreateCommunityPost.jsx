@@ -24,9 +24,8 @@ function CreateCommunityPost() {
     data.append("title", title);
     data.append("description", description);
     var l = images.length;
-    for(var k = 0; k < l; k++)
-    {
-    data.append(`images-${k}`, images[k]);
+    for (var k = 0; k < l; k++) {
+      data.append(`images-${k}`, images[k]);
     }
     $.ajax({
       url: `${API}/community/create-post`,
@@ -74,9 +73,17 @@ function CreateCommunityPost() {
                   <div
                     className="buttoncolor text p-1 pt-1 ps-3 ms-1 noselect"
                     style={{ marginRigth: "30px" }}
-                    onClick={() => document.getElementById('file').click()}
+                    onClick={() => document.getElementById("file").click()}
                   >
-                    <input type="file" name="file" id="file" ref={imagesRef} style={{display: "none"}} multiple accept="images/png, images/jpeg" />
+                    <input
+                      type="file"
+                      name="file"
+                      id="file"
+                      ref={imagesRef}
+                      style={{ display: "none" }}
+                      multiple
+                      accept="images/png, images/jpeg"
+                    />
                     Fájlok csatolása{" "}
                     <FaFile
                       className=" ms-autoborder-0 rounded-circle buttoncolor"

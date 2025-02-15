@@ -50,7 +50,7 @@ function CreateListing() {
     data.append("itemprice", itemPrice);
     data.append("car", car);
     data.append("showemail", showemail);
-    for(var k = 0; k < images.length; k++) {
+    for (var k = 0; k < images.length; k++) {
       data.append(`images-${k}`, images[k]);
     }
 
@@ -199,14 +199,31 @@ function CreateListing() {
           <div className="col-1"></div>
           <div className="col-10">
             <div className="row my-3">
-            <label htmlFor="images">Fotók csatolása..</label>
-            <input type="file" className="form-control" name="images" id="images" ref={imagesRef} multiple accept="image/png, image/jpeg"/>
+              <label htmlFor="images">Fotók csatolása..</label>
+              <input
+                type="file"
+                className="form-control"
+                name="images"
+                id="images"
+                ref={imagesRef}
+                multiple
+                accept="image/png, image/jpeg"
+              />
             </div>
             <div className="row my-2">
               <div className="form-check">
-              <input type="checkbox" className="form-check-input" name="showemail" id="showemail" ref={showEmailRef} />
-              <label htmlFor="showemail" className="form-check-label">Email megjelenítése a hirdetésen</label>
-            </div></div>
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  name="showemail"
+                  id="showemail"
+                  ref={showEmailRef}
+                />
+                <label htmlFor="showemail" className="form-check-label">
+                  Email megjelenítése a hirdetésen
+                </label>
+              </div>
+            </div>
           </div>
           <div className="col-1"></div>
         </div>

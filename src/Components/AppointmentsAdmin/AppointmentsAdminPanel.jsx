@@ -17,11 +17,11 @@ function AppointmentsAdminPanel() {
   const [appointments, setAppointments] = useState([]);
   const localizer = momentLocalizer(moment);
   const { CreateModal } = useContext(ModalContext);
-      const navi = useNavigate();
-    const CheckUser = () => {
-      var rankid = Cookies.get("rank");
-      if (rankid != 1) {
-        navi("/");
+  const navi = useNavigate();
+  const CheckUser = () => {
+    var rankid = Cookies.get("rank");
+    if (rankid != 1) {
+      navi("/");
     }
   };
 
@@ -182,39 +182,41 @@ function AppointmentsAdminPanel() {
           </select>
           <div className="mt-3">
             <div>
-            <p className="fs-4 fw-bold my-0">
-              Kapcsolattartási adatok
-            </p>
-            <div className="d-flex flex-column">
-              <p className="fw-bold my-0 mt-2">Telefonszám</p>
-              <p>{data.phone}</p>
-            </div>
-            <div className="d-flex flex-column">
-              <p className="fw-bold my-0 mt-2">Email cím</p>
-              <p>{data.email}</p>
-            </div>
+              <p className="fs-4 fw-bold my-0">Kapcsolattartási adatok</p>
+              <div className="d-flex flex-column">
+                <p className="fw-bold my-0 mt-2">Telefonszám</p>
+                <p>{data.phone}</p>
+              </div>
+              <div className="d-flex flex-column">
+                <p className="fw-bold my-0 mt-2">Email cím</p>
+                <p>{data.email}</p>
+              </div>
             </div>
             <p className="fs-4 fw-bold my-0">Probléma</p>
             <p>{data.complaint}</p>
-            <p className="fs-4 fw-bold my-0" >Probléma reprodukálása</p>
+            <p className="fs-4 fw-bold my-0">Probléma reprodukálása</p>
             <p>{data.stepstorep}</p>
           </div>
         </div>
         <p className="fs-4 fw-bold my-0">Autó adatai</p>
         <div className="d-flex">
-<div className="d-flex flex-column mx-3 justify-content-center text-center">
-          <p className="fw-bold my-0 mt-2">Márka</p>
+          <div className="d-flex flex-column mx-3 justify-content-center text-center">
+            <p className="fw-bold my-0 mt-2">Márka</p>
             <p>{car_data.brand}</p>
-          </div><div className="d-flex flex-column mx-3 justify-content-center text-center">
-          <p className="fw-bold my-0 mt-2">Modell</p>
-          <p>{car_data.model}</p>
-          </div>  <div className="d-flex flex-column mx-3 justify-content-center text-center">
-          <p className="fw-bold my-0 mt-2">Motorkód</p>
-          <p>{car_data.engineCode}</p>
-          </div>          <div className="d-flex flex-column mx-3 justify-content-center text-center">
-          <p className="fw-bold my-0 mt-2">Alvázszám</p>
-          <p>{data.vin}</p>
-          </div>        </div>
+          </div>
+          <div className="d-flex flex-column mx-3 justify-content-center text-center">
+            <p className="fw-bold my-0 mt-2">Modell</p>
+            <p>{car_data.model}</p>
+          </div>{" "}
+          <div className="d-flex flex-column mx-3 justify-content-center text-center">
+            <p className="fw-bold my-0 mt-2">Motorkód</p>
+            <p>{car_data.engineCode}</p>
+          </div>{" "}
+          <div className="d-flex flex-column mx-3 justify-content-center text-center">
+            <p className="fw-bold my-0 mt-2">Alvázszám</p>
+            <p>{data.vin}</p>
+          </div>{" "}
+        </div>
       </>
     );
   };
@@ -239,7 +241,14 @@ function AppointmentsAdminPanel() {
           messages={messages}
           onSelectEvent={(event) => {
             var data = event.data;
-            CreateModal(<><p className="my-0">{data.name} időpontja</p><hr /></>, View(data), true);
+            CreateModal(
+              <>
+                <p className="my-0">{data.name} időpontja</p>
+                <hr />
+              </>,
+              View(data),
+              true
+            );
             selected.current = data.car_id;
           }}
           components={{
