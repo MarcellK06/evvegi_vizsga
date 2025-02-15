@@ -1,14 +1,21 @@
+import { Link } from "react-router-dom"
 function NotFound() {
   return (
     <>
-      <div className="row mt-5 mb-5">
-        <div className="col-1"></div>
-        <div className="col-10">
-          <h1>404</h1>
-          <h3>Az oldal amit keres nem található rendszerünkben.</h3>
-        </div>
-        <div className="col-1"></div>
+    <div className="not-found-container d-flex align-items-center justify-content-center vh-100">
+      <div className="text-center">
+        <h1 className="display-1 fw-bold">404</h1>
+        <p className="fs-3">
+          <span className="text-danger">Hoppá!</span> Az oldal nem található.
+        </p>
+        <p className="lead">
+          Sajnáljuk, de a keresett oldal nem létezik, eltávolították vagy átmenetileg nem elérhető.
+        </p>
+        <Link to="/" className="btn btn-primary">
+          Vissza a főoldalra
+        </Link>
       </div>
+    </div>
     </>
   );
 }

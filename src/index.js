@@ -29,6 +29,7 @@ import Mailer from "./Pages/Mailer";
 import GDPR from "./Pages/GDPR";
 import Aszf from "./Pages/Aszf";
 import CarsAdminPanel from "./Pages/CarsAdminPanel";
+
 //192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
