@@ -50,13 +50,14 @@ class Route
         $path = self::$request["REQUEST_URI"];
         $rqMethod = self::$request["REQUEST_METHOD"];
         $foud = false;
-
         foreach (self::$routes as $i) {
             $routeHandle = self::HandleRouteParams($path, $i->path);
-            if (("/" . $routeHandle->trimmedRoute) == $path) {
-                if ($rqMethod != $i->routeMethod) {
-                    http_response_code(405);
-                    break;
+            if (is_object($routeHandle) && property_exists($routeHandle, 'trimmedRoute')) {
+                if (("/" . $routeHandle->trimmedRoute) == $path) {
+                    if ($rqMethod != $i->routeMethod) {
+                     http_response_code(405);
+                        break;
+                    }
                 }
                 if ($i->authClass != null) {
                     $headers = getallheaders();
@@ -64,8 +65,7 @@ class Route
                     if (!($i->authClass::Authenticate($headers["token"]))) {
                         http_response_code(401);
                         header('Content-Type: application/json');
-                        echo json_encode(["401" => "Unauthorized"]);
-                        // ha valaki majd ide keveredne          
+                        echo json_encode(["401" => "Unauthorized"]);      
                         return;
                     }
                 }
