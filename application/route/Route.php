@@ -76,7 +76,7 @@ class Route
                     echo json_encode($i->requreParams);
                     return;
                 }
-                call_user_func($i->callback, $params);
+                echo call_user_func_array($i->callback, [$params]);
                 $foud = true;
             }
             foreach (HttpHeadersManager::getAllHeaders() as $key => $value) {
