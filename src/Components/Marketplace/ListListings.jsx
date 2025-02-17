@@ -31,7 +31,7 @@ function ListListings() {
       this.listed_at = listed_at;
     }
   }
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   var listings = [];
 
   const LoadListings = () => {
@@ -87,127 +87,106 @@ function ListListings() {
   };
 
   const ListingEntry = (el) => {
-    if (!el.itemname) return;
-    var vehicle_data = "";
-
-    var car = el.data;
-    var desc = el.itemdescription;
-    if (desc.length > 575) desc = `${desc.substr(0, 575)}...`;
-    var vehicle_data = [];
-    if (el.data != undefined) {
-      if (car.year) vehicle_data.push(car.year);
-      if (car.brand) vehicle_data.push(car.brand);
-      if (car.model) vehicle_data.push(car.model);
-      if (car.engineCode) vehicle_data.push(car.engineCode);
-      if (car.km) vehicle_data.push(`${car.km}km`);
-      vehicle_data = vehicle_data.join(", ");
+   
+  
+    if (!el.itemname) return null
+  
+    let desc = el.itemdescription
+    if (desc.length > 575) desc = `${desc.substr(0, 575)}...`
+  
+    let vehicle_data = []
+    if (el.data !== undefined) {
+      const car = el.data
+      if (car.year) vehicle_data.push(car.year)
+      if (car.brand) vehicle_data.push(car.brand)
+      if (car.model) vehicle_data.push(car.model)
+      if (car.engineCode) vehicle_data.push(car.engineCode)
+      if (car.km) vehicle_data.push(`${car.km}km`)
+      vehicle_data = vehicle_data.join(", ")
     }
-
-    if (el.images != "NINCS") {
-      if (el.images.includes(",")) el.images = el.images.split(",");
-      else if (el.images.length > 0) el.images = [el.images];
-      else el.images = [];
+  
+    let images = el.images
+    if (images !== "NINCS") {
+      if (images.includes(",")) images = images.split(",")
+      else if (images.length > 0) images = [images]
+      else images = []
     }
+  
+    const imageUrl = Array.isArray(images) && images.length > 0 ? `/marketplace/images/${el.id}/0` : ""
+  
     return (
-      <div className="post my-3 w-100">
-        <div className="row">
-          <div className="col-4 g-5">
-            <div className="row h-100">
-              <div
-                style={{
-                  backgroundImage: `url(${API}/marketplace/images/${el.id}/0)`,
-                }}
-                className="marketplace-listing-image m-2"
-              ></div>
+      <article className="listing-entry">
+        <div className="listing-image" style={{ backgroundImage: `url(${API+imageUrl})` }}></div>
+        <div className="listing-content">
+          <h2 className="listing-title">{el.itemname}</h2>
+          <p className="listing-description">{desc}</p>
+          <div className="listing-details">
+            <div className="listing-price">{Number.parseInt(el.itemprice).toLocaleString()} Ft</div>
+            <div className="listing-tags">
+              <span className="listing-label">Címkék</span>
+              <span className="listing-value">{vehicle_data}</span>
+            </div>
+            <div className="listing-date">
+              <span className="listing-label">Közzétéve</span>
+              <span className="listing-value">{el.listed_at}</span>
             </div>
           </div>
-          <div className="col-8 g-3">
-            <div className="d-flex flex-column my-2">
-              <p className="fs-4 fw-bold my-0">
-                {el.itemname}
-                <hr className="w-25" />
-              </p>
-              <p className="fs-7 mt-1">{desc}</p>
-              <p className="fs-11 mt-1">
-                <u className="fw-bold">{`${el.itemprice}`}</u>Ft
-              </p>
-              <div className="d-flex justify-content-between">
-                <div className="d-flex flex-column mt-3">
-                  <p className="my-0">
-                    Címkék <hr className="my-0" />
-                  </p>
-                  <p className="fw-bold">{vehicle_data}</p>
-                </div>
-                <div className="d-flex flex-column mt-3">
-                  <p className="my-0">
-                    Közzétéve <hr className="my-0" />
-                  </p>
-                  <p className="fw-bold">{el.listed_at}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <button className="listing-button" onClick={() => navigate(`/marketplace-item/${el.id}`)}>
+            Megtekintés
+          </button>
         </div>
-        <div className="row">
-          <div className="col-10"></div>
-          <div className="col-2 mt-auto">
-            <input
-              type="button"
-              value="Megtekintés"
-              className="btn btn-primary mb-2"
-              onClick={() => navigator(`/marketplace-item/${el.id}`)}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  };
+      </article>
+    )
+  }
+  
 
   useEffect(() => {
     LoadListings();
   }, []);
   return (
     <>
-      <div className="row">
-        <div className="container col-sm-3 my-2">
-          <div className="d-flex justify-content-center mt-5">
-            <div className="col-2"></div>
-            <div className="col-8 post d-flex justify-content-center flex-column text-center">
-              <p className="fs-4 fw-bold mt-2 mb-2">Szűrők</p>
-              <div className="m-2">
-                <label htmlFor="">Gyártó</label>
-                <select ref={brandFilterRef} className="form-control">
-                  <option value="-">-</option>
-                </select>
-              </div>
-              <div className="m-2">
-                <label htmlFor="">Gyártmány</label>
-                <select ref={modelFilterRef} className="form-control">
-                  <option value="-">-</option>
-                </select>
-              </div>
-              <div className="m-2">
-                <label htmlFor="">Motorkód</label>
-                <select ref={engineCodeFilterRef} className="form-control">
-                  <option value="-">-</option>
-                </select>
-              </div>
-              <input
-                type="button"
-                value="Szűrés"
-                className="form-control mt-2 mb-4 hoverbutton"
-                onClick={LoadListings}
-              />
-            </div>
-            <div className="col-2"></div>
+  <div className="row">
+    <div className="container col-sm-3 my-2">
+      <div className="d-flex justify-content-center mt-5">
+        <div className="col-2"></div>
+        <div className="col-8 listing-entry d-flex justify-content-center flex-column text-center">
+          <p className="fs-4 fw-bold mt-2 mb-4 ">Szűrők</p>
+          <div className="m-2">
+            <label htmlFor="brand" className="form-label fw-bold">Gyártó</label>
+            <select ref={brandFilterRef} className="form-select ">
+              <option value="-">-</option>
+            </select>
           </div>
+          <div className="m-2">
+            <label htmlFor="model" className="form-label fw-bold">Gyártmány</label>
+            <select ref={modelFilterRef} className="form-select ">
+              <option value="-">-</option>
+            </select>
+          </div>
+          <div className="m-2">
+            <label htmlFor="engineCode" className="form-label fw-bold">Motorkód</label>
+            <select ref={engineCodeFilterRef} className="form-select ">
+              <option value="-">-</option>
+            </select>
+          </div>
+         <div className="px-0 px-sm-4 py-2">
+         <input
+            type="button"
+            value="Szűrés"
+            className="filter-button btn w-100"
+            onClick={LoadListings}
+          />
+         </div>
         </div>
-        <div className="container col-sm-7 my-2">
-          {activeListings.map((i) => ListingEntry(i))}
-        </div>
-        <div className="col-sm-2 p-0"></div>
+        <div className="col-2"></div>
       </div>
-    </>
+    </div>
+    <div className="container col-sm-7 my-2">
+      {activeListings.map((i) => ListingEntry(i))}
+    </div>
+    <div className="col-sm-2 p-0"></div>
+  </div>
+</>
   );
 }
 

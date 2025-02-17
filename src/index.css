@@ -476,6 +476,7 @@ input {
   font-family: "Rubik Mono One", serif;
   font-weight: 400;
   font-style: normal;
+  text-shadow: 1px 1px black;
 }
 .slogen {
   backdrop-filter: blur(7px);
@@ -758,4 +759,140 @@ input {
   background-color: #0056b3;
   border-color: #0056b3;
   transform: translateY(-2px);
+}
+.request-container{
+  background-color: #FAF9F6;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+  padding: 20px;
+  border-radius: 5px;
+
+}
+.listing-entry {
+  display: flex;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.listing-entry:hover {
+  transform: translateY(-4px);
+}
+
+.listing-image {
+  flex: 0 0 30%;
+  background-size: cover;
+  background-position: center;
+  min-height: 200px;
+}
+
+.listing-content {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.listing-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.listing-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.listing-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+.listing-price {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.listing-tags,
+.listing-date {
+  display: flex;
+  flex-direction: column;
+}
+
+.listing-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #95a5a6;
+  margin-bottom: 0.25rem;
+}
+
+.listing-value {
+  font-size: 0.9rem;
+  color: #34495e;
+}
+
+.listing-button {
+  align-self: flex-end;
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.filter-button {
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.listing-button:hover {
+  background-color: #2980b9;
+}
+
+@media (max-width: 768px) {
+  .listing-entry {
+    flex-direction: column;
+  }
+
+  .listing-image {
+    flex: 0 0 200px;
+  }
+
+  .listing-details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .listing-tags,
+  .listing-date {
+    margin-bottom: 0.5rem;
+  }
+
+  .listing-button {
+    align-self: stretch;
+  }
+}
+
+.h-btn:hover{
+  background-color: #021627;
+  transition: all 0.3s;
+  transform: translateY(-1.5px);
 }

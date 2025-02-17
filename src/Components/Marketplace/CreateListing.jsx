@@ -251,7 +251,8 @@ function CreateListing() {
         <div className="col-2 mx-5">
           <input
             type="button"
-            value="Hírdetés létrehozása"
+            value=" + Hírdetés létrehozása"
+        
             onClick={() =>
               CreateModal(
                 <p className="border-bottom fs-3 fw-bold">Hírdetés</p>,
@@ -259,7 +260,7 @@ function CreateListing() {
                 true
               )
             }
-            className="form-control my-3 hoverbutton postcolor"
+            className="form-control h-btn my-3 hoverbutton postcolor"
           />
         </div>
         <div className="col-5"></div>

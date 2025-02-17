@@ -95,7 +95,6 @@ function LoginForm() {
   return (
     <>
       <div className="d-none d-sm-block">
-        {" "}
         <br />
         <br />
         <br />
@@ -152,8 +151,6 @@ function LoginForm() {
           </div>
         </div>
       </div>
-
-      {/* jelszó visszaállítási lehetőség */}
     </>
   );
 }

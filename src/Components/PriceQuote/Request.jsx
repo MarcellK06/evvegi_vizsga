@@ -210,12 +210,13 @@ function Request() {
     );
   } else {
     return (
-      <div className="my-3">
+  
+      <div className="container my-3">
         <div className="row">
           <p className="fs-3 mx-auto text-center">Árajánlat Kérése</p>
         </div>
-        <div className="row req my-3">
-          <div className="col-sm-5 mx-auto">
+        <div className="row my-3">
+          <div className="col-sm-7 mx-auto  request-container">
             <label htmlFor="subject">
               <p className="fs-3 fw-bold mt-2">
                 Cím<span className="text-danger">*</span>
