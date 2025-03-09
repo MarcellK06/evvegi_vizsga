@@ -83,7 +83,9 @@ function LoadProfileData() {
                   <div className="col-12 col-md-4 col-lg-3 mb-3">
                     <div
                       className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
-                      onClick={() => (window.location.href = "/posts/admin")}
+                      onClick={() =>
+                        (window.location.href = "/community/admin")
+                      }
                     >
                       <FaThList size={20} className="mx-auto" />
                       <p className="mb-0 pt-2">Bejegyzések</p>

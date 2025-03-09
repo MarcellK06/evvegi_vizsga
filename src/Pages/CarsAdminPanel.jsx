@@ -145,7 +145,7 @@ function CarsAdminPanel() {
               <img
                 src={el.images[0]}
                 alt=""
-                className="object-fit-contain mx-auto hoverbutton"
+                className="img-fluid mx-auto hoverbutton"
                 style={{ height: "30vh" }}
                 onClick={() => window.open(el.images[0], "_blank")}
               />
@@ -154,7 +154,7 @@ function CarsAdminPanel() {
               <img
                 src={el.images[1]}
                 alt=""
-                className="object-fit-contain mx-auto hoverbutton"
+                className="img-fluid mx-auto hoverbutton"
                 style={{ height: "30vh" }}
                 onClick={() => window.open(el.images[1], "_blank")}
               />
@@ -163,7 +163,7 @@ function CarsAdminPanel() {
               <img
                 src={el.images[2]}
                 alt=""
-                className="object-fit-contain mx-auto hoverbutton"
+                className="img-fluid mx-auto hoverbutton"
                 style={{ height: "30vh" }}
                 onClick={() => window.open(el.images[2], "_blank")}
               />

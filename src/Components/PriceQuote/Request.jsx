@@ -210,7 +210,6 @@ function Request() {
     );
   } else {
     return (
-  
       <div className="container my-3">
         <div className="row">
           <p className="fs-3 mx-auto text-center">Árajánlat Kérése</p>

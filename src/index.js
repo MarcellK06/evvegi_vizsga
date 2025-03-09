@@ -29,6 +29,10 @@ import Mailer from "./Pages/Mailer";
 import GDPR from "./Pages/GDPR";
 import Aszf from "./Pages/Aszf";
 import CarsAdminPanel from "./Pages/CarsAdminPanel";
+import USERDOC from "./Pages/USERDOC";
+import DEVDOC from "./Pages/DEVDOC";
+import TESTDOC from "./Pages/TESTDOC";
+import Exam from "./Pages/Exam";
 
 //192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -59,6 +63,9 @@ root.render(
             />
             <Route path="/GDPR" element={<GDPR />} />
             <Route path="/aszf" element={<Aszf />} />
+            <Route path="/user-doc" element={<USERDOC />} />
+            <Route path="/dev-doc" element={<DEVDOC />} />
+            <Route path="/test-doc" element={<TESTDOC />} />
             <Route
               path="/my-account/listings"
               element={<MyAccountListings />}
@@ -72,6 +79,7 @@ root.render(
             <Route path="/auth/:type" element={<Authentication />} />
             <Route path="/about" element={<About />} />
             <Route path="/admin/mails" element={<Mailer />} />
+            <Route path="/exam" element={<Exam />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

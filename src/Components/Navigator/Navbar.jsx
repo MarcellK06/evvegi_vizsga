@@ -29,6 +29,7 @@ function Navbar() {
     new NavLink("Marketplace", "/marketplace", false),
     new NavLink("Közösség", "/community", true),
     new NavLink("Autóim", "/own-cars", true),
+    new NavLink("Vizsga", "/exam", false),
   ];
 
   const OpenClose = () => {

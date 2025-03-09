@@ -476,7 +476,7 @@ input {
   font-family: "Rubik Mono One", serif;
   font-weight: 400;
   font-style: normal;
-  text-shadow: 1px 1px black;
+  text-shadow: 1px 1px #00000066;
 }
 .slogen {
   backdrop-filter: blur(7px);
@@ -760,12 +760,12 @@ input {
   border-color: #0056b3;
   transform: translateY(-2px);
 }
-.request-container{
-  background-color: #FAF9F6;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+.request-container {
+  background-color: #faf9f6;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
   padding: 20px;
   border-radius: 5px;
-
 }
 .listing-entry {
   display: flex;
@@ -891,7 +891,7 @@ input {
   }
 }
 
-.h-btn:hover{
+.h-btn:hover {
   background-color: #021627;
   transition: all 0.3s;
   transform: translateY(-1.5px);

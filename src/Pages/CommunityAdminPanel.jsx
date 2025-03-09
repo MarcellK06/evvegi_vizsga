@@ -1,7 +1,7 @@
 import Cookie from "js-cookie";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import LoadCommunityPostsAdmin from "../Components/CommunityAdminPanel/LoadCommunityPosts";
 function CommunityAdminPanel() {
   const navi = useNavigate();
   const CheckUser = () => {
@@ -12,7 +12,11 @@ function CommunityAdminPanel() {
   useEffect(() => {
     CheckUser();
   }, []);
-  return <></>;
+  return (
+    <>
+      <LoadCommunityPostsAdmin />
+    </>
+  );
 }
 
 export default CommunityAdminPanel;

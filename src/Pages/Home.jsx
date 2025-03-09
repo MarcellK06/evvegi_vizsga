@@ -148,7 +148,7 @@ function Home() {
             className="brand-title text-center text-white"
             style={{ fontSize: "40px" }}
           >
-            Szervíz / Kozmetika / Gumiabrocs...
+            Szervíz / Kozmetika / Gumiabroncs...
           </h5>
           <div className="d-flex justify-content-center">
             <h3 className="text-center brand-title slogen">

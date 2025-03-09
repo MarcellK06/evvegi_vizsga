@@ -252,7 +252,6 @@ function CreateListing() {
           <input
             type="button"
             value=" + Hírdetés létrehozása"
-        
             onClick={() =>
               CreateModal(
                 <p className="border-bottom fs-3 fw-bold">Hírdetés</p>,
