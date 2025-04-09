@@ -43,6 +43,11 @@ function ListListings() {
       data: {
         userid: userid,
         rankid: rankid,
+        filters: [
+          brandFilterRef.current.value,
+          modelFilterRef.current.value,
+          engineCodeFilterRef.current.value,
+        ]
       },
       success: function (resp) {
         if (i < listings.length) setActiveListings(listings[i - 1]);
@@ -63,6 +68,7 @@ function ListListings() {
               )
             );
             if (typeof el.data != "undefined") {
+              console.log(el);
               var car = JSON.parse(el.data);
               if (!brandFilterRef.current.innerHTML.includes(car.brand))
                 brandFilterRef.current.innerHTML += `<option value="${car.brand}">${car.brand}</option>`;
@@ -84,12 +90,14 @@ function ListListings() {
   };
 
   const ListingEntry = (el) => {
-    if (!el.itemname) return;
-    var vehicle_data = "";
+    if (!el.itemname) return null;
 
-    var car = el.data;
-    var vehicle_data = [];
-    if (el.data != undefined) {
+    let desc = el.itemdescription;
+    if (desc.length > 575) desc = `${desc.substr(0, 575)}...`;
+
+    let vehicle_data = [];
+    if (el.data !== undefined) {
+      const car = el.data;
       if (car.year) vehicle_data.push(car.year);
       if (car.brand) vehicle_data.push(car.brand);
       if (car.model) vehicle_data.push(car.model);
@@ -98,12 +106,8 @@ function ListListings() {
       vehicle_data = vehicle_data.join(", ");
     }
 
-    if (el.images != "NINCS") {
-      if (el.images.includes(",")) el.images = el.images.split(",");
-      else if (el.images.length > 0) el.images = [el.images];
-      else el.images = [];
-    }
-
+    let images = el.images;
+    
     const ApproveListing = (i) => {
       var userid = Cookie.get("userid");
       var rankid = Cookie.get("rank");
@@ -140,96 +144,109 @@ function ListListings() {
       });
     };
 
+    if (images !== "NINCS") {
+      if (images.includes(",")) images = images.split(",");
+      else if (images.length > 0) images = [images];
+      else images = [];
+    }
+
+    const imageUrl =
+      Array.isArray(images) && images.length > 0
+        ? `/marketplace/images/${el.id}/0`
+        : "";
+
     return (
-      <div className="post my-3 w-100">
-        <div className="row">
-          <div className="col-4 g-5">
-            <div className="row h-100">
-              <div
-                style={{ backgroundImage: `url(${el.images[0]})` }}
-                className="marketplace-listing-image m-2"
-              ></div>
+      <article className="listing-entry">
+        <div
+          className="listing-image"
+          style={{ backgroundImage: `url(${API + imageUrl})` }}
+        ></div>
+        <div className="listing-content">
+          <h2 className="listing-title">{el.itemname}</h2>
+          <p className="listing-description">{desc}</p>
+          <div className="listing-details">
+            <div className="listing-price">
+              {Number.parseInt(el.itemprice).toLocaleString()} Ft
+            </div>
+            <div className="listing-tags">
+              <span className="listing-label">Címkék</span>
+              <span className="listing-value">{vehicle_data}</span>
+            </div>
+            <div className="listing-date">
+              <span className="listing-label">Közzétéve</span>
+              <span className="listing-value">{el.listed_at}</span>
             </div>
           </div>
-          <div className="col-8 g-3">
-            <div className="d-flex flex-column my-2">
-              <p className="fs-4 fw-bold">{el.itemname}</p>
-              <p className="fs-7 mt-3">{el.itemdescription}</p>
-              <p className="fs-11 mt-1">
-                <u className="fw-bold">{`${el.itemprice}`}</u>Ft
-              </p>
-              <div className="d-flex justify-content-between">
-                <p className="fw-bold">{vehicle_data}</p>
-                <p className="fw-bold">{el.listed_at}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row d-flex justify-content-end">
-          <div className="col-9"></div>
-          <div className="col-3 mt-auto d-flex justify-content-end">
-            <input
-              type="button"
-              value="Megerősítés"
-              className="btn btn-primary mb-2 mx-1"
+          <div className="d-flex justify-content-end">
+            <button
+              className="h-btn w-25 mx-auto acceptad"
               onClick={() => ApproveListing(el)}
-            />
-            <input
-              type="button"
-              value="Elutasítás"
-              className="btn btn-danger mb-2 mx-1"
+            >
+              Elfogadás
+            </button>
+            <button
+              className="h-btn w-25 mx-auto declinead"
               onClick={() => DeclineListing(el)}
-            />
+            >
+              Elutasítás
+            </button>
           </div>
         </div>
-      </div>
+      </article>
     );
   };
-
   useEffect(() => {
     LoadListings();
   }, []);
   return (
     <>
-      <div className="row">
-        <div className="container col-sm-3 my-2">
-          <div className="d-flex justify-content-center mt-5">
-            <div className="col-2"></div>
-            <div className="col-8 post d-flex justify-content-center flex-column text-center">
-              <p className="fs-4 fw-bold mt-2 mb-2">Szűrők</p>
-              <div className="m-2">
-                <label htmlFor="">Gyártó</label>
-                <select ref={brandFilterRef} className="form-control">
-                  <option value="-">-</option>
-                </select>
-              </div>
-              <div className="m-2">
-                <label htmlFor="">Gyártmány</label>
-                <select ref={modelFilterRef} className="form-control">
-                  <option value="-">-</option>
-                </select>
-              </div>
-              <div className="m-2">
-                <label htmlFor="">Motorkód</label>
-                <select ref={engineCodeFilterRef} className="form-control">
-                  <option value="-">-</option>
-                </select>
-              </div>
+    <div className="row">
+      <div className="container col-sm-3 my-2">
+        <div className="d-flex justify-content-center mt-5">
+          <div className="col-2"></div>
+          <div className="col-8 listing-entry d-flex justify-content-center flex-column text-center">
+            <p className="fs-4 fw-bold mt-2 mb-4 ">Szűrők</p>
+            <div className="m-2">
+              <label htmlFor="brand" className="form-label fw-bold">
+                Gyártó
+              </label>
+              <select ref={brandFilterRef} className="form-select ">
+                <option value="-">-</option>
+              </select>
+            </div>
+            <div className="m-2">
+              <label htmlFor="model" className="form-label fw-bold">
+                Gyártmány
+              </label>
+              <select ref={modelFilterRef} className="form-select ">
+                <option value="-">-</option>
+              </select>
+            </div>
+            <div className="m-2">
+              <label htmlFor="engineCode" className="form-label fw-bold">
+                Motorkód
+              </label>
+              <select ref={engineCodeFilterRef} className="form-select ">
+                <option value="-">-</option>
+              </select>
+            </div>
+            <div className="px-0 px-sm-4 py-2">
               <input
                 type="button"
                 value="Szűrés"
-                className="form-control mt-2 mb-4"
+                className="h-btn w-100"
                 onClick={LoadListings}
               />
             </div>
-            <div className="col-2"></div>
           </div>
+          <div className="col-2"></div>
         </div>
-        <div className="container col-sm-7 my-2">
-          {activeListings.map((i) => ListingEntry(i))}
-        </div>
-        <div className="col-sm-2 p-0"></div>
       </div>
+      <div className="container col-sm-7 my-2">
+        {activeListings.map((i) => ListingEntry(i))}
+      </div>
+      <div className="col-sm-2 p-0"></div>
+    </div>
     </>
   );
 }

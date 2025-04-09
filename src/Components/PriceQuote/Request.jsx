@@ -150,133 +150,130 @@ function Request() {
   }, []);
   if (loggedIn) {
     return (
-      <div className="my-3">
-        <div className="row">
-          <p className="fs-3 mx-auto text-center">Árajánlat Kérése</p>
+      <div className="quote-container">
+        <div className="quote-header">
+          <h2 className="quote-title">Árajánlat Kérése</h2>
         </div>
-        <div className="row post my-3">
-          <div className="col-2"></div>
-          <div className="col-8">
-            <div className="row my-3">
-              <label htmlFor="subject">
-                <p className="fs-3 fw-bold m-0">Cím</p>
-                <p>Írja le röviden, mit tapasztal járműve!</p>
+        <div className="quote-form-wrapper">
+          <div className="quote-form">
+            <div className="form-group">
+              <label htmlFor="subject" className="form-label">
+                <span className="label-title">Cím</span>
+                <span className="label-description ms-2">Írja le röviden, mit tapasztal járműve!</span>
               </label>
               <input
                 type="text"
                 name="subject"
                 id="subject"
-                className="form-control"
+                className="input-field"
                 ref={subjectRef}
               />
             </div>
-            <div className="row my-3">
-              <label htmlFor="body">
-                <p className="fs-3 fw-bold m-0">Leírás</p>
-                <p>Írja le részletesebben járműve problémáját!</p>
+            
+            <div className="form-group">
+              <label htmlFor="body" className="form-label">
+                <span className="label-title">Leírás</span>
+                <span className="label-description ms-2">Írja le részletesebben járműve problémáját!</span>
               </label>
               <input
                 type="text"
                 name="body"
                 id="body"
-                className="form-control"
+                className="input-field"
                 ref={bodyRef}
               />
             </div>
-            <div className="row my-3">
-              <label htmlFor="owncars">
-                <p className="fs-3 fw-bold m-0">Saját Járművek</p>
+            
+            <div className="form-group">
+              <label htmlFor="owncars" className="form-label">
+                <span className="label-title">Saját Járművek</span>
               </label>
               <select
                 name="owncars"
                 id="owncars"
-                className="form-control"
+                className="select-field"
                 ref={ownCarsRef}
               >
                 <option value={"SELECT"}>Válasszon járművet</option>
                 {ownCars.map((i) => ownCarEntry(i))}
               </select>
             </div>
-            <input
+            
+            <button
               type="button"
-              value="Árajánlat Kérése"
-              className="form-control my-3"
+              className="submit-button"
               onClick={SendRequest}
-            />
+            >
+              Árajánlat Kérése
+            </button>
           </div>
-          <div className="col-2"></div>
         </div>
       </div>
     );
   } else {
     return (
-      <div className="container my-3">
-        <div className="row">
-          <p className="fs-3 mx-auto text-center">Árajánlat Kérése</p>
+      <div className="quote-container">
+        <div className="quote-header">
+          <h2 className="quote-title">Árajánlat Kérése</h2>
         </div>
-        <div className="row my-3">
-          <div className="col-sm-7 mx-auto  request-container">
-            <label htmlFor="subject">
-              <p className="fs-3 fw-bold mt-2">
-                Cím<span className="text-danger">*</span>
-              </p>
-              <p>Írja le röviden, mit tapasztal járműve!</p>
-            </label>
-            <div>
-              {" "}
+        <div className="quote-form-wrapper">
+          <div className="quote-form">
+            <div className="form-group">
+              <label htmlFor="subject" className="form-label">
+                <span className="label-title">Cím<span className="required-mark">*</span></span>
+                <span className="label-description">Írja le röviden, mit tapasztal járműve!</span>
+              </label>
               <input
                 type="text"
                 name="subject"
                 id="subject"
-                className="form-control"
+                className="input-field"
                 ref={subjectRef}
               />
             </div>
-            <label htmlFor="body">
-              <p className="fs-3 fw-bold mt-2">
-                Leírás<span className="text-danger">*</span>
-              </p>
-              <p>Írja le részletesebben járműve problémáját!</p>
-            </label>
-            <div>
+            
+            <div className="form-group">
+              <label htmlFor="body" className="form-label">
+                <span className="label-title">Leírás<span className="required-mark">*</span></span>
+                <span className="label-description">Írja le részletesebben járműve problémáját!</span>
+              </label>
               <textarea
-                type="text"
                 name="body"
                 id="body"
-                className="form-control"
+                className="textarea-field"
                 ref={bodyRef}
-                rows={10}
+                rows={8}
               ></textarea>
             </div>
-
-            <label htmlFor="body">
-              <p className="fs-3 fw-bold mt-2">
-                Email cím <span className="text-danger">*</span>
-              </p>
-              <p>Adja meg email címét ahol elérhetjük!</p>
-            </label>
-            <div>
+            
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                <span className="label-title">Email cím <span className="required-mark">*</span></span>
+                <span className="label-description">Adja meg email címét ahol elérhetjük!</span>
+              </label>
               <input
-                type="text"
-                name="body"
-                id="body"
-                className="form-control"
+                type="email"
+                name="email"
+                id="email"
+                className="input-field"
                 ref={emailRef}
               />
             </div>
-            <div>
-              <button
-                className="btn h-btn form-control mt-4 p-3"
-                onClick={SendRequestAnon}
-              >
-                Ajánlat kérése
-              </button>
-            </div>
+            
+            <button
+              className="submit-button"
+              onClick={SendRequestAnon}
+            >
+              Ajánlat kérése
+            </button>
           </div>
         </div>
       </div>
     );
   }
+  
+  
+ 
 }
 
 export default Request;

@@ -4,7 +4,7 @@ import { HiOfficeBuilding } from "react-icons/hi";
 import Logo from "../../Media/logo.png";
 function Footer({ f = false }) {
   return (
-    <footer>
+    <footer id="footer">
       <div
         className={`container-fluid bg-dark w-100 footer py-2 mt-3 mt-5 ${
           f ? "postion-absolute button-0" : ""
@@ -42,17 +42,16 @@ function Footer({ f = false }) {
                 <a href="/about">Rólunk</a>
               </div>
               <div>
-                <a href="">Gyakran ismételt kérdések</a>
-              </div>
-              <div>
-                {" "}
-                <a href="">Adatkezelési tájékoztatót</a>
+                <a href="/faq">Gyakran ismételt kérdések</a>
               </div>
               <div>
                 <a href="/GDPR">GDPR</a>
               </div>
               <div>
                 <a href="/aszf">ASZF</a>
+              </div>
+              <div>
+                <a href="/exam">VIZSGA</a>
               </div>
             </div>
           </div>
@@ -67,11 +66,11 @@ function Footer({ f = false }) {
           <div className="col-sm-3 mx-auto mb-sm-2">
             <h5 className="text-uppercase fw-bold">Kapcsolat</h5>
             <div>
-              <MdEmail /> info@Szalkacar.hu
+              <MdEmail /> <a href="mailto:info@szalkacar.hu">info@Szalkacar.hu</a>
               <br />
-              <FaPhone /> 06303926004
+              <FaPhone /> <a href="tel:+36303926004">+36303926004</a>
               <br />
-              <HiOfficeBuilding /> 4700, Mátászalka Kölcsey út 12
+              <HiOfficeBuilding /> <a href="https://maps.app.goo.gl/9xEzNy9RpNJG2L5H9">4700, Mátészalka Kölcsey út 12</a>
             </div>
           </div>
         </div>

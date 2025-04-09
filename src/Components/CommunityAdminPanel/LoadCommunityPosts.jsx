@@ -4,12 +4,14 @@ import $ from "jquery";
 import Cookie from "js-cookie";
 import CommunityPostComments from "./CommunityPostComments";
 import { CiClock2 } from "react-icons/ci";
-import { FaRegCommentDots, FaTrash } from "react-icons/fa";
+import { FaRegCommentDots, FaTrash, FaImages, FaEye, FaExclamationTriangle } from "react-icons/fa";
 import { json } from "react-router-dom";
 import { ModalContext } from "../../Providers/ModalProvider";
 import Cookies from "js-cookie";
+
 function LoadCommunityPostsAdmin() {
   const [i, setI] = useState(1);
+  const [loading, setLoading] = useState(true);
   const { CreateModal } = useContext(ModalContext);
   var API = CONFIG.API;
 
@@ -44,6 +46,7 @@ function LoadCommunityPostsAdmin() {
 
   var posts = [];
   var [activeposts, setActivePosts] = useState([]);
+  
   const ShowComments = (id) => {
     var el = document.getElementById(`comments-${id}`);
     if (el.classList.contains("d-block")) {
@@ -59,49 +62,59 @@ function LoadCommunityPostsAdmin() {
     if (el.images[0] == "") return;
     var postid = el.id;
     return (
-      <>
-        <div class={`carousel-item ${idx == 0 ? "active" : ""}`}>
-          <div className="d-flex p-3">
-            <img
-              src={`${API}/community/postimages/${postid}/${idx}`}
-              className="h-50 w-50 mx-auto rounded"
-            />
-          </div>
+      <div className={`carousel-item ${idx == 0 ? "active" : ""}`} key={idx}>
+        <div className="d-flex p-3">
+          <img
+            src={`${API}/community/postimages/${postid}/${idx}`}
+            className="carousel-image img-fluid rounded mx-auto"
+            alt={`Post image ${idx + 1}`}
+          />
         </div>
-      </>
+      </div>
     );
   };
 
   const showAllImages = (el) => {
     return (
-      <>
-        <div id={`carousel-${el.id}`} class="carousel slide bg-dark">
-          <div class="carousel-inner">
+      <div className="image-carousel-container">
+        <div id={`carousel-${el.id}`} className="carousel slide">
+          <div className="carousel-inner rounded-3 overflow-hidden">
             {el.images.map((i, idx) => loadImage(idx, el))}
           </div>
-          <button
-            class="carousel-control-prev"
-            data-bs-target={`#carousel-${el.id}`}
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            data-bs-target={`#carousel-${el.id}`}
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+          {el.images.length > 1 && (
+            <>
+              <button
+                className="carousel-control-prev"
+                type="button"
+                data-bs-target={`#carousel-${el.id}`}
+                data-bs-slide="prev"
+              >
+                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span className="visually-hidden">Previous</span>
+              </button>
+              <button
+                className="carousel-control-next"
+                type="button"
+                data-bs-target={`#carousel-${el.id}`}
+                data-bs-slide="next"
+              >
+                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                <span className="visually-hidden">Next</span>
+              </button>
+            </>
+          )}
         </div>
-      </>
+      </div>
     );
   };
 
   const DeletePost = (postid) => {
     var userid = Cookies.get("userid");
+    
+    if (!window.confirm("Biztosan törölni szeretné ezt a bejegyzést?")) {
+      return;
+    }
+    
     $.ajax({
       url: `${API}/community/admin/posts/delete`,
       type: "post",
@@ -115,22 +128,11 @@ function LoadCommunityPostsAdmin() {
     });
   };
 
-  const PostEntry = (el) => {
-    var avatar = el.avatar;
-    var postedat = el.postedat;
+  const formatTimeAgo = (postedat) => {
     var postedat_text = "";
-    var userid = el.userid;
     var psplit = postedat.split("-");
     var now = new Date();
     if (psplit[1][0] == "0") psplit[1] = psplit[1][1];
-    var then = new Date(
-      parseInt(psplit[0].split(" ")[0]),
-      parseInt(psplit[1].split(" ")[0]),
-      parseInt(psplit[2].split(" ")[0]),
-      postedat.split(" ")[1].split(":"[0]),
-      postedat.split(" ")[1].split(":"[1]),
-      postedat.split(" ")[1].split(":"[2])
-    );
 
     if (parseInt(psplit[2].split(" ")[0]) != now.getDate())
       postedat_text = `${now.getDate() - parseInt(psplit[2])} n`;
@@ -147,88 +149,108 @@ function LoadCommunityPostsAdmin() {
       if (parseInt(psplit[0]) != now.getHours())
         postedat_text = `${now.getHours() - parseInt(psplit[0])} ó`;
     }
+    
+    return postedat_text;
+  };
+
+  const PostEntry = (el) => {
+    var postedat_text = formatTimeAgo(el.postedat);
+    var userid = el.userid;
+    
     return (
-      <>
-        <div className="post w-100 my-4">
-          <div className="row">
-            <div className="col-sm-1 mb-0">
-              <div
-                className="avatar mb-0"
-                style={{ backgroundImage: `url(${API}/user/avatar/${userid})` }}
-              ></div>
-            </div>
-            <div className="col-sm-4 mb-0" style={{ marginTop: "1.1%" }}>
-              <p className="fs-7 mb-0 mx-2">{el.username}</p>
-            </div>
-            <div className="col-sm mb-0">
-              <div className="d-flex justify-content-end mb-0">
-                <CiClock2 size={20} style={{ marginTop: "0.5%" }} />
-                <div className="ms-2 mb-0">{postedat_text}</div>
-              </div>
-            </div>
+      <div className="admin-post-card" key={el.id}>
+        <div className="post-header">
+          <div className="user-info">
+            <div
+              className="user-avatar"
+              style={{ backgroundImage: `url(${API}/user/avatar/${userid})` }}
+            ></div>
+            <div className="user-name">{el.username}</div>
           </div>
-          <p className="mt-2 mb-3 fw-bold fs-8">{el.title}</p>
-          <p className="fs-9">{el.description}</p>
-          {el.images[0] != "" ? <hr /> : <></>}
-          <div>
-            <div className="row">
-              {el.images[0] != "" ? (
+          <div className="post-time">
+            <CiClock2 className="time-icon" />
+            <span>{postedat_text}</span>
+          </div>
+        </div>
+        
+        <div className="post-content">
+          <h3 className="post-title">{el.title}</h3>
+          <p className="post-description">{el.description}</p>
+          
+          {el.images[0] != "" && (
+            <div className="post-images">
+              <div className="image-preview">
                 <img
                   src={`${API}/community/postimages/${el.id}/0`}
-                  className="object-fit-contain mx-auto hoverbutton"
+                  className="preview-image"
+                  alt="Post preview"
                   onClick={() =>
                     CreateModal(
-                      <>
-                        <p className="fs-3">Képek megtekintése</p> <hr />
-                      </>,
+                      <div className="modal-header">
+                        <h4 className="modal-title">
+                          <FaImages className="me-2" />
+                          Képek megtekintése
+                        </h4>
+                      </div>,
                       showAllImages(el),
                       true
                     )
                   }
                 />
-              ) : (
-                <></>
-              )}
-              {el.images[0] != "" ? (
-                <input
-                  type="button"
-                  value="Képek megtekintése"
-                  className="form-control mx-auto my-1 hoverbutton"
-                  style={{ width: "15vw" }}
-                  onClick={() =>
-                    CreateModal(
-                      <>
-                        <p className="fs-3">Képek megtekintése</p> <hr />
-                      </>,
-                      showAllImages(el),
-                      true
-                    )
-                  }
-                />
-              ) : (
-                <></>
-              )}
+                {el.images.length > 1 && (
+                  <div className="image-count">
+                    <FaImages className="me-1" />
+                    <span>{el.images.length}</span>
+                  </div>
+                )}
+              </div>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-primary d-block mx-auto mt-2"
+                onClick={() =>
+                  CreateModal(
+                    <>
+                      <h4 className="text-center mb-3">Images</h4>
+                    </>,
+                    showAllImages(el),
+                    true
+                  )
+                }
+              >
+                View All Images
+              </button>
             </div>
-          </div>
+          )}
         </div>
-        <hr />
-        <div className="d-flex justify-content-between">
-          <div onClick={() => ShowComments(el.id)} className="d-flex pointer">
-            <FaRegCommentDots />
-            <div className="ms-2 noselect">{el.comments}</div>
-          </div>
-          <div onClick={() => DeletePost(el.id)} className="d-flex pointer">
-            <FaTrash size={20} />
-          </div>
+        
+        <div className="post-actions">
+          <button 
+            className="action-button comments-button"
+            onClick={() => ShowComments(el.id)}
+          >
+            <FaRegCommentDots className="action-icon" />
+            <span>{el.comments}</span>
+          </button>
+          
+          <button 
+            className="action-button delete-button"
+            onClick={() => DeletePost(el.id)}
+            title="Bejegyzés törlése"
+          >
+            <FaTrash className="action-icon" />
+            <span>Törlés</span>
+          </button>
         </div>
-        <div className="container" id={`commentbox-${el.id}`}>
+        
+        <div className="comments-container d-none" id={`comments-${el.id}`}>
           <CommunityPostComments data={el} />
         </div>
-      </>
+      </div>
     );
   };
 
   const LoadPosts = () => {
+    setLoading(true);
     var token = Cookie.get("token");
     var userid = Cookie.get("userid");
     $.ajax({
@@ -241,8 +263,9 @@ function LoadCommunityPostsAdmin() {
         userid: userid,
       },
       success: function (resp) {
-        if (i < posts.length) setActivePosts((activeposts = posts[i - 1]));
-        else {
+        if (i < posts.length) {
+          setActivePosts(posts[i - 1]);
+        } else {
           posts.push([]);
           if (typeof resp == "string") {
             resp = JSON.parse(resp);
@@ -266,32 +289,65 @@ function LoadCommunityPostsAdmin() {
           });
           setActivePosts(posts[i - 1]);
         }
+        setLoading(false);
       },
+      error: function() {
+        setLoading(false);
+      }
     });
   };
 
   useEffect(() => {
     LoadPosts();
-  }, []);
+  }, [i]);
 
   return (
-    <>
-      <div className="container">
+    <div className="admin-posts-container">
+      <div className="container py-4">
+        <h2 className="admin-section-title mb-4">
+          <FaExclamationTriangle className="me-2" />
+          Közösségi Bejegyzések Kezelése
+        </h2>
+        
         <div className="row">
-          <div className="col-sm-6 mx-auto">
-            {" "}
-            {activeposts.map((i) => PostEntry(i))}
+          <div className="col-lg-8 col-md-10 mx-auto">
+            {loading ? (
+              <div className="loading-container">
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+                <p>Bejegyzések betöltése...</p>
+              </div>
+            ) : activeposts.length > 0 ? (
+              <>
+                {activeposts.map((post) => PostEntry(post))}
+                
+                <div className="pagination-controls">
+                  <button 
+                    className="pagination-button prev-button"
+                    onClick={() => setI(i - 1)} 
+                    disabled={i <= 1}
+                  >
+                    Előző
+                  </button>
+                  <span className="page-indicator">Oldal: {i}</span>
+                  <button 
+                    className="pagination-button next-button"
+                    onClick={() => setI(i + 1)}
+                  >
+                    Következő
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="no-posts-message">
+                <p>Nincsenek megjeleníthető bejegyzések</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
-
-      {/*    <input type="button" value="Previous" onClick={(e) => {setI(i-1)}} disabled={i <= 1}/>
-    <div>
-        
     </div>
-    
-    <input type="button" value="Next" onClick={(e) => {setI(i+1)}}/>*/}
-    </>
   );
 }
 

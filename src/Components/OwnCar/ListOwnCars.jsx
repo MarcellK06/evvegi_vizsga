@@ -3,7 +3,7 @@ import $ from "jquery";
 import Cookie from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../../Providers/ModalProvider";
-import { FaEye, FaTrash } from "react-icons/fa";
+import { FaEye, FaTrash, FaCheckCircle, FaHourglassHalf, FaCar } from "react-icons/fa";
 
 function ListOwnCars() {
   var API = CONFIG.API;
@@ -64,9 +64,9 @@ function ListOwnCars() {
 
   const JsonEntry = (i, el) => {
     return (
-      <div className="d-flex flex-column">
-        <p>{szotar[i]}&emsp;</p>
-        <p className="fw-bold">{el[i]}</p>
+      <div className="car-detail-item">
+        <p className="detail-label">{szotar[i]}</p>
+        <p className="detail-value">{el[i]}</p>
       </div>
     );
   };
@@ -89,78 +89,51 @@ function ListOwnCars() {
 
   const OwnCarEntry = (el) => {
     return (
-      <div className="post my-3 text-center">
-        <div className="d-flex">
+      <div className="car-detail-modal p-3">
+        <div className="car-specs d-flex flex-wrap mb-4">
           {Object.keys(el.data).map((i) => JsonEntry(i, el.data))}
-          <div>
-            <p>Alvázszám&emsp;</p>
-            <p className="fw-bold">{el.vin}</p>
+          <div className="car-detail-item">
+            <p className="detail-label">Alvázszám</p>
+            <p className="detail-value">{el.vin}</p>
           </div>
-          <div>
-            <p>Jármű Állapota:&emsp;</p>
-            <p className="fw-bold">{el.status}</p>
+          <div className="car-detail-item">
+            <p className="detail-label">Jármű Állapota</p>
+            <p className="detail-value">{el.status}</p>
           </div>
         </div>
-        <hr />
-        <div>
-          <div
-            className="row justify-content-between d-flex"
-            style={{ width: "50vw" }}
-          >
-            <div className="col-4 mx-auto d-flex">
-              <img
-                src={el.images[0]}
-                alt=""
-                className="object-fit-contain mx-auto hoverbutton"
-                style={{ height: "30vh" }}
-                onClick={() =>
-                  CreateModal(
-                    <div>
-                      <p className="fs-3">Fénykép Megtekintés</p>
-                      <hr />
-                    </div>,
-                    <img src={el.images[0]} style={{ height: "70vh" }} />,
-                    true
-                  )
-                }
-              />
-            </div>
-            <div className="col-4 mx-auto d-flex">
-              <img
-                src={el.images[1]}
-                alt=""
-                className="object-fit-contain mx-auto hoverbutton"
-                style={{ height: "30vh" }}
-                onClick={() =>
-                  CreateModal(
-                    <div>
-                      <p className="fs-3">Fénykép Megtekintés</p>
-                      <hr />
-                    </div>,
-                    <img src={el.images[1]} style={{ height: "70vh" }} />,
-                    true
-                  )
-                }
-              />
-            </div>
-            <div className="col-4 mx-auto d-flex">
-              <img
-                src={el.images[2]}
-                alt=""
-                className="object-fit-contain mx-auto hoverbutton"
-                style={{ height: "30vh" }}
-                onClick={() =>
-                  CreateModal(
-                    <div>
-                      <p className="fs-3">Fénykép Megtekintés</p>
-                      <hr />
-                    </div>,
-                    <img src={el.images[2]} style={{ height: "70vh" }} />,
-                    true
-                  )
-                }
-              />
-            </div>
+        
+        <hr className="divider" />
+        
+        <div className="car-images-container">
+          <div className="row g-3">
+            {el.images.map((img, index) => (
+              <div className="col-md-4" key={index}>
+                <div className="car-image-card">
+                  <img
+                    src={img || "/placeholder.svg"}
+                    alt={`Car image ${index + 1}`}
+                    className="img-fluid rounded car-thumbnail"
+                    onClick={() =>
+                      CreateModal(
+                        <div>
+                          <h4 className="modal-title">Fénykép Megtekintés</h4>
+                          <hr className="divider" />
+                        </div>,
+                        <img 
+                          src={img || "/placeholder.svg"} 
+                          className="img-fluid modal-image" 
+                          alt={`Car image ${index + 1} full view`}
+                        />,
+                        true
+                      )
+                    }
+                  />
+                  <div className="image-overlay">
+                    <FaEye className="view-icon" />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -179,57 +152,83 @@ function ListOwnCars() {
     var approved = el.approved;
     var engineCode = el.data.engineCode;
     return (
-      <>
-        <div className="row postcolor my-3 p-2 rounded">
-          <div className="col-4">
-            <p className="fs-3 m-0">{nickname}</p>
-            <div className="d-flex my-1">
-              <p className="fs-9 mx-2 fw-bold">{year}</p>
-              <p className="fs-9 mx-2 fw-bold">{brand}</p>
-              <p className="fs-9 mx-2 fw-bold">{model}</p>
-              <p className="fs-9 mx-2 fw-bold">{engineCode}</p>
+      <div className="car-list-item" key={el.id}>
+        <div className="car-card">
+          <div className="car-info">
+            <h3 className="car-nickname">{nickname}</h3>
+            <div className="car-specs-summary">
+              <span className="car-year">{year}</span>
+              <span className="car-brand">{brand}</span>
+              <span className="car-model">{model}</span>
+              <span className="car-engine">{engineCode}</span>
             </div>
           </div>
-          <div className="col-5"></div>
-          <div className="col-3 d-flex align-items-center justify-content-end">
-            <p
-              className={`fs-9 bold ${
-                approved ? "text-success" : "text-danger"
-              } m-0 mx-2`}
-            >
-              {approved ? "Ellenőrizve!" : "Ellenörzésre vár.."}
-            </p>
-            <FaEye
-              size={25}
-              className="mx-3 pointer"
+          
+          <div className="car-actions">
+            <div className={`approval-status ${approved ? 'approved' : 'pending'}`}>
+              {approved ? (
+                <>
+                  <FaCheckCircle className="status-icon" />
+                  <span>Ellenőrizve!</span>
+                </>
+              ) : (
+                <>
+                  <FaHourglassHalf className="status-icon" />
+                  <span>Ellenörzésre vár..</span>
+                </>
+              )}
+            </div>
+            
+            <button 
+              className="action-button view-button"
               onClick={() =>
                 CreateModal(
                   <div>
-                    <p className="fs-3">{nickname}</p>
-                    <hr />
+                    <h4 className="modal-title">
+                      <FaCar className="me-2" />
+                      {nickname}
+                    </h4>
+                    <hr className="divider" />
                   </div>,
                   OwnCarEntry(el),
                   true
                 )
               }
-            />
-            <FaTrash
-              size={25}
-              className="mx-3 pointer"
+            >
+              <FaEye/>
+            </button>
+            
+            <button 
+              className="action-button delete-button"
               onClick={() => HandleDelete(el)}
-            />
+            >
+              <FaTrash/>
+            </button>
           </div>
         </div>
-      </>
+      </div>
     );
   };
-  //{ownCars.map((i) => OwnCarEntry(i))}
+
   return (
-    <div>
-      <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8">{ownCars.map((i) => carListEntry(i))}</div>
-        <div className="col-2"></div>
+    <div className="car-list-container">
+      <div className="container py-4">
+        <h2 className="section-title mb-4">
+          <FaCar className="me-2" />
+          Saját Járművek
+        </h2>
+        
+        <div className="row">
+          <div className="col-lg-10 col-md-12 mx-auto">
+            {ownCars.length > 0 ? (
+              ownCars.map((car) => carListEntry(car))
+            ) : (
+              <div className="no-cars-message">
+                <p>Nincsenek járművek a listában</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

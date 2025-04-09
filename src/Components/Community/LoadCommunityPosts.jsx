@@ -7,9 +7,9 @@ import Cookie from "js-cookie";
 import CommunityPostComments from "./CommunityPostComments";
 import { CiClock2 } from "react-icons/ci";
 import { FaRegCommentDots } from "react-icons/fa";
-import { json } from "react-router-dom";
 import { ModalContext } from "../../Providers/ModalProvider";
-function LoadCommunityPosts() {
+
+const LoadCommunityPosts = function() {
   const [i, setI] = useState(1);
   const { CreateModal } = useContext(ModalContext);
   var API = CONFIG.API;
@@ -47,6 +47,7 @@ function LoadCommunityPosts() {
   var [activeposts, setActivePosts] = useState([]);
   const ShowComments = (id) => {
     var el = document.getElementById(`comments-${id}`);
+    console.log(el);
     if (el.classList.contains("d-block")) {
       el.classList.remove("d-block");
       el.classList.add("d-none");
@@ -61,11 +62,12 @@ function LoadCommunityPosts() {
     var postid = el.id;
     return (
       <>
-        <div class={`carousel-item ${idx == 0 ? "active" : ""}`}>
+        <div className={`carousel-item ${idx == 0 ? "active" : ""}`}>
           <div className="d-flex p-3">
             <img
               src={`${API}/community/postimages/${postid}/${idx}`}
-              className="h-50 w-50 mx-auto rounded"
+              className="img-fluid rounded mx-auto"
+              style={{ maxHeight: "500px", objectFit: "contain" }}
             />
           </div>
         </div>
@@ -76,25 +78,27 @@ function LoadCommunityPosts() {
   const showAllImages = (el) => {
     return (
       <>
-        <div id={`carousel-${el.id}`} class="carousel slide bg-dark">
-          <div class="carousel-inner">
+        <div id={`carousel-${el.id}`} className="carousel slide bg-light rounded-3 shadow">
+          <div className="carousel-inner">
             {el.images.map((i, idx) => loadImage(idx, el))}
           </div>
           <button
-            class="carousel-control-prev"
+            className="carousel-control-prev"
+            type="button"
             data-bs-target={`#carousel-${el.id}`}
             data-bs-slide="prev"
           >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Previous</span>
           </button>
           <button
-            class="carousel-control-next"
+            className="carousel-control-next"
+            type="button"
             data-bs-target={`#carousel-${el.id}`}
             data-bs-slide="next"
           >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Next</span>
           </button>
         </div>
       </>
@@ -135,81 +139,86 @@ function LoadCommunityPosts() {
     }
     return (
       <>
-        <div className="post w-100 my-4">
-          <div className="row">
-            <div className="col-sm-1 mb-0">
-              <div
-                className="avatar mb-0"
-                style={{ backgroundImage: `url(${API}/user/avatar/${userid})` }}
-              ></div>
-            </div>
-            <div className="col-sm-4 mb-0" style={{ marginTop: "1.1%" }}>
-              <p className="fs-7 mb-0 mx-2">{el.username}</p>
-            </div>
-            <div className="col-sm mb-0">
-              <div className="d-flex justify-content-end mb-0">
-                <CiClock2 size={20} style={{ marginTop: "0.5%" }} />
-                <div className="ms-2 mb-0">{postedat_text}</div>
+        <div className="post-card bg-white rounded-3 shadow-sm p-4 mb-4">
+          <div className="d-flex align-items-center mb-3">
+            <div
+              className="avatar rounded-circle me-3"
+              style={{ 
+                backgroundImage: `url(${API}/user/avatar/${userid})`,
+                width: "48px",
+                height: "48px",
+                backgroundSize: "cover",
+                backgroundPosition: "center"
+              }}
+            ></div>
+            <div className="flex-grow-1">
+              <p className="fw-bold mb-0">{el.username}</p>
+              <div className="d-flex align-items-center text-muted small">
+                <CiClock2 size={16} className="me-1" />
+                <span>{postedat_text}</span>
               </div>
             </div>
           </div>
-          <p className="mt-2 mb-3 fw-bold fs-8">{el.title}</p>
-          <p className="fs-9">{el.description}</p>
-          {el.images[0] != "" ? <hr /> : <></>}
-          <div>
-            <div className="row">
-              {el.images[0] != "" ? (
-                <img
-                  src={`${API}/community/postimages/${el.id}/0`}
-                  className="object-fit-contain mx-auto hoverbutton"
-                  onClick={() =>
-                    CreateModal(
-                      <>
-                        <p className="fs-3">Képek megtekintése</p> <hr />
-                      </>,
-                      showAllImages(el),
-                      true
-                    )
-                  }
-                />
-              ) : (
-                <></>
-              )}
-              {el.images[0] != "" ? (
-                <input
-                  type="button"
-                  value="Képek megtekintése"
-                  className="form-control mx-auto my-1 hoverbutton"
-                  style={{ width: "15vw" }}
-                  onClick={() =>
-                    CreateModal(
-                      <>
-                        <p className="fs-3">Képek megtekintése</p> <hr />
-                      </>,
-                      showAllImages(el),
-                      true
-                    )
-                  }
-                />
-              ) : (
-                <></>
-              )}
+          
+          <h5 className="fw-bold mb-2">{el.title}</h5>
+          <p className="mb-3">{el.description}</p>
+          
+          {el.images[0] != "" && (
+            <div className="mb-3">
+              <img
+                src={`${API}/community/postimages/${el.id}/0`}
+                className="img-fluid rounded-3 w-100"
+                style={{ maxHeight: "300px", objectFit: "cover", cursor: "pointer" }}
+                onClick={() =>
+                  CreateModal(
+                    <>
+                      <h4 className="text-center mb-3">Images</h4>
+                    </>,
+                    showAllImages(el),
+                    true
+                  )
+                }
+              />
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-primary d-block mx-auto mt-2"
+                onClick={() =>
+                  CreateModal(
+                    <>
+                      <h4 className="text-center mb-3">Images</h4>
+                    </>,
+                    showAllImages(el),
+                    true
+                  )
+                }
+              >
+                View All Images
+              </button>
+            </div>
+          )}
+          
+          <hr className="my-3" />
+          
+          <div className="d-flex justify-content-between">
+            <div className="d-flex align-items-center">
+              <LikeCommunityPost data={el} />
+            </div>
+            <div 
+              onClick={() => ShowComments(el.id)} 
+              className="d-flex align-items-center text-muted"
+              style={{ cursor: "pointer" }}
+            >
+              <FaRegCommentDots className="me-2" />
+              <span>{el.comments}</span>
             </div>
           </div>
-        </div>
-        <hr />
-        <div className="d-flex justify-content-between">
-          <div className="d-flex">
-            <LikeCommunityPost data={el} />
+          
+          <div className="mt-3 d-none" id={`comments-${el.id}`}>
+            <div className="comments-container bg-light p-3 rounded-3 mt-3">
+              <CommunityPostComments data={el} />
+              <CommentCommunityPost data={el.id} />
+            </div>
           </div>
-          <div onClick={() => ShowComments(el.id)} className="d-flex pointer">
-            <FaRegCommentDots />
-            <div className="ms-2 noselect">{el.comments}</div>
-          </div>
-        </div>
-        <div className="container" id={`commentbox-${el.id}`}>
-          <CommunityPostComments data={el} />
-          <CommentCommunityPost data={el.id} />
         </div>
       </>
     );
@@ -259,27 +268,52 @@ function LoadCommunityPosts() {
 
   useEffect(() => {
     LoadPosts();
+    setInterval(() => {
+      if (document.getElementById("postsloader") != null) {
+        document.getElementById("postsloader").innerHTML = "Jelenleg nincs közösségi bejegyzés..";
+        document.getElementById("loaderspinner").classList = [];
+      }
+    }, 3000);
   }, []);
 
   return (
     <>
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-6 mx-auto">
-            {" "}
-            {activeposts.map((i) => PostEntry(i))}
+      <div className="container py-4">
+        <div className="row justify-content-center">
+          <div className="col-lg-8 col-md-10">
+            {activeposts.length > 0 ? (
+              activeposts.map((post) => PostEntry(post))
+            ) : (
+              <div className="text-center py-5">
+                <div className="spinner-border text-primary" id="loaderspinner" role="status">
+                  <span className="visually-hidden">Betöltés...</span>
+                </div>
+                <p className="mt-3" id="postsloader">Posztok betöltése...</p>
+              </div>
+            )}
+            
+            <div className="d-flex justify-content-between mt-4">
+              <button 
+                type="button" 
+                className="btn btn-outline-primary px-4" 
+                onClick={(e) => {setI(i-1)}} 
+                disabled={i <= 1}
+              >
+                Previous
+              </button>
+              <button 
+                type="button" 
+                className="btn btn-primary px-4" 
+                onClick={(e) => {setI(i+1)}}
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-      {/*    <input type="button" value="Previous" onClick={(e) => {setI(i-1)}} disabled={i <= 1}/>
-    <div>
-        
-    </div>
-    
-    <input type="button" value="Next" onClick={(e) => {setI(i+1)}}/>*/}
     </>
   );
-}
+};
 
 export default LoadCommunityPosts;

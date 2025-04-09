@@ -139,13 +139,13 @@ function Home() {
           <br />
           <br />
           <h1
-            className="brand-title text-center text-white"
+            className="brand-title text-center text-white title"
             style={{ fontSize: "100px" }}
           >
             Szalkacar
           </h1>
           <h5
-            className="brand-title text-center text-white"
+            className="brand-title text-center text-white services"
             style={{ fontSize: "40px" }}
           >
             Szervíz / Kozmetika / Gumiabroncs...

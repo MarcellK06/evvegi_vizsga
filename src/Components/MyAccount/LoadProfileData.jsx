@@ -10,8 +10,9 @@ import {
   FaThList,
   FaCar,
   FaNewspaper,
-  FaCalendar,
+  FaCalendar
 } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 import { IoIosPricetags } from "react-icons/io";
 function LoadProfileData() {
   var API = CONFIG.API;
@@ -62,81 +63,75 @@ function LoadProfileData() {
     Get();
     getAvatar();
   }, []);
-
   const AdminPanel = () => {
     if (profile[0].rank == "admin")
       return (
-        <>
-          <div className="row">
-            <div className="col-2"></div>
-            <div className="col-8">
-              <div className="row text-center border-bottom">
-                <p className="fs-3">Admin Panel</p>
-              </div>
-            </div>
-            <div className="col-2"></div>
-
-            <div className="row p-0 mx-auto">
-              <div className="col-2"></div>
-              <div className="col-8">
-                <div className="row justify-content-center">
-                  <div className="col-12 col-md-4 col-lg-3 mb-3">
-                    <div
-                      className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
-                      onClick={() =>
-                        (window.location.href = "/community/admin")
-                      }
-                    >
-                      <FaThList size={20} className="mx-auto" />
-                      <p className="mb-0 pt-2">Bejegyzések</p>
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-4 col-lg-3 mb-3">
-                    <div
-                      className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
-                      onClick={() =>
-                        (window.location.href = "/appointments/admin")
-                      }
-                    >
-                      <FaCalendar size={20} className="mx-auto" />
-                      <p className="mb-0 pt-2">Foglalt Időpontok</p>
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-4 col-lg-3 mb-3">
-                    <div
-                      className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
-                      onClick={() =>
-                        (window.location.href = "/marketplace/admin")
-                      }
-                    >
-                      <FaNewspaper size={20} className="mx-auto" />
-                      <p className="mb-0 pt-2">Hirdetések</p>
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-4 col-lg-3 mb-3">
-                    <div
-                      className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
-                      onClick={() => (window.location.href = "/requests/admin")}
-                    >
-                      <IoIosPricetags size={20} className="mx-auto" />
-                      <p className="mb-0 pt-2">Árajánlat kérések</p>
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-4 col-lg-3 mb-3">
-                    <div
-                      className="form-control my-3 hoverbutton d-flex flex-column text-center container px-3"
-                      onClick={() => (window.location.href = "/cars/admin")}
-                    >
-                      <FaCar size={20} className="mx-auto" />
-                      <p className="mb-0 pt-2">Jármű Ellenőrzés</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-2"></div>
+        <div className="admin-panel">
+          <div className="admin-header">
+            <h2 className="admin-title">Admin Panel</h2>
           </div>
-        </>
+          
+          <div className="admin-grid">
+            <div 
+              className="admin-card"
+              onClick={() => (window.location.href = "/community/admin")}
+            >
+              <div className="card-icon">
+                <FaThList />
+              </div>
+              <p className="card-label">Bejegyzések</p>
+            </div>
+            
+            <div 
+              className="admin-card"
+              onClick={() => (window.location.href = "/appointments/admin")}
+            >
+              <div className="card-icon">
+                <FaCalendar />
+              </div>
+              <p className="card-label">Foglalt Időpontok</p>
+            </div>
+            
+            <div 
+              className="admin-card"
+              onClick={() => (window.location.href = "/marketplace/admin")}
+            >
+              <div className="card-icon">
+                <FaNewspaper />
+              </div>
+              <p className="card-label">Hirdetések</p>
+            </div>
+            
+            <div 
+              className="admin-card"
+              onClick={() => (window.location.href = "/requests/admin")}
+            >
+              <div className="card-icon">
+                <IoIosPricetags />
+              </div>
+              <p className="card-label">Árajánlat kérések</p>
+            </div>
+            
+            <div 
+              className="admin-card"
+              onClick={() => (window.location.href = "/cars/admin")}
+            >
+              <div className="card-icon">
+                <FaCar />
+              </div>
+              <p className="card-label">Jármű Ellenőrzés</p>
+            </div>
+            <div 
+              className="admin-card"
+              onClick={() => (window.location.href = "/admin/mailer")}
+            >
+              <div className="card-icon">
+                <MdEmail />
+              </div>
+              <p className="card-label">Levelek</p>
+            </div>
+          </div>
+        </div>
       );
     else return <></>;
   };
@@ -247,115 +242,103 @@ function LoadProfileData() {
     };
     return (
       <>
-        <div className="container my-5">
-          <div className="row">
-            <div className="col-sm-6 mb-3">
-              <div className="container">
-                <div className="d-flex">
-                  <div
-                    className="profile-avatar m-0 p-0 d-flex justify-content-end"
-                    style={{
-                      backgroundImage: `url(https://code2-api.paraghtibor.hu/user/avatar/${Cookies.get(
-                        "userid"
-                      )})`,
-                    }}
-                  >
-                    <div className="postcolor mt-auto rounded-circle hoverbutton">
-                      <FaPencilAlt
-                        className="m-2"
-                        onClick={() =>
-                          CreateModal(
-                            <div>
-                              <p className="fs-3">Profilkép szerkesztése</p>
-                              <hr />
-                            </div>,
-                            openAvatarUpload,
-                            true
-                          )
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div className="d-flex mt-3 ms-3">
+  <div className="profile-container">
+    <div className="profile-grid">
+      <div className="profile-info-section">
+        <div className="profile-header">
+          <div 
+            className="profile-avatar"
+            style={{
+              backgroundImage: `url(https://code2-api.paraghtibor.hu/user/avatar/${Cookies.get("userid")})`,
+            }}
+          >
+            <div className="avatar-edit-button">
+              <FaPencilAlt
+                className="edit-icon"
+                onClick={() =>
+                  CreateModal(
                     <div>
-                      <p className="fs-3 mb-0">{name}</p>
-                      <p className="ms-3 fw-bold text-uppercase">{rank}</p>
-                    </div>
-                    <div></div>
-                  </div>
-                </div>
-              </div>
-              <div className="container mx-auto mt-3 mt-sm-3 w-50">
-                <input
-                  type="button"
-                  value="Kijelentkezés"
-                  onClick={HandleLogout}
-                  className="hoverbutton h-btn w-100"
-                />
-              </div>
+                      <p className="modal-title">Profilkép szerkesztése</p>
+                      <hr />
+                    </div>,
+                    openAvatarUpload,
+                    true
+                  )
+                }
+              />
             </div>
-            <div className="col-sm-6 border-start">
-              <div className="row g-0">
-                <div className="col-sm-2 mx-auto d-none d-xl-grid">
-                  <div className="mb-5 mt-1">Email cím:</div>
-                  <div>Telefonszám:</div>
-                </div>
-                <div className="col-sm-5 mx-auto">
-                  <div className="d-block d-xl-none">
-                    <label>Email cím:</label>
-                  </div>
-                  <div className="mb-3">
-                    <input
-                      type="text"
-                      name="email"
-                      id="email"
-                      defaultValue={email}
-                      className="form-control"
-                      disabled
-                      ref={emailRef}
-                    />
-                  </div>
-                  <div className="d-block d-xl-none">
-                    <label>Telefonszám:</label>
-                  </div>
-
-                  <div className="mb-2">
-                    <input
-                      type="text"
-                      name="phonenumber"
-                      id="phonenumber"
-                      defaultValue={phone}
-                      className="form-control"
-                      disabled
-                      ref={phonenumberRef}
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6 mx-auto">
-                    <input
-                      type="button"
-                      value="Mentés"
-                      className="d-none h-btn"
-                      id="savebutton"
-                      onClick={saveData}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="d-flex justify-content-center mt-2">
-                <FaPencilAlt
-                  size={30}
-                  className="hoverbutton h-btn"
-                  onClick={changeEditMode}
-                />
-              </div>
+          </div>
+          <div className="user-details">
+            <h2 className="user-name">{name}</h2>
+            <p className="user-rank">{rank}</p>
+          </div>
+        </div>
+        <div className="logout-container">
+          <button
+            type="button"
+            onClick={HandleLogout}
+            className="logout-button"
+          >
+            Kijelentkezés
+          </button>
+        </div>
+      </div>
+      
+      <div className="user-data-section">
+        <div className="form-grid">
+          <div className="form-labels">
+            <div className="form-label">Email cím</div>
+            <div className="form-label">Telefonszám</div>
+          </div>
+          <div className="form-fields">
+            <div className="field-container">
+              <label className="mobile-label">Email cím</label>
+              <input
+                type="text"
+                name="email"
+                id="email"
+                defaultValue={email}
+                className="text-field"
+                disabled
+                ref={emailRef}
+              />
+            </div>
+            <div className="field-container">
+              <label className="mobile-label">Telefonszám</label>
+              <input
+                type="text"
+                name="phonenumber"
+                id="phonenumber"
+                defaultValue={phone}
+                className="text-field"
+                disabled
+                ref={phonenumberRef}
+              />
             </div>
           </div>
         </div>
+        <div className="actions-container">
+          <button
+            type="button"
+            id="savebutton"
+            className="h-btn hidden"
+            onClick={saveData}
+          >
+            Mentés
+          </button>
+          <button 
+            className="edit-button h-btn p-2"
+            onClick={changeEditMode}
+          >
+            <FaPencilAlt className="edit-icon" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <AdminPanel />
-      </>
+  <AdminPanel />
+</>
     );
   };
 

@@ -3,7 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import $ from "jquery";
 import CONFIG from "../config.json";
 import { ModalContext } from "../Providers/ModalProvider";
-import { FaPen } from "react-icons/fa";
+import { FaPen, FaEye, FaCar, FaXing, FaCheck, FaCheckCircle, FaHourglassHalf } from "react-icons/fa";
+import {RxCheck, RxCross1} from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 function CarsAdminPanel() {
   const API = CONFIG.API;
@@ -55,7 +56,7 @@ function CarsAdminPanel() {
               el.images,
               el.status,
               el.nickname,
-              el.approved
+              el.approved,
             )
           );
         });
@@ -68,8 +69,8 @@ function CarsAdminPanel() {
     GetNotApprovedVehicles();
   }, []);
 
-  const JsonEntry = (i, el) => {
-    var data = el.data;
+  const JsonEntry = (i, el, id) => {
+    var data = el;
     return (
       <div className="d-flex flex-column">
         <p>{i}&emsp;</p>
@@ -77,7 +78,7 @@ function CarsAdminPanel() {
           type="text"
           className="form-control"
           name={i}
-          id={`${el.id}-${i}`}
+          id={`${id}-${i}`}
           defaultValue={data[i]}
         />
       </div>
@@ -108,125 +109,168 @@ function CarsAdminPanel() {
       },
     });
   };
+  const Decline = (el) => {
+    var data = new FormData();
+    var userid = Cookie.get("userid");
+    var vin = document.getElementById(`${el.id}-vin`).value;
+    var status = document.getElementById(`${el.id}-status`).value;
+    Object.keys(el.data).forEach((i) => {
+      var val = document.getElementById(`${el.id}-${i}`).value;
+      data.append(i, val);
+    });
+    data.append("vin", vin);
+    data.append("status", status);
+    data.append("carid", el.id);
+    data.append("userid", userid);
+    $.ajax({
+      url: `${API}/cars/admin/decline`,
+      type: "post",
+      data: data,
+      processData: false,
+      contentType: false,
+      success: (resp) => {
+        window.location.reload();
+      },
+    });
+  };
 
   const CarEntry = (el) => {
     return (
-      <div className="post my-3 text-center">
-        <div className="d-flex">
-          {Object.keys(el.data).map((i) => JsonEntry(i, el))}
-          <div>
-            <p>vin&emsp;</p>
-            <input
-              type="text"
-              className="form-control"
-              name="vin"
-              id={`${el.id}-vin`}
-              defaultValue={el.vin}
-            />
+      <div className="car-detail-modal p-3 my-3">
+        <div className="car-specs d-flex flex-wrap mb-4">
+          {Object.keys(el.data).map((i) => JsonEntry(i, el.data, el.id))}
+          <div className="car-detail-item">
+            <p className="detail-label">Alvázszám</p>
+            <input type="text" className="form-control detail-value" id={`${el.id}-vin`} defaultValue={el.vin}/>
           </div>
-          <div>
-            <p>status&emsp;</p>
-            <input
-              type="text"
-              className="form-control"
-              name="status"
-              id={`${el.id}-status`}
-              defaultValue={el.status}
-            />
+          <div className="car-detail-item">
+            <p className="detail-label">Jármű Állapota</p>
+            <input type="text" className="form-control detail-value" id={`${el.id}-status`} defaultValue={el.status}/>
+          </div>
+        </div>
+        
+        <hr className="divider" />
+        
+        <div className="car-images-container">
+          <div className="row g-3">
+            {el.images.map((img, index) => (
+              <div className="col-md-4" key={index}>
+                <div className="car-image-card">
+                  <img
+                    src={img || "/placeholder.svg"}
+                    alt={`Car image ${index + 1}`}
+                    className="img-fluid rounded car-thumbnail"
+                  />
+                  <div className="image-overlay" 
+                    onClick={() =>
+                      CreateModal(
+                        <div>
+                          <h4 className="modal-title">Fénykép Megtekintés</h4>
+                          <hr className="divider" />
+                        </div>,
+                        <img 
+                          src={img || "/placeholder.svg"} 
+                          className="img-fluid modal-image" 
+                          alt={`Car image ${index + 1} full view`}
+                        />,
+                        true
+                      )
+                    }>
+                    <FaEye className="view-icon" />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
         <hr />
-        <div>
-          <div
-            className="row justify-content-between d-flex"
-            style={{ width: "50vw" }}
-          >
-            <div className="col-4 mx-auto d-flex">
-              <img
-                src={el.images[0]}
-                alt=""
-                className="img-fluid mx-auto hoverbutton"
-                style={{ height: "30vh" }}
-                onClick={() => window.open(el.images[0], "_blank")}
-              />
-            </div>
-            <div className="col-4 mx-auto d-flex">
-              <img
-                src={el.images[1]}
-                alt=""
-                className="img-fluid mx-auto hoverbutton"
-                style={{ height: "30vh" }}
-                onClick={() => window.open(el.images[1], "_blank")}
-              />
-            </div>
-            <div className="col-4 mx-auto d-flex">
-              <img
-                src={el.images[2]}
-                alt=""
-                className="img-fluid mx-auto hoverbutton"
-                style={{ height: "30vh" }}
-                onClick={() => window.open(el.images[2], "_blank")}
-              />
-            </div>
+        <div className="row">
+          <div className="col-9">
+
           </div>
-        </div>
-        <div className="row mt-5 ">
-          <div className="col-4"></div>
-          <div className="col-4">
-            <input
-              type="button"
-              value="Jóváhagyás"
-              className="form-control my-2"
-              onClick={(e) => Approve(el)}
-            />
-            <input type="button" value="Törlés" className="form-control my-2" />
+          <div className="col-3 d-flex">
+            
+          <button 
+                      className="action-buttonad acceptad"
+                      style={{color: "white"}}
+                      onClick={() =>
+                        Approve(el)
+                      }
+                    >
+                      <RxCheck size={25}/>
+                    </button>
+                    
+                    <button 
+                      className="action-buttonad declinead"
+                      style={{color: "white"}}
+                      onClick={() => Decline(el)}
+                    >
+                      <RxCross1 size={25}/>
+                    </button>
           </div>
-          <div className="col-4"></div>
         </div>
       </div>
     );
   };
 
   const carListEntry = (el) => {
+    
     var nickname = el.nickname;
     var brand = el.data.brand;
     var model = el.data.model;
     var year = el.data.year;
     var approved = el.approved;
-    return (
-      <>
-        <div className="row postcolor my-3 p-2 rounded">
-          <div className="col-4">
-            <p className="fs-3 m-0">{nickname}</p>
-            <div className="d-flex my-1">
-              <p className="fs-9 mx-2 fw-bold">{year}</p>
-              <p className="fs-9 mx-2 fw-bold">{brand}</p>
-              <p className="fs-9 mx-2 fw-bold">{model}</p>
-            </div>
-          </div>
-          <div className="col-5"></div>
-          <div className="col-3 d-flex align-items-center justify-content-end">
-            <p className="fs-9 bold text-danger m-0 mx-2">
-              {approved ? "" : "Ellenörzésre vár.."}
-            </p>
-            <FaPen
-              size={25}
-              className="mx-3 pointer"
-              onClick={() =>
-                CreateModal(
-                  <div>
-                    <p className="fs-3">{nickname}</p>
-                    <hr />
-                  </div>,
-                  CarEntry(el),
-                  true
-                )
-              }
-            />
-          </div>
-        </div>
-      </>
-    );
+    var engineCode = el.data.engineCode;
+            return (
+              <div className="car-list-item" key={el.id}>
+                <div className="car-card">
+                  <div className="car-info">
+                    <h3 className="car-nickname">{nickname}</h3>
+                    <div className="car-specs-summary">
+                      <span className="car-year">{year}</span>
+                      <span className="car-brand">{brand}</span>
+                      <span className="car-model">{model}</span>
+                      <span className="car-engine">{engineCode}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="car-actions">
+                    <div className={`approval-status ${approved ? 'approved' : 'pending'}`}>
+                      {approved ? (
+                        <>
+                          <FaCheckCircle className="status-icon" />
+                          <span>Ellenőrizve!</span>
+                        </>
+                      ) : (
+                        <>
+                          <FaHourglassHalf className="status-icon" />
+                          <span>Ellenörzésre vár..</span>
+                        </>
+                      )}
+                    </div>
+                    
+                    <button 
+                      className="action-button view-button"
+                      onClick={() =>
+                        CreateModal(
+                          <div>
+                            <h4 className="modal-title">
+                              <FaCar className="me-2" />
+                              {nickname}
+                            </h4>
+                            <hr className="divider" />
+                          </div>,
+                          CarEntry(el),
+                          true
+                        )
+                      }
+                    >
+                      <FaEye/>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
   };
 
   return (

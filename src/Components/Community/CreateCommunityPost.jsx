@@ -2,7 +2,7 @@ import { useRef } from "react";
 import CONFIG from "../../config.json";
 import $ from "jquery";
 import Cookie from "js-cookie";
-import { FaFile } from "react-icons/fa";
+import { FaFile, FaImage } from "react-icons/fa";
 import { IoMdSend } from "react-icons/io";
 
 function CreateCommunityPost() {
@@ -41,13 +41,14 @@ function CreateCommunityPost() {
 
   return (
     <>
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-6 mx-auto">
-            <div className="post w-100 mt-5">
-              <h5>Bejegyzés létrehozása</h5>
-              <div>
-                <label htmlFor="title" className="text-center noselect">
+      <div className="container py-4">
+        <div className="row justify-content-center">
+          <div className="col-lg-8 col-md-10">
+            <div className="create-post-card bg-white rounded-3 shadow-sm p-4 mb-4">
+              <h4 className="mb-4 fw-bold">Bejegyzés közzététele</h4>
+              
+              <div className="mb-3">
+                <label htmlFor="title" className="form-label fw-semibold">
                   Cím
                 </label>
                 <input
@@ -56,54 +57,77 @@ function CreateCommunityPost() {
                   id="title"
                   ref={titleRef}
                   required
-                  className="my-1 border-0 rounded post w-100 mx-auto h-50 bg-white"
+                  className="form-control form-control-lg border"
+                  placeholder="Add meg a bejegyzés címét"
                 />
-                <label htmlFor="description" className="text-center noselect">
+              </div>
+              
+              <div className="mb-4">
+                <label htmlFor="description" className="form-label fw-semibold">
                   Törzs
                 </label>
                 <textarea
                   cols="10"
                   rows="5"
                   ref={descriptionRef}
-                  className="form-control w-100"
+                  className="form-control"
+                  placeholder="Írd le a bejegyzés tartalmát..."
                 ></textarea>
               </div>
-              <div className="container-fluid d-flex justify-content-end mt-3">
-                <div className="d-flex text-center">
-                  <div
-                    className="buttoncolor text p-1 pt-1 ps-3 ms-1 noselect"
-                    style={{ marginRigth: "30px" }}
-                    onClick={() => document.getElementById("file").click()}
-                  >
-                    <input
-                      type="file"
-                      name="file"
-                      id="file"
-                      ref={imagesRef}
-                      style={{ display: "none" }}
-                      multiple
-                      accept="images/png, images/jpeg"
-                    />
-                    Fájlok csatolása{" "}
-                    <FaFile
-                      className=" ms-autoborder-0 rounded-circle buttoncolor"
-                      size={30}
-                    />
-                  </div>
-                </div>
-                <div className="d-flex text-center">
-                  <div
-                    className="buttoncolor text p-1 pt-1 ps-3 ms-1 noselect"
-                    onClick={CreatePost}
-                    style={{ marginRigth: "30px" }}
-                  >
-                    Küldés{" "}
-                    <IoMdSend
-                      className="ms-auto border-0 rounded-circle buttoncolor"
-                      size={30}
-                    />
-                  </div>
-                </div>
+              
+              <div className="file-upload-preview mb-3" id="filePreviewContainer">
+                {/* File previews will be displayed here via JavaScript */}
+              </div>
+              
+              <div className="d-flex flex-wrap justify-content-between align-items-center mt-4">
+                <button
+                  type="button"
+                  className="btn btn-outline-primary d-flex align-items-center"
+                  onClick={() => document.getElementById("file").click()}
+                >
+                  <FaImage className="me-2" />
+                  <span>Fájlok csatolása</span>
+                  <input
+                    type="file"
+                    name="file"
+                    id="file"
+                    ref={imagesRef}
+                    style={{ display: "none" }}
+                    multiple
+                    accept="image/png, image/jpeg"
+                    onChange={(e) => {
+                      // Display file names when files are selected
+                      const fileContainer = document.getElementById("filePreviewContainer");
+                      fileContainer.innerHTML = "";
+                      
+                      if (e.target.files.length > 0) {
+                        const fileList = document.createElement("div");
+                        fileList.className = "list-group mt-2";
+                        
+                        for (let i = 0; i < e.target.files.length; i++) {
+                          const fileItem = document.createElement("div");
+                          fileItem.className = "list-group-item d-flex align-items-center";
+                          fileItem.innerHTML = `
+                            <FaFile className="me-2 text-primary" />
+                            <span>${e.target.files[i].name}</span>
+                          `;
+                          fileList.appendChild(fileItem);
+                        }
+                        
+                        fileContainer.appendChild(fileList);
+                      }
+                    }}
+                  />
+                </button>
+                
+                <button
+                  type="button"
+                  className="btn btn-primary d-flex align-items-center"
+                  onClick={CreatePost}
+                >
+                  <span className="me-2">Küldés</span>
+                  <IoMdSend />
+                </button>
               </div>
             </div>
           </div>

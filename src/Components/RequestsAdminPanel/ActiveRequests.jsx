@@ -4,6 +4,7 @@ import Cookie from "js-cookie";
 import $ from "jquery";
 import { ModalContext } from "../../Providers/ModalProvider";
 import Cookies from "js-cookie";
+import { Ribbon } from "lucide-react";
 
 function ActiveRequests() {
   var API = CONFIG.API;
@@ -192,107 +193,7 @@ function ActiveRequests() {
 
   const RequestEntry = (el) => {
     if (el.email == "USER") {
-      return (
-        <div className="row my-3">
-          <div className="col-2"></div>
-          <div className="col-8">
-            <div className="post">
-              <div className="row">
-                <div className="col-1"></div>
-                <div className="col-10">
-                  <div className="row my-2">
-                    <label htmlFor="title">Fej</label>
-                    <textarea
-                      rows={2}
-                      value={el.title}
-                      name="title"
-                      id="title"
-                      className="form-control"
-                      disabled
-                    />
-                  </div>
-                  <div className="row my-2">
-                    <label htmlFor="description">Törzs</label>
-                    <textarea
-                      rows={5}
-                      value={el.description}
-                      name="description"
-                      id="description"
-                      className="form-control"
-                      disabled
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="row my-2 text-center">
-                <p className="fs-3 mx-auto">Adatok</p>
-              </div>
-              <div className="row my-2">
-                <div className="col-1"></div>
-
-                <div className="col-10">
-                  <div className="row d-flex justify-content-between text-center my-2">
-                    <div className="col-3  d-flex flex-column justify-content-between text-center">
-                      <p className="fw-bold m-0 mx-auto">Gyártó</p>
-                      <p className="mx-auto">{el.data.brand}</p>
-                    </div>
-                    <div className="col-3  d-flex flex-column justify-content-between text-center">
-                      <p className="fw-bold m-0 mx-auto">Gyártmány</p>
-                      <p className="mx-auto">{el.data.model}</p>
-                    </div>
-                    <div className="col-3  d-flex flex-column justify-content-between text-center">
-                      <p className="fw-bold m-0 mx-auto">Évjárat</p>
-                      <p className="mx-auto">{el.data.year}</p>
-                    </div>
-                  </div>
-                  <div className="row d-flex justiy-content-between text-center my-2">
-                    <div className="col-3 d-flex flex-column justify-content-between text-center">
-                      <p className="fw-bold m-0 mx-auto">Motorkód</p>
-                      <p className="mx-auto">{el.data.engineCode}</p>
-                    </div>
-                    <div className="col-3  d-flex flex-column justify-content-between text-center">
-                      <p className="fw-bold m-0 mx-auto">Rendszám</p>
-                      <p className="mx-auto">{el.data.licensePlate}</p>
-                    </div>
-                    <div className="col-3  d-flex flex-column justify-content-between text-center">
-                      <p className="fw-bold m-0 mx-auto">Alvázszám</p>
-                      <p className="mx-auto">{el.vin}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-1"></div>
-              </div>
-              <div className="row d-flex text-center">
-                <p className="fw-bold mx-auto">
-                  {el.answered ? "Válaszolva" : "Válaszra Vár"}
-                </p>
-              </div>
-              {el.answered == 0 ? (
-                <input
-                  type="button"
-                  value="Válaszolás"
-                  className="form-control hoverbutton"
-                  onClick={() =>
-                    CreateModal(
-                      <p className="mx-auto">Árajánlás válaszolás</p>,
-                      AnswerRequest(el),
-                      true
-                    )
-                  }
-                />
-              ) : (
-                <input
-                  type="button"
-                  value="Törlés"
-                  className="form-control hoverbutton"
-                  onClick={() => DeleteRequest(el)}
-                />
-              )}
-            </div>
-          </div>
-          <div className="col-2"></div>
-        </div>
-      );
+      return <></>;
     } else {
       return (
         <div className="row my-3">
@@ -374,18 +275,164 @@ function ActiveRequests() {
   useEffect(() => {
     LoadRequests();
   }, []);
+  const [activeRequest, setActiveRequest] = useState(null);
+
+  const getActiveRequestComponent = (r) => {
+    if (r.data != null)
+    return (
+      <>
+        <div className="row mt-3">
+          <div className="col-sm-2 mx-auto ms-2">
+            <div className="fw-bold">Gyártmány</div>
+            <div className=" ms-3">{r.data.brand}</div>
+          </div>
+          <div className="col-sm-2 mx-auto">
+            <div className="fw-bold">Model</div>
+            <div className=" ms-3">{r.data.model}</div>
+          </div>
+          <div className="col-sm-2 mx-auto">
+            <div className="fw-bold">Motorkód</div>
+            <div className="ms-3">{r.data.engineCode}</div>
+          </div>
+          <div className="col-sm-2 mx-auto">
+            <div className="fw-bold">Rendszám</div>
+            <div className="ms-3">{r.data.licensePlate}</div>
+          </div>
+        </div>
+        <div className="row mt-4">
+          <div className="col-sm-2 ms-2">
+            <div className="fw-bold">Kilóméter</div>
+            <div className=" ms-3">{r.data.km}</div>
+          </div>
+          <div className="col-sm-2">
+            <div className="fw-bold">Alvázszám</div>
+            <div className=" ms-3">{r.vin}</div>
+          </div>
+          <div className="col-sm-2">
+            <div className="fw-bold">Válaszolva</div>
+            <div className=" ms-3">{r.replied == 0 ? <b>Nem</b> : <b>Igen</b>}</div>
+          </div>
+          <div className="col-sm-2">
+              <button className="btn btn-danger" onClick={() => DeleteRequest(r)}>Törlés</button>
+          </div>
+        </div>
+        <div>
+        <hr />
+        <div className="container p-2 m-2 mx-auto rounded request-text-color">
+          <p className="mt-2 ms-3 fs-4">
+          <b>Cím</b>
+          </p>
+          <p className="ms-4">{r.title}</p></div>
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-10">
+              <hr />
+            </div>
+            <div className="col-1"></div>
+          </div>
+          <div className="container p-2 m-2 mx-auto rounded request-text-color">
+          <p className="mb-3 ms-3 fs-4">
+            <b>Leírás</b>
+          </p>
+          <p className="ms-4"> {r.description}</p></div>
+          <div className="ms-2 row d-flex">
+            <div className="mx-auto col-8">
+            <p className="fw-bold">Válasz</p>
+            <textarea className="form-control w-sm-100" ref={responseRef}></textarea>
+            <div className="d-flex">
+              <button className="h-btn p-2 mt-2 ms-auto me-2" onClick={() => SendResponse(r)}>Válasz küldése</button>
+            </div></div>
+          </div>
+        
+        </div>
+      </>
+    );
+    else {
+      return (
+        <>
+          <div className="row mt-3 d-flex">
+            <div className="col-sm-2 mx-auto">
+              <div className="fw-bold">Email cím</div>
+              <div className=" ms-3">{r.email}</div>
+            </div>
+            <div className="col-sm-2 mx-auto">
+              <div className="fw-bold">Válaszolva</div>
+              <div className=" ms-3">{r.replied == 0 ? <b>Nem</b> : <b>Igen</b>}</div>
+            </div>
+            <div className="col-sm-2 mx-auto">
+                <button className="btn btn-danger" onClick={() => DeleteRequest(r)}>Törlés</button>
+            </div>
+          </div>
+          <div>
+          <hr />
+          <div className="container p-2 m-2 mx-auto rounded request-text-color">
+            <p className="mt-2 ms-3 fs-4">
+            <b>Cím</b>
+            </p>
+            <p className="ms-4">{r.title}</p></div>
+            <div className="row">
+              <div className="col-1"></div>
+              <div className="col-10">
+                <hr />
+              </div>
+              <div className="col-1"></div>
+            </div>
+            <div className="container p-2 m-2 mx-auto rounded request-text-color">
+            <p className="mb-3 ms-3 fs-4">
+              <b>Leírás</b>
+            </p>
+            <p className="ms-4"> {r.description}</p></div>
+          <div className="ms-2 row d-flex">
+            <div className="mx-auto col-8">
+            <p className="fw-bold">Válasz</p>
+            <textarea className="form-control w-sm-100" ref={responseRef}></textarea>
+            <div className="d-flex">
+              <button className="h-btn p-2 mt-2 ms-auto me-2" onClick={() => SendResponse(r)}>Válasz küldése</button>
+            </div></div>
+          </div>
+          
+          </div>
+        </>
+      );
+    }
+  };
+  const UserEntry = (u) => {
+    return (
+      <>
+        <div
+          className=" ms-2 request-user mb-2"
+          style={{ cursor: "pointer" }}
+          onClick={() => setActiveRequest(u)}
+        >
+          <div className="ms-3">
+            {u.email == "USER" ? "Regsztrált felhasználó" : u.email}
+          </div>
+          <div className="ms-5" style={{ fontSize: "15px" }}>
+            {u.title.split("").slice(0, 25).join("")}...
+          </div>
+        </div>
+      </>
+    );
+  };
 
   return (
-    <div className="my-3">
-      <div className="row d-flex">
-        <div className="col-5"></div>
-        <div className="col-2">
-          <p className="fs-3 mx-auto text-center">Árajánlatok</p>
+    <>
+      <div className="row g-0">
+        <div className="col-sm-2 request-userlist h-100">
+          {requests.map((i) => UserEntry(i))}
         </div>
-        <div className="col-5"></div>
+        <div className="col-sm request-data">
+          {activeRequest == null ? (
+            <div className="text-center mt-5 fw-bold ">
+              Nincs kiválasztva ajánlatkérés.
+            </div>
+          ) : (
+            getActiveRequestComponent(activeRequest)
+          )}
+          <div className="d-flex justify-content-center"></div>
+        </div>
       </div>
-      {requests.map((i) => RequestEntry(i))}
-    </div>
+    </>
   );
 }
 

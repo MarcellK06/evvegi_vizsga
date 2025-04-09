@@ -25,6 +25,7 @@ import MyAccountPosts from "./Pages/MyAccountPosts";
 import MyAccountRequests from "./Pages/MyAccountRequests";
 import AppointmentsAdminPanel from "./Components/AppointmentsAdmin/AppointmentsAdminPanel";
 import About from "./Pages/About";
+import Faq from "./Pages/Faq";
 import Mailer from "./Pages/Mailer";
 import GDPR from "./Pages/GDPR";
 import Aszf from "./Pages/Aszf";
@@ -33,6 +34,8 @@ import USERDOC from "./Pages/USERDOC";
 import DEVDOC from "./Pages/DEVDOC";
 import TESTDOC from "./Pages/TESTDOC";
 import Exam from "./Pages/Exam";
+import VerifyAccount from "./Pages/VerifyAccount";
+
 
 //192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -42,7 +45,7 @@ root.render(
       <ModalProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />  } />
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/marketplace" element={<Marketplace />} />
             <Route
@@ -78,9 +81,12 @@ root.render(
             <Route path="/marketplace-item/:id" element={<Marketplaceitem />} />
             <Route path="/auth/:type" element={<Authentication />} />
             <Route path="/about" element={<About />} />
-            <Route path="/admin/mails" element={<Mailer />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/admin/mailer" element={<Mailer />} />
             <Route path="/exam" element={<Exam />} />
+            <Route path="/verify-account/:token" element={<VerifyAccount />} />
             <Route path="*" element={<NotFound />} />
+            
           </Routes>
         </BrowserRouter>
       </ModalProvider>

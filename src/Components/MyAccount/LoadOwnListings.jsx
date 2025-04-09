@@ -85,6 +85,7 @@ function LoadOwnListings() {
 
     var car = el.data;
     var vehicle_data = [];
+    var images = el.images;
     if (el.data != undefined) {
       if (car.year) vehicle_data.push(car.year);
       if (car.brand) vehicle_data.push(car.brand);
@@ -94,55 +95,48 @@ function LoadOwnListings() {
       vehicle_data = vehicle_data.join(", ");
     }
 
-    if (el.images != "NINCS") {
-      if (el.images.includes(",")) el.images = el.images.split(",");
-      else if (el.images.length > 0) el.images = [el.images];
-      else el.images = [];
+    if (images !== "NINCS") {
+      if (images.includes(",")) images = images.split(",");
+      else if (images.length > 0) images = [images];
+      else images = [];
     }
+
+    const imageUrl =
+      Array.isArray(images) && images.length > 0
+        ? `/marketplace/images/${el.id}/0`
+        : "";
     return (
-      <div className="post my-3 w-100">
-        <div className="row">
-          <div className="col-4 g-5">
-            <div className="row h-100">
-              <div
-                style={{ backgroundImage: `url(${el.images[0]})` }}
-                className="marketplace-listing-image m-2"
-              ></div>
+      <article className="listing-entry">
+        <div
+          className="listing-image"
+          style={{ backgroundImage: `url(${API + imageUrl})` }}
+        ></div>
+        <div className="listing-content">
+          <h2 className="listing-title">{el.itemname}</h2>
+          <p className="listing-description">{el.description}</p>
+          <div className="listing-details">
+            <div className="listing-price">
+              {Number.parseInt(el.itemprice).toLocaleString()} Ft
+            </div>
+            <div className="listing-tags">
+              <span className="listing-label">Címkék</span>
+              <span className="listing-value">{vehicle_data}</span>
+            </div>
+            <div className="listing-date">
+              <span className="listing-label">Közzétéve</span>
+              <span className="listing-value">{el.listed_at}</span>
             </div>
           </div>
-          <div className="col-8 g-3">
-            <div className="d-flex flex-column my-2">
-              <p className="fs-4 fw-bold">{el.itemname}</p>
-              <p className="fs-7 mt-3">{el.itemdescription}</p>
-              <p className="fs-11 mt-1">
-                <u className="fw-bold">{`${el.itemprice}`}</u>Ft
-              </p>
-              <div className="d-flex justify-content-between">
-                <p className="fw-bold">{vehicle_data}</p>
-                <p className="fw-bold">{el.listed_at}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-10"></div>
-          <div className="col-2 mt-auto">
-            <div
-              className="btn-close-red ms-auto d-flex justify-content-end m-3"
-              style={{ width: "1.5rem" }}
+          <div className="d-flex justify-content-end">
+            <button
+              className="h-btn w-25 mx-auto declinead"
               onClick={() => DeleteListing(el)}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="red"
-              >
-                <path d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z" />
-              </svg>
-            </div>
+              Törlés
+            </button>
           </div>
         </div>
-      </div>
+      </article>
     );
   };
   useEffect(() => {

@@ -29,7 +29,6 @@ function Navbar() {
     new NavLink("Marketplace", "/marketplace", false),
     new NavLink("Közösség", "/community", true),
     new NavLink("Autóim", "/own-cars", true),
-    new NavLink("Vizsga", "/exam", false),
   ];
 
   const OpenClose = () => {
@@ -66,8 +65,10 @@ function Navbar() {
     if (nowHour < oHour || (nowHour === oHour && nowMin < oMin)) {
       return (
         <>
-          <div className="open-close close mt-2"></div>
-          <div className="text-light ms-2">Jelenleg Zárva</div>
+          <a href="#footer" className="d-flex text-decoration-none">
+            <div className="open-close close mt-2"></div>
+            <div className="text-light ms-2">Jelenleg Zárva</div>
+          </a>
         </>
       );
     }
@@ -75,16 +76,20 @@ function Navbar() {
     if (nowHour > cHour || (nowHour === cHour && nowMin >= cMin)) {
       return (
         <>
-          <div className="open-close close mt-2"></div>
-          <div className="text-light ms-2">Jelenleg Zárva</div>
+          <a href="#footer" className="d-flex text-decoration-none">
+            <div className="open-close close mt-2"></div>
+            <div className="text-light ms-2">Jelenleg Zárva</div>
+          </a>
         </>
       );
     }
 
     return (
       <>
-        <div className="open-close open mt-2"></div>
-        <div className="text-light ms-2">Jelenleg Nyitva</div>
+        <a href="#footer" className="d-flex text-decoration-none">
+          <div className="open-close open mt-2"></div>
+          <div className="text-light ms-2">Jelenleg Nyitva</div>
+        </a>
       </>
     );
   };
@@ -134,12 +139,13 @@ function Navbar() {
             <div>
               {Cookies.get("userid") == null ? (
                 <button
-                  className="btn btn-light hoverbutton"
+                  className="own-cars ms-3 cursor-pointer hoverbutton fw-bold"
                   onClick={() => {
                     window.location.href = "/auth/login";
                   }}
                 >
-                  Bejelentkezés
+                  
+                  <div className="fw-bold">Bejelentkezés</div>
                 </button>
               ) : (
                 <div
@@ -223,7 +229,8 @@ function Navbar() {
                         window.location.href = "/auth/login";
                       }}
                     >
-                      Bejelentkezés
+                      
+                  <div className="fw-bold">Bejelentkezés</div>
                     </button>
                   ) : (
                     <div
