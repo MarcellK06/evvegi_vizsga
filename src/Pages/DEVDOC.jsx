@@ -30,24 +30,6 @@ function DEVDOC() {
         </iframe>
       </div>
       <div></div>
-      {/*<div className="row">
-            <div className="col-4"></div>
-        <div className="col-4">
-        <Document file={PDF} renderAnnotationLayer={false}>
-            <Page pageNumber={page}/>
-        </Document>
-      <p className='text-center'>
-        {page}. oldal a 8-ból
-      </p>
-      <div className="d-flex">
-        <input type="button" value="<" onClick={decrementPages} className='form-control hoverbutton' />
-        <input type="button" value=">" onClick={incrementPages}  className='form-control hoverbutton' /></div>
-        </div>
-        <div className="col-4">
-
-        </div>
-
-        </div>*/}
     </>
   );
 }

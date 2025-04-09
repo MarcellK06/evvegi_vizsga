@@ -196,7 +196,6 @@ function HomOld() {
                 működése érdekében.
               </p>
             </div>
-            {/* ide vissza kell tenni az animációt*/}
             <div class="col-md-6 image mx-auto">
               <img
                 src={AltalanosJavitasok}

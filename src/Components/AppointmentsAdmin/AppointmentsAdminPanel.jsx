@@ -13,7 +13,6 @@ import {
 import { ModalContext } from "../../Providers/ModalProvider";
 import { useNavigate } from "react-router-dom";
 function AppointmentsAdminPanel() {
-  // State az események tárolására
   const [appointments, setAppointments] = useState([]);
   const localizer = momentLocalizer(moment);
   const { CreateModal } = useContext(ModalContext);
@@ -25,7 +24,6 @@ function AppointmentsAdminPanel() {
     }
   };
 
-  // Event hozzáadásának függvénye
   const AddEvent = (title, start, data) => {
     return {
       title: title,
@@ -37,7 +35,6 @@ function AppointmentsAdminPanel() {
     };
   };
 
-  // Event stílus beállítása
   const eventPropGetter = (event) => {
     return {
       style: {
@@ -96,7 +93,6 @@ function AppointmentsAdminPanel() {
     dec: "Dec",
   };
 
-  // Egyéni toolbar a naptár vezérléséhez
   const CustomToolbar = ({ label, onNavigate }) => {
     return (
       <div className="rbc-toolbar">

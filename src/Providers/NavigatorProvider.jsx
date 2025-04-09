@@ -29,7 +29,6 @@ export const NavigatorProvider = ({ children }) => {
       console.info(this.type + " => enabled");
     }
     #set(eD) {
-      //private method
       if (eD) {
         if (this.type == "NAVBAR") {
           _setNavbar(<Navbar />);
@@ -61,12 +60,3 @@ export const NavigatorProvider = ({ children }) => {
   );
 };
 //ötlet: ha lenne telefonra más navbar akkor pl : _Navigator.phone();
-
-/* 
-HASZNÁLAT:
-import { NavigatorContext } from "../Providers/NavigatorProvider";
-const {_Navigator} = useContext(NavigatorContext);
-_Navigator.Navbar().disable(); 
-  
-
-*/

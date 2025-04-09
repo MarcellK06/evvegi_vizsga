@@ -4,7 +4,6 @@ import AuthCheck from "../Components/Authentication/AuthCheck";
 function Community() {
   return (
     <>
-      {/*<AuthCheck/>*/}
       <CreateCommunityPost />
       <LoadCommunityPosts />
     </>

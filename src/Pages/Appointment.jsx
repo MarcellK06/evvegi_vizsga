@@ -245,7 +245,6 @@ function Appointment() {
             return new TimeClass(t.id, t.date, t.time, isTaken ? 1 : 0);
           });
 
-          // Use functional state update for immutability
           setTimes((prev) => ({
             ...prev,
             [formattedDate]: timesList,
@@ -257,7 +256,7 @@ function Appointment() {
   const WeekDay = (date) => {
     const formattedDate = `${date}`;
 
-    const timesForDay = times[formattedDate] || []; // Default to empty array if no data
+    const timesForDay = times[formattedDate] || [];
 
     return (
       <div className="col-2 mx-auto">

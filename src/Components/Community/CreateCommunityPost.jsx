@@ -76,7 +76,6 @@ function CreateCommunityPost() {
               </div>
               
               <div className="file-upload-preview mb-3" id="filePreviewContainer">
-                {/* File previews will be displayed here via JavaScript */}
               </div>
               
               <div className="d-flex flex-wrap justify-content-between align-items-center mt-4">
@@ -96,7 +95,6 @@ function CreateCommunityPost() {
                     multiple
                     accept="image/png, image/jpeg"
                     onChange={(e) => {
-                      // Display file names when files are selected
                       const fileContainer = document.getElementById("filePreviewContainer");
                       fileContainer.innerHTML = "";
                       

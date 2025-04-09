@@ -37,7 +37,6 @@ import Exam from "./Pages/Exam";
 import VerifyAccount from "./Pages/VerifyAccount";
 
 
-//192.168.1.45
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <div style={{ minHeight: "65.7vh" }}>

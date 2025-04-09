@@ -24,11 +24,6 @@ function RegisterForm() {
     var tel = telRef.current.value;
     var pswag = passwordAginRef.current.value;
 
-    /* if(name.length == 0 || password.length == 0 || email.length == 0 || tel.length == 0 || pswag.length){
-            setRegisterError(RegisterError("Mezők kitöltése kötelező!"))
-            return;
-        }
-            */
     if (password != pswag) {
       setRegisterError(RegisterError("A két jelszó nem egyezik meg!"));
     }
