@@ -149,4 +149,26 @@ Route::post("/cars/admin/approve", [], function($params) {
     DB::table("car")->
     update(["data" => $jsonarray, "approved" => 1])->
     where("id", "=", $carid)->save();
+    http_response_code(200);
+    echo DB::arrayToJson(["status" => "200", "response" => "OK"]);
+});
+Route::post("/cars/admin/decline", [], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+
+    $userid = $params["userid"];
+
+    
+    $allowed = DB::runSql("SELECT COUNT(*) AS 'allowed' FROM user_rank WHERE userid=$userid AND rankid=1");
+    if ($allowed[0] == 0) {
+        http_response_code(405);
+        echo DB::arrayToJson([
+            "status" => 405,
+            "Message" => "NOT ALLOWED"
+        ]);
+        return;
+    };
+    $carid = intval($params["carid"]);
+    DB::runSql("DELETE FROM car WHERE id=$carid");
+    http_response_code(200);
+    echo DB::arrayToJson(["status" => "200", "response" => "OK"]);
 });

@@ -139,3 +139,51 @@ Route::get("/aszf", [], function(){
         echo "A fájl nem található.";
     }
 });
+Route::get("/userdoc", [], function(){
+ 
+    $filePath = 'userdoc.pdf';
+    header("Content-Type: application/pdf");
+        header("Content-Disposition: inline; filename='userdoc.pdf'");
+    
+    if (file_exists($filePath)) {
+        readfile($filePath);
+        
+        
+        exit;
+    } else {
+        http_response_code(404);
+        echo "A fájl nem található.";
+    }
+});
+Route::get("/devdoc", [], function(){
+ 
+    $filePath = 'devdoc.pdf';
+    header("Content-Type: application/pdf");
+        header("Content-Disposition: inline; filename='devdoc.pdf'");
+    
+    if (file_exists($filePath)) {
+        readfile($filePath);
+        
+        
+        exit;
+    } else {
+        http_response_code(404);
+        echo "A fájl nem található.";
+    }
+});
+Route::get("/testdoc", [], function(){
+ 
+    $filePath = 'testdoc.pdf';
+    header("Content-Type: application/pdf");
+        header("Content-Disposition: inline; filename='testdoc.pdf'");
+    
+    if (file_exists($filePath)) {
+        readfile($filePath);
+        
+        
+        exit;
+    } else {
+        http_response_code(404);
+        echo "A fájl nem található.";
+    }
+});

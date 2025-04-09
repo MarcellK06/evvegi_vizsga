@@ -1,0 +1,91 @@
+https://www.canva.com/design/DAGdpnNnDDI/JduqJED84Mu1-FJx2vs8mQ/edit
+
+1. Bevezetés
+A tesztelés célja
+
+A dokumentáció hatóköre
+
+Hivatkozott dokumentumok (pl. specifikációk, user story-k, ticketek)
+
+2. Tesztelendő funkciók / modulok
+Főbb komponensek vagy funkciók listája
+
+Mi az, amit tesztelni kell (és mi az, amit nem)
+
+3. Tesztelési stratégia
+Tesztelés típusa (pl. funkcionális, integrációs, rendszer, regressziós)
+
+Manuális vs. automatizált tesztek
+
+Használt eszközök (pl. Selenium, JUnit, Postman, TestRail)
+
+4. Tesztelési környezet
+Szoftver és hardver környezet (pl. böngészők, operációs rendszerek, adatbázis verziók)
+
+Teszt adatok / mock-ok
+
+Verziók (pl. build száma, deploy dátuma)
+
+5. Tesztesetek
+Egyedi azonosító (pl. TC-001)
+
+Tesztelni kívánt funkció
+
+Előfeltételek
+
+Lépések
+
+Várt eredmény
+
+Valós eredmény (tesztelés után)
+
+Eredmény státusz (Pass / Fail / Blocked)
+
+Megjegyzések, bug hivatkozások
+
+6. Hibajegyek / Incidensek
+Kapcsolódó bugok listája (pl. JIRA ticketek)
+
+Hibák státusza, súlyossága
+
+7. Tesztelés eredményei
+Összesített statisztika (pl. hány teszteset futott le, sikeres/hibás arány)
+
+Kockázatok, problémák
+
+Ajánlások a javításra
+
+8. Felelősségek
+Ki írta a dokumentációt
+
+Ki végezte a tesztelést
+
+Review/validálás dátuma és nevei
+
+9. Mellékletek
+Képernyőképek
+
+Log fájlok
+
+Teszt script-ek
+
+Tesztkörnyezet snapshot
+
+
+mi lenne a "A dokumentáció hatóköre?"
+
+Részletesen mit tartalmazhat a hatókör?
+Tesztelendő funkciók és modulok:
+Meghatározza, hogy mely funkciókat, modulokat vagy komponenseket kell tesztelni. Például, ha egy webalkalmazásról van szó, itt megadható, hogy csak a felhasználói regisztráció, bejelentkezés, és a fő műveletek tartoznak a tesztelés körébe, míg az adminisztrációs felület esetleg külön projekt alatt kerül.
+
+Teszt típusok:
+Lefedi, hogy milyen típusú teszteket várnak el (funkcionális, integrációs, rendszer, regressziós, teljesítmény-, vagy biztonsági tesztek). Ez segít abban, hogy minden érintett tisztában legyen azzal, milyen tesztelési módszerek kerülnek alkalmazásra.
+
+Tesztelési környezet:
+Ide tartozik annak meghatározása, hogy mely környezetekben – például különböző operációs rendszerek, böngészők, eszközök – kell a teszteket futtatni. Az is szerepelhet, hogy milyen teszt adatok, mock-ok, vagy konfigurációs beállítások alkalmazandók.
+
+Kizárások:
+A hatókör leírja azt is, hogy mi nem része a tesztelésnek. Ez segít elkerülni a félreértéseket, miszerint például bizonyos nem kritikus funkciók, vagy olyan komponensek, amelyek akár már dokumentálva lettek korábban, nem kerülnek ide a részletes tesztelés alá.
+
+Dokumentáció céljai és elvárások:
+A leírás részletezi, hogy a dokumentum célja a tesztelési folyamat részleteinek, eredményeinek és esetlegesen felmerült hibáknak a összegzése, valamint, hogy ez milyen mértékben támaszkodik a tesztelési tervre vagy a specifikációra.

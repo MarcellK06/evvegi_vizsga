@@ -27,7 +27,7 @@ Route::post("/requests/all", ["userid"], function($params) {
         ]);
     }
 
-    $res = DB::runSql("SELECT requests.id, `title`, `description`, `data`, `replied`, `vin`, `email` FROM requests LEFT JOIN car ON requests.carid = car.id ORDER BY requests.replied ASC");
+    $res = DB::runSql("SELECT requests.id, `title`, `description`, `data`, `replied`, `vin`, `email`, `date` FROM requests LEFT JOIN car ON requests.carid = car.id ORDER BY requests.replied ASC");
     http_response_code(200);
     echo DB::arrayToJson($res);
 });

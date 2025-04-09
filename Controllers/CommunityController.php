@@ -138,10 +138,54 @@ Route::post("/community/posts/delete", ["userid", "postid"], function($params) {
         ]);
         return;
     }
+    DB::runSql("DELETE FROM community_posts WHERE id = $postid");
+    http_response_code(200);
+    echo DB::arrayToJson([
+        "status" => 200,
+        "Message" => "Success"
+    ]);
+});
 
-    DB::runSql("DELETE FROM community_post_likes WHERE postid = $postid;");
-    DB::runSql("DELETE community_comments_likes FROM community_comments_likes JOIN community_posts_comments ON community_comments_likes.commentid = community_posts_comments.id WHERE community_posts_comments.postid = $postid;");
-    DB::runSql("DELETE FROM community_posts_comments WHERE postid = $postid;");
+Route::post("/community/admin/comments/delete", ["userid", "postid"], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+    $userid = $params["userid"];
+
+    $allowed = DB::runSql("SELECT COUNT(*) AS 'allowed' FROM user_rank WHERE userid = $userid AND rankid = 1");
+    if ($allowed[0] == 0) {
+        http_response_code(405);
+        echo DB::arrayToJson([
+            "status" => 405,
+            "Message" => "NOT ALLOWED"
+        ]);
+        return;
+    }
+
+    $postid = intval($params["postid"]);
+
+    DB::runSql("DELETE FROM community_posts_comments WHERE id = $postid");
+    http_response_code(200);
+    echo DB::arrayToJson([
+        "status" => 200,
+        "Message" => "Success"
+    ]);
+});
+
+Route::post("/community/admin/posts/delete", ["userid", "postid"], function($params) {
+    HttpHeadersManager::setHeader(HttpHeadersInterface::HEADER_CONTENT_TYPE, 'application/json; charset=utf-8');
+    $userid = $params["userid"];
+
+    $allowed = DB::runSql("SELECT COUNT(*) AS 'allowed' FROM user_rank WHERE userid = $userid AND rankid = 1");
+    if ($allowed[0] == 0) {
+        http_response_code(405);
+        echo DB::arrayToJson([
+            "status" => 405,
+            "Message" => "NOT ALLOWED"
+        ]);
+        return;
+    }
+
+    $postid = intval($params["postid"]);
+
     DB::runSql("DELETE FROM community_posts WHERE id = $postid");
     http_response_code(200);
     echo DB::arrayToJson([

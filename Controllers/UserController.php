@@ -35,7 +35,8 @@ Route::post("/user/register", ["fullName", "email", "phone", "password"], functi
         } 
         $uid = DB::table("user")->insert([["name" => $fullName, "email" => $email,"phone"=> $phone,"password"=> $password_hashed, "token" => $token, "verified" => 0]], true)->getLastInsertId();
         DB::table("user_rank")->insert([["userid" => $uid, "rankid" => 2]], true);
-        Mailer::Send($email, "SzalkaCar regisztráció", Mailer::MailTamplate("Sikeres regisztáció", "<h4>Üdvözöljük a weboldalon, ".$fullName." !</h4><p>Ha kérdése van cégünkkel kapcsolatba, várjuk emailét szeretettel az <a href='mailto:support@szalkauto.paraghtibor.hu'>itt</a> látható címen!</p><h4>Fiók megerősítés</h4><p>A fiókját megerősítheti <a href='https://code2-api.paraghtibor.hu/user/verify/$token'>itt!</a></p><p>Abban az esetben ha a fent megadott link nem működött, ezt itt is megteheti: https://code2-api.paraghtibor.hu/user/verify/$token</p>"));
+        Mailer::Send($email, "SzalkaCar regisztráció", Mailer::MailTamplate("Sikeres regisztáció", "<h4>Üdvözöljük a weboldalon, ".$fullName."
+         !</h4><p>Ha kérdése van cégünkkel kapcsolatba, várjuk emailét szeretettel az <a href='mailto:support@szalkauto.paraghtibor.hu'>itt</a> látható címen!</p><h4>Fiók megerősítés</h4><p>A fiókját megerősítheti <a href='https://szalkacar.paraghtibor.hu/verify-account/$token'>itt!</a></p><p>Abban az esetben ha a fent megadott link nem működött, ezt itt is megteheti: https://szalkacar.paraghtibor.hu/verify-account/$token</p>"));
         echo DB::arrayToJson([
             "status" => 201,
             "Message" => "Sikeres regisztráció!"
@@ -123,7 +124,7 @@ Route::post("/user/get-password-recovery/verify", ["email", "token"], function($
     $email = $params["email"];
     $token = $params["token"];
     $verify = DB::runSql("SELECT * from user INNER JOIN password_recovery ON password_recovery.userid = user.id WHERE user.email like '$email' 
-    and token like '$token' and password_recovery.expiry > NOW() and password_recovery.success not like 1");
+    and password_recovery.token like '$token' and password_recovery.expiry > NOW() and password_recovery.success not like 1");
     if (count($verify) > 0) {
         echo json_encode(["status" => "passed"]);
     } else {
@@ -141,7 +142,7 @@ Route::post("/user/reset-password", ["email",  "password","token"], function($pa
     $token = $params["token"];
     $newPassword = password_hash($params["password"], PASSWORD_DEFAULT);
     $verify = DB::runSql("SELECT * from user INNER JOIN password_recovery ON password_recovery.userid = user.id WHERE user.email like '$email' 
-    and token like '$token' and password_recovery.expiry > NOW() and password_recovery.success not like 1");
+    and password_recovery.token like '$token' and password_recovery.expiry > NOW() and password_recovery.success not like 1");
 
     if (count($verify) > 0) {
 
@@ -228,15 +229,23 @@ Route::get("/user/verify/{token}", [], function($params) {
 
     $token = $params["token"];
 
-    $exists = DB::runSql("SELECT COUNT(*) AS 'exists' FROM user WHERE token='$token'")[0]->exists;
+    $exists = DB::runSql("SELECT *  FROM user WHERE token='$token'");
 
-    if ($exists == 0)
+    if (count($exists) == 0)
     {
         http_response_code(406);
-        echo DB::arrayToJson(["status" => 406, "Message" => "Invalid token!"]);
+        echo DB::arrayToJson(["status" => 406, "Message" => "Azonosítás sikertelen, a fiók megerősítése nem sikerült."]);
         return;
+    } else {
+      $user = $exists[0];
+      if($user->verified == 1){
+        http_response_code(400);
+        echo DB::arrayToJson(["status" => 400, "Message" =>"Ez a fiók már meg lett erősítve!"]);
+        return;
+      }
+
     }
     DB::table("user")->update(["verified"=>1])->where("token","=",$token)->save();
     http_response_code(200);
-    echo DB::arrayToJson(["status" => 20, "Message" => "SUCCESS"]);
+    echo DB::arrayToJson(["status" => 20, "Message" => "A fiók megerősítése sikeresen megtörtént!"]);
 });

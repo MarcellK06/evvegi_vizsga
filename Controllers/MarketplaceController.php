@@ -75,8 +75,31 @@ Route::post("/marketplace/listings/load/admin/{page}", [], function ($params){
         ]);
         return;
     };
-    $where = "WHERE marketplace.approved = 0";
+    $brand = $params["filters"][0];
+    if (strlen($params["filters"][1]) != 1) {
+        $model = str_replace('-', ' ', $params["filters"][1]);
+    } else {
+        $model = $params["filters"][1];
+    }
+    $engineCode = $params["filters"][2];
+
+    $tempwhere = "WHERE marketplace.approved = 0";
+    $parameters = [];
+    if ($brand != "-" || $model != "-" || $engineCode != "-")
+    {
+        if ($brand != "-")
+            $parameters[] = "JSON_EXTRACT(car.data, '$.brand') = '".$brand."'";
+
+        if ($model != "-")
+            $parameters[] = "JSON_EXTRACT(car.data, '$.model') = '".$model."'";
+
+        if ($engineCode != "-")
+            $parameters[] = "JSON_EXTRACT(car.data, '$.engineCode') = '".$engineCode."'";
+        $tempwhere = "WHERE " . implode(" AND ", $parameters) . " AND marketplace.approved = 0";
+    }
+    $where = $tempwhere;
     $items = DB::runSql("SELECT marketplace.id, itemname, itemdescription, itemprice, listed_at, marketplace.images, car.data from marketplace LEFT JOIN car ON marketplace.carid = car.id ".$where);
+
     $db = DB::runSql("SELECT COUNT(*) as 'all' from marketplace ");
 
     echo DB::arrayToJson([$items, $db]);
@@ -193,7 +216,7 @@ Route::post("/marketplace/listings/delete", ["userid", "listingid"], function($p
     $userid = intval($params["userid"]);
     $listingid = intval($params["listingid"]);
 
-    DB::runSql("DELETE FROM user_marketplace WHERE userid=$userid marketplaceid=$listingid");
+    DB::runSql("DELETE FROM user_marketplace WHERE userid=$userid AND marketplaceid=$listingid");
     DB::runSql("DELETE FROM marketplace WHERE userid=$userid AND id=$listingid");
     http_response_code(200);
     echo DB::arrayToJson([

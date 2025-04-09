@@ -20,3 +20,18 @@ Route::get("/ratings/get", [], function($params){
 
     echo DB::arrayToJson(["ratings" => $ratings, "avg" => $avg->avg, "all_ratings" => $all->all_ratings, "countperstars" => $sp]);
 });
+Route::post("/ratings/new", ["userid", "stars", "comment"], function($params){
+    $id = $params["userid"];
+    $stars = $params["stars"];
+    $comment = $params["comment"];
+    $user =  DB::runSql("select * from user where id = $id")[0];
+    if($user->verified == 0 )return;
+    DB::runSql("insert into ratings (userid, count, comment) values ('$id', '$stars', '$comment')");
+    return DB::arrayToJson(["success" => true]);
+
+   
+
+
+
+});
+
