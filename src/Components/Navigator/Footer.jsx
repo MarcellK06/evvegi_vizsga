@@ -66,11 +66,15 @@ function Footer({ f = false }) {
           <div className="col-sm-3 mx-auto mb-sm-2">
             <h5 className="text-uppercase fw-bold">Kapcsolat</h5>
             <div>
-              <MdEmail /> <a href="mailto:info@szalkacar.hu">info@Szalkacar.hu</a>
+              <MdEmail />{" "}
+              <a href="mailto:info@szalkacar.hu">info@Szalkacar.hu</a>
               <br />
               <FaPhone /> <a href="tel:+36303926004">+36303926004</a>
               <br />
-              <HiOfficeBuilding /> <a href="https://maps.app.goo.gl/9xEzNy9RpNJG2L5H9">4700, Mátészalka Kölcsey út 12</a>
+              <HiOfficeBuilding />{" "}
+              <a href="https://maps.app.goo.gl/9xEzNy9RpNJG2L5H9">
+                4700, Mátészalka Kölcsey út 12
+              </a>
             </div>
           </div>
         </div>

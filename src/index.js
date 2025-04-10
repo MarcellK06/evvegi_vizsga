@@ -36,7 +36,6 @@ import TESTDOC from "./Pages/TESTDOC";
 import Exam from "./Pages/Exam";
 import VerifyAccount from "./Pages/VerifyAccount";
 
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <div style={{ minHeight: "65.7vh" }}>
@@ -44,7 +43,7 @@ root.render(
       <ModalProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />  } />
+            <Route path="/" element={<Home />} />
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/marketplace" element={<Marketplace />} />
             <Route
@@ -85,7 +84,6 @@ root.render(
             <Route path="/exam" element={<Exam />} />
             <Route path="/verify-account/:token" element={<VerifyAccount />} />
             <Route path="*" element={<NotFound />} />
-            
           </Routes>
         </BrowserRouter>
       </ModalProvider>

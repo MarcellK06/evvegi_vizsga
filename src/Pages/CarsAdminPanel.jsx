@@ -3,8 +3,16 @@ import { useContext, useEffect, useState } from "react";
 import $ from "jquery";
 import CONFIG from "../config.json";
 import { ModalContext } from "../Providers/ModalProvider";
-import { FaPen, FaEye, FaCar, FaXing, FaCheck, FaCheckCircle, FaHourglassHalf } from "react-icons/fa";
-import {RxCheck, RxCross1} from "react-icons/rx";
+import {
+  FaPen,
+  FaEye,
+  FaCar,
+  FaXing,
+  FaCheck,
+  FaCheckCircle,
+  FaHourglassHalf,
+} from "react-icons/fa";
+import { RxCheck, RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 function CarsAdminPanel() {
   const API = CONFIG.API;
@@ -56,7 +64,7 @@ function CarsAdminPanel() {
               el.images,
               el.status,
               el.nickname,
-              el.approved,
+              el.approved
             )
           );
         });
@@ -141,16 +149,26 @@ function CarsAdminPanel() {
           {Object.keys(el.data).map((i) => JsonEntry(i, el.data, el.id))}
           <div className="car-detail-item">
             <p className="detail-label">Alvázszám</p>
-            <input type="text" className="form-control detail-value" id={`${el.id}-vin`} defaultValue={el.vin}/>
+            <input
+              type="text"
+              className="form-control detail-value"
+              id={`${el.id}-vin`}
+              defaultValue={el.vin}
+            />
           </div>
           <div className="car-detail-item">
             <p className="detail-label">Jármű Állapota</p>
-            <input type="text" className="form-control detail-value" id={`${el.id}-status`} defaultValue={el.status}/>
+            <input
+              type="text"
+              className="form-control detail-value"
+              id={`${el.id}-status`}
+              defaultValue={el.status}
+            />
           </div>
         </div>
-        
+
         <hr className="divider" />
-        
+
         <div className="car-images-container">
           <div className="row g-3">
             {el.images.map((img, index) => (
@@ -161,21 +179,23 @@ function CarsAdminPanel() {
                     alt={`Car image ${index + 1}`}
                     className="img-fluid rounded car-thumbnail"
                   />
-                  <div className="image-overlay" 
+                  <div
+                    className="image-overlay"
                     onClick={() =>
                       CreateModal(
                         <div>
                           <h4 className="modal-title">Fénykép Megtekintés</h4>
                           <hr className="divider" />
                         </div>,
-                        <img 
-                          src={img || "/placeholder.svg"} 
-                          className="img-fluid modal-image" 
+                        <img
+                          src={img || "/placeholder.svg"}
+                          className="img-fluid modal-image"
                           alt={`Car image ${index + 1} full view`}
                         />,
                         true
                       )
-                    }>
+                    }
+                  >
                     <FaEye className="view-icon" />
                   </div>
                 </div>
@@ -185,28 +205,23 @@ function CarsAdminPanel() {
         </div>
         <hr />
         <div className="row">
-          <div className="col-9">
-
-          </div>
+          <div className="col-9"></div>
           <div className="col-3 d-flex">
-            
-          <button 
-                      className="action-buttonad acceptad"
-                      style={{color: "white"}}
-                      onClick={() =>
-                        Approve(el)
-                      }
-                    >
-                      <RxCheck size={25}/>
-                    </button>
-                    
-                    <button 
-                      className="action-buttonad declinead"
-                      style={{color: "white"}}
-                      onClick={() => Decline(el)}
-                    >
-                      <RxCross1 size={25}/>
-                    </button>
+            <button
+              className="action-buttonad acceptad"
+              style={{ color: "white" }}
+              onClick={() => Approve(el)}
+            >
+              <RxCheck size={25} />
+            </button>
+
+            <button
+              className="action-buttonad declinead"
+              style={{ color: "white" }}
+              onClick={() => Decline(el)}
+            >
+              <RxCross1 size={25} />
+            </button>
           </div>
         </div>
       </div>
@@ -214,63 +229,64 @@ function CarsAdminPanel() {
   };
 
   const carListEntry = (el) => {
-    
     var nickname = el.nickname;
     var brand = el.data.brand;
     var model = el.data.model;
     var year = el.data.year;
     var approved = el.approved;
     var engineCode = el.data.engineCode;
-            return (
-              <div className="car-list-item" key={el.id}>
-                <div className="car-card">
-                  <div className="car-info">
-                    <h3 className="car-nickname">{nickname}</h3>
-                    <div className="car-specs-summary">
-                      <span className="car-year">{year}</span>
-                      <span className="car-brand">{brand}</span>
-                      <span className="car-model">{model}</span>
-                      <span className="car-engine">{engineCode}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="car-actions">
-                    <div className={`approval-status ${approved ? 'approved' : 'pending'}`}>
-                      {approved ? (
-                        <>
-                          <FaCheckCircle className="status-icon" />
-                          <span>Ellenőrizve!</span>
-                        </>
-                      ) : (
-                        <>
-                          <FaHourglassHalf className="status-icon" />
-                          <span>Ellenörzésre vár..</span>
-                        </>
-                      )}
-                    </div>
-                    
-                    <button 
-                      className="action-button view-button"
-                      onClick={() =>
-                        CreateModal(
-                          <div>
-                            <h4 className="modal-title">
-                              <FaCar className="me-2" />
-                              {nickname}
-                            </h4>
-                            <hr className="divider" />
-                          </div>,
-                          CarEntry(el),
-                          true
-                        )
-                      }
-                    >
-                      <FaEye/>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
+    return (
+      <div className="car-list-item" key={el.id}>
+        <div className="car-card">
+          <div className="car-info">
+            <h3 className="car-nickname">{nickname}</h3>
+            <div className="car-specs-summary">
+              <span className="car-year">{year}</span>
+              <span className="car-brand">{brand}</span>
+              <span className="car-model">{model}</span>
+              <span className="car-engine">{engineCode}</span>
+            </div>
+          </div>
+
+          <div className="car-actions">
+            <div
+              className={`approval-status ${approved ? "approved" : "pending"}`}
+            >
+              {approved ? (
+                <>
+                  <FaCheckCircle className="status-icon" />
+                  <span>Ellenőrizve!</span>
+                </>
+              ) : (
+                <>
+                  <FaHourglassHalf className="status-icon" />
+                  <span>Ellenörzésre vár..</span>
+                </>
+              )}
+            </div>
+
+            <button
+              className="action-button view-button"
+              onClick={() =>
+                CreateModal(
+                  <div>
+                    <h4 className="modal-title">
+                      <FaCar className="me-2" />
+                      {nickname}
+                    </h4>
+                    <hr className="divider" />
+                  </div>,
+                  CarEntry(el),
+                  true
+                )
+              }
+            >
+              <FaEye />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (

@@ -279,68 +279,75 @@ function LoadOwnRequests() {
 
   const getActiveRequestComponent = (r) => {
     if (r.data != null)
-    return (
-      <>
-        <div className="row mt-3">
-          <div className="col-sm-2 mx-auto ms-2">
-            <div className="fw-bold">Gyártmány</div>
-            <div className=" ms-3">{r.data.brand}</div>
-          </div>
-          <div className="col-sm-2 mx-auto">
-            <div className="fw-bold">Model</div>
-            <div className=" ms-3">{r.data.model}</div>
-          </div>
-          <div className="col-sm-2 mx-auto">
-            <div className="fw-bold">Motorkód</div>
-            <div className="ms-3">{r.data.engineCode}</div>
-          </div>
-          <div className="col-sm-2 mx-auto">
-            <div className="fw-bold">Rendszám</div>
-            <div className="ms-3">{r.data.licensePlate}</div>
-          </div>
-        </div>
-        <div className="row mt-4">
-          <div className="col-sm-2 ms-2">
-            <div className="fw-bold">Kilóméter</div>
-            <div className=" ms-3">{r.data.km}</div>
-          </div>
-          <div className="col-sm-2">
-            <div className="fw-bold">Alvázszám</div>
-            <div className=" ms-3">{r.vin}</div>
-          </div>
-          <div className="col-sm-2">
-            <div className="fw-bold">Válaszolva</div>
-            <div className=" ms-3">{r.replied == 0 ? <b>Nem</b> : <b>Igen</b>}</div>
-          </div>
-          <div className="col-sm-2">
-              <button className="btn btn-danger" onClick={() => DeleteRequest(r)}>Törlés</button>
-          </div>
-        </div>
-        <div>
-        <hr />
-        <div className="container p-2 m-2 mx-auto rounded request-text-color">
-          <p className="mt-2 ms-3 fs-4">
-          <b>Cím</b>
-          </p>
-          <p className="ms-4">{r.title}</p></div>
-          <div className="row">
-            <div className="col-1"></div>
-            <div className="col-10">
-              <hr />
+      return (
+        <>
+          <div className="row mt-3">
+            <div className="col-sm-2 mx-auto ms-2">
+              <div className="fw-bold">Gyártmány</div>
+              <div className=" ms-3">{r.data.brand}</div>
             </div>
-            <div className="col-1"></div>
+            <div className="col-sm-2 mx-auto">
+              <div className="fw-bold">Model</div>
+              <div className=" ms-3">{r.data.model}</div>
+            </div>
+            <div className="col-sm-2 mx-auto">
+              <div className="fw-bold">Motorkód</div>
+              <div className="ms-3">{r.data.engineCode}</div>
+            </div>
+            <div className="col-sm-2 mx-auto">
+              <div className="fw-bold">Rendszám</div>
+              <div className="ms-3">{r.data.licensePlate}</div>
+            </div>
           </div>
-          <div className="container p-2 m-2 mx-auto rounded request-text-color">
-          <p className="mb-3 ms-3 fs-4">
-            <b>Leírás</b>
-          </p>
-          <p className="ms-4"> {r.description}</p></div>
-          <div className="ms-2 row d-flex">
+          <div className="row mt-4">
+            <div className="col-sm-2 ms-2">
+              <div className="fw-bold">Kilóméter</div>
+              <div className=" ms-3">{r.data.km}</div>
+            </div>
+            <div className="col-sm-2">
+              <div className="fw-bold">Alvázszám</div>
+              <div className=" ms-3">{r.vin}</div>
+            </div>
+            <div className="col-sm-2">
+              <div className="fw-bold">Válaszolva</div>
+              <div className=" ms-3">
+                {r.replied == 0 ? <b>Nem</b> : <b>Igen</b>}
+              </div>
+            </div>
+            <div className="col-sm-2">
+              <button
+                className="btn btn-danger"
+                onClick={() => DeleteRequest(r)}
+              >
+                Törlés
+              </button>
+            </div>
           </div>
-        
-        </div>
-      </>
-    );
+          <div>
+            <hr />
+            <div className="container p-2 m-2 mx-auto rounded request-text-color">
+              <p className="mt-2 ms-3 fs-4">
+                <b>Cím</b>
+              </p>
+              <p className="ms-4">{r.title}</p>
+            </div>
+            <div className="row">
+              <div className="col-1"></div>
+              <div className="col-10">
+                <hr />
+              </div>
+              <div className="col-1"></div>
+            </div>
+            <div className="container p-2 m-2 mx-auto rounded request-text-color">
+              <p className="mb-3 ms-3 fs-4">
+                <b>Leírás</b>
+              </p>
+              <p className="ms-4"> {r.description}</p>
+            </div>
+            <div className="ms-2 row d-flex"></div>
+          </div>
+        </>
+      );
     else {
       return (
         <>
@@ -351,19 +358,27 @@ function LoadOwnRequests() {
             </div>
             <div className="col-sm-2 mx-auto">
               <div className="fw-bold">Válaszolva</div>
-              <div className=" ms-3">{r.replied == 0 ? <b>Nem</b> : <b>Igen</b>}</div>
+              <div className=" ms-3">
+                {r.replied == 0 ? <b>Nem</b> : <b>Igen</b>}
+              </div>
             </div>
             <div className="col-sm-2 mx-auto">
-                <button className="btn btn-danger" onClick={() => DeleteRequest(r)}>Törlés</button>
+              <button
+                className="btn btn-danger"
+                onClick={() => DeleteRequest(r)}
+              >
+                Törlés
+              </button>
             </div>
           </div>
           <div>
-          <hr />
-          <div className="container p-2 m-2 mx-auto rounded request-text-color">
-            <p className="mt-2 ms-3 fs-4">
-            <b>Cím</b>
-            </p>
-            <p className="ms-4">{r.title}</p></div>
+            <hr />
+            <div className="container p-2 m-2 mx-auto rounded request-text-color">
+              <p className="mt-2 ms-3 fs-4">
+                <b>Cím</b>
+              </p>
+              <p className="ms-4">{r.title}</p>
+            </div>
             <div className="row">
               <div className="col-1"></div>
               <div className="col-10">
@@ -372,11 +387,11 @@ function LoadOwnRequests() {
               <div className="col-1"></div>
             </div>
             <div className="container p-2 m-2 mx-auto rounded request-text-color">
-            <p className="mb-3 ms-3 fs-4">
-              <b>Leírás</b>
-            </p>
-            <p className="ms-4"> {r.description}</p></div>
-          
+              <p className="mb-3 ms-3 fs-4">
+                <b>Leírás</b>
+              </p>
+              <p className="ms-4"> {r.description}</p>
+            </div>
           </div>
         </>
       );

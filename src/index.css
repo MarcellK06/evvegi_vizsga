@@ -440,21 +440,20 @@ input {
     width: 95% !important;
     max-width: 95% !important;
   }
-  .home-header .title{
+  .home-header .title {
     font-size: 50px !important;
   }
-  .home-header .services{
+  .home-header .services {
     font-size: 30px !important;
     text-indent: -9999px !important;
     line-height: 0 !important;
   }
-  
+
   .home-header .services::after {
     content: "Szervíz  Kozmetika Gumiabroncs...";
     text-indent: 0;
     display: block;
     line-height: initial;
-    
   }
 }
 
@@ -910,9 +909,8 @@ input {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
-
 
 .quote-header {
   margin-bottom: 40px;
@@ -929,7 +927,7 @@ input {
 }
 
 .quote-title:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 60px;
   height: 3px;
@@ -1049,11 +1047,11 @@ input {
   .quote-form {
     padding: 30px 20px;
   }
-  
+
   .label-title {
     font-size: 16px;
   }
-  
+
   .input-field,
   .textarea-field,
   .select-field,
@@ -1066,7 +1064,7 @@ input {
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 20px;
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .profile-grid {
@@ -1083,7 +1081,7 @@ input {
   .profile-grid {
     grid-template-columns: 1fr 1fr;
   }
-  
+
   .user-data-section {
     border-left: 1px solid #e2e8f0;
     padding-left: 30px;
@@ -1197,7 +1195,7 @@ input {
   .form-grid {
     grid-template-columns: 100px 1fr;
   }
-  
+
   .mobile-label {
     display: none;
   }
@@ -1276,7 +1274,7 @@ input {
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 20px;
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .admin-header {
@@ -1297,7 +1295,7 @@ input {
 }
 
 .admin-title:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 40px;
   height: 3px;
@@ -1374,13 +1372,13 @@ input {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
   }
-  
+
   .card-icon {
     width: 40px;
     height: 40px;
     font-size: 18px;
   }
-  
+
   .card-label {
     font-size: 14px;
   }
@@ -1390,7 +1388,7 @@ input {
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 20px;
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .dashboard-container {
@@ -1422,7 +1420,7 @@ input {
 
 .dashboard-title:after,
 .admin-title:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 40px;
   height: 3px;
@@ -1505,17 +1503,17 @@ input {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
   }
-  
+
   .card-icon {
     width: 40px;
     height: 40px;
     font-size: 18px;
   }
-  
+
   .card-label {
     font-size: 14px;
   }
-  
+
   .dashboard-container {
     padding: 20px;
   }
@@ -1742,7 +1740,8 @@ input {
   margin-right: 0.5rem;
 }
 
-.action-button, .action-buttonad {
+.action-button,
+.action-buttonad {
   background: none;
   border: none;
   width: 40px;
@@ -1891,13 +1890,13 @@ input {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .car-actions {
     width: 100%;
     margin-top: 1rem;
     justify-content: flex-end;
   }
-  
+
   .car-detail-item {
     flex: 1 0 100%;
   }
@@ -2153,12 +2152,12 @@ input {
   .comment-header {
     flex-direction: column;
   }
-  
+
   .comment-actions {
     margin-top: 0.5rem;
     align-self: flex-end;
   }
-  
+
   .comment-image-container {
     width: 80px;
     height: 80px;
@@ -2333,7 +2332,6 @@ input {
   }
 }
 
-
 .admin-posts-container {
   padding: 20px 0;
 }
@@ -2482,7 +2480,8 @@ input {
   border-top: 1px solid #e9ecef;
 }
 
-.action-button, .action-buttonad {
+.action-button,
+.action-buttonad {
   background: none;
   border: none;
   border-radius: 5px;
@@ -2498,7 +2497,6 @@ input {
 .action-buttonad:hover {
   background-color: #363636;
 }
-
 
 .comments-button {
   color: #6c757d;
@@ -2619,13 +2617,12 @@ input {
   }
 }
 
-.verify-account-error-icon{
-   margin-left: 30px;
+.verify-account-error-icon {
+  margin-left: 30px;
 }
-.verify-account-success-icon{
+.verify-account-success-icon {
   margin-left: 50px;
 }
-
 
 .acceptad {
   background-color: rgb(0, 102, 0);
@@ -2634,12 +2631,12 @@ input {
 .declinead {
   background-color: rgb(102, 0, 0);
 }
-.request-user:hover{
+.request-user:hover {
   background-color: #00919652;
 }
-.request-user{
+.request-user {
   background-color: rgba(128, 128, 128, 0.034);
 }
-.request-data{
+.request-data {
   border-left: 1px solid black;
 }

@@ -7,7 +7,6 @@ import { ModalContext } from "../../Providers/ModalProvider";
 import { Star } from "lucide-react";
 import WriteRating from "./WriteRating";
 
-
 function Ratings() {
   const [ratings, setRatings] = useState({
     avg: 0,
@@ -16,7 +15,7 @@ function Ratings() {
     ratings: [],
   });
 
-  const {CreateModal} = useContext(ModalContext);
+  const { CreateModal } = useContext(ModalContext);
   useEffect(() => {
     $.ajax({
       url: `${API.API}/ratings/get`,
@@ -68,16 +67,6 @@ function Ratings() {
     );
   };
 
-
-
- 
-
-  
- 
- 
-
-
-
   return (
     <div className="ratings-container">
       <motion.h2
@@ -104,12 +93,13 @@ function Ratings() {
         </div>
       </motion.div>
       <div className="d-flex justify-content-center my-4">
-        <div className="h-btn fs-5 p-3" style={{cursor: "pointer"}} onClick={() => {
-
-          CreateModal("Értékelés", <WriteRating/>, true);
-
-
-        }}>
+        <div
+          className="h-btn fs-5 p-3"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            CreateModal("Értékelés", <WriteRating />, true);
+          }}
+        >
           <div className="d-flex justify-content-between">
             <div className="me-3">
               <svg
@@ -125,7 +115,6 @@ function Ratings() {
             </div>
             <div> Véleményt írok</div>
           </div>
-         
         </div>
       </div>
       <div className="ratings-grid">

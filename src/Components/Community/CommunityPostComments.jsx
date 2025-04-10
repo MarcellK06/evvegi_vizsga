@@ -55,11 +55,15 @@ function CommunityPostComments(data) {
   const LoadImage = (url) => {
     return (
       <div className="comment-image-container">
-        <img src={url || "/placeholder.svg"} className="comment-image img-fluid rounded" alt="Comment attachment" />
+        <img
+          src={url || "/placeholder.svg"}
+          className="comment-image img-fluid rounded"
+          alt="Comment attachment"
+        />
       </div>
     );
   };
-  
+
   const commentEntry = (i) => {
     var comment = i.comment;
     var username = i.username;
@@ -109,7 +113,7 @@ function CommunityPostComments(data) {
             </div>
             <div className="comment-actions">
               <button
-                className={`like-button ${liked ? 'liked' : ''}`}
+                className={`like-button ${liked ? "liked" : ""}`}
                 id={`comment-${i.id}`}
                 onClick={() => LikeComment(i.id)}
               >
@@ -121,9 +125,7 @@ function CommunityPostComments(data) {
               </button>
             </div>
           </div>
-          <div className="comment-text">
-            {comment}
-          </div>
+          <div className="comment-text">{comment}</div>
           {images.length > 0 && (
             <div className="comment-images">
               {images.map((imgUrl, index) => LoadImage(imgUrl))}

@@ -46,7 +46,7 @@ function CreateCommunityPost() {
           <div className="col-lg-8 col-md-10">
             <div className="create-post-card bg-white rounded-3 shadow-sm p-4 mb-4">
               <h4 className="mb-4 fw-bold">Bejegyzés közzététele</h4>
-              
+
               <div className="mb-3">
                 <label htmlFor="title" className="form-label fw-semibold">
                   Cím
@@ -61,7 +61,7 @@ function CreateCommunityPost() {
                   placeholder="Add meg a bejegyzés címét"
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label htmlFor="description" className="form-label fw-semibold">
                   Törzs
@@ -74,10 +74,12 @@ function CreateCommunityPost() {
                   placeholder="Írd le a bejegyzés tartalmát..."
                 ></textarea>
               </div>
-              
-              <div className="file-upload-preview mb-3" id="filePreviewContainer">
-              </div>
-              
+
+              <div
+                className="file-upload-preview mb-3"
+                id="filePreviewContainer"
+              ></div>
+
               <div className="d-flex flex-wrap justify-content-between align-items-center mt-4">
                 <button
                   type="button"
@@ -95,29 +97,32 @@ function CreateCommunityPost() {
                     multiple
                     accept="image/png, image/jpeg"
                     onChange={(e) => {
-                      const fileContainer = document.getElementById("filePreviewContainer");
+                      const fileContainer = document.getElementById(
+                        "filePreviewContainer"
+                      );
                       fileContainer.innerHTML = "";
-                      
+
                       if (e.target.files.length > 0) {
                         const fileList = document.createElement("div");
                         fileList.className = "list-group mt-2";
-                        
+
                         for (let i = 0; i < e.target.files.length; i++) {
                           const fileItem = document.createElement("div");
-                          fileItem.className = "list-group-item d-flex align-items-center";
+                          fileItem.className =
+                            "list-group-item d-flex align-items-center";
                           fileItem.innerHTML = `
                             <FaFile className="me-2 text-primary" />
                             <span>${e.target.files[i].name}</span>
                           `;
                           fileList.appendChild(fileItem);
                         }
-                        
+
                         fileContainer.appendChild(fileList);
                       }
                     }}
                   />
                 </button>
-                
+
                 <button
                   type="button"
                   className="btn btn-primary d-flex align-items-center"

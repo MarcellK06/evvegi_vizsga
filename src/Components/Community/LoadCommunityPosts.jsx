@@ -9,7 +9,7 @@ import { CiClock2 } from "react-icons/ci";
 import { FaRegCommentDots } from "react-icons/fa";
 import { ModalContext } from "../../Providers/ModalProvider";
 
-const LoadCommunityPosts = function() {
+const LoadCommunityPosts = function () {
   const [i, setI] = useState(1);
   const { CreateModal } = useContext(ModalContext);
   var API = CONFIG.API;
@@ -78,7 +78,10 @@ const LoadCommunityPosts = function() {
   const showAllImages = (el) => {
     return (
       <>
-        <div id={`carousel-${el.id}`} className="carousel slide bg-light rounded-3 shadow">
+        <div
+          id={`carousel-${el.id}`}
+          className="carousel slide bg-light rounded-3 shadow"
+        >
           <div className="carousel-inner">
             {el.images.map((i, idx) => loadImage(idx, el))}
           </div>
@@ -88,7 +91,10 @@ const LoadCommunityPosts = function() {
             data-bs-target={`#carousel-${el.id}`}
             data-bs-slide="prev"
           >
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span
+              className="carousel-control-prev-icon"
+              aria-hidden="true"
+            ></span>
             <span className="visually-hidden">Previous</span>
           </button>
           <button
@@ -97,7 +103,10 @@ const LoadCommunityPosts = function() {
             data-bs-target={`#carousel-${el.id}`}
             data-bs-slide="next"
           >
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span
+              className="carousel-control-next-icon"
+              aria-hidden="true"
+            ></span>
             <span className="visually-hidden">Next</span>
           </button>
         </div>
@@ -143,12 +152,12 @@ const LoadCommunityPosts = function() {
           <div className="d-flex align-items-center mb-3">
             <div
               className="avatar rounded-circle me-3"
-              style={{ 
+              style={{
                 backgroundImage: `url(${API}/user/avatar/${userid})`,
                 width: "48px",
                 height: "48px",
                 backgroundSize: "cover",
-                backgroundPosition: "center"
+                backgroundPosition: "center",
               }}
             ></div>
             <div className="flex-grow-1">
@@ -159,16 +168,20 @@ const LoadCommunityPosts = function() {
               </div>
             </div>
           </div>
-          
+
           <h5 className="fw-bold mb-2">{el.title}</h5>
           <p className="mb-3">{el.description}</p>
-          
+
           {el.images[0] != "" && (
             <div className="mb-3">
               <img
                 src={`${API}/community/postimages/${el.id}/0`}
                 className="img-fluid rounded-3 w-100"
-                style={{ maxHeight: "300px", objectFit: "cover", cursor: "pointer" }}
+                style={{
+                  maxHeight: "300px",
+                  objectFit: "cover",
+                  cursor: "pointer",
+                }}
                 onClick={() =>
                   CreateModal(
                     <>
@@ -196,15 +209,15 @@ const LoadCommunityPosts = function() {
               </button>
             </div>
           )}
-          
+
           <hr className="my-3" />
-          
+
           <div className="d-flex justify-content-between">
             <div className="d-flex align-items-center">
               <LikeCommunityPost data={el} />
             </div>
-            <div 
-              onClick={() => ShowComments(el.id)} 
+            <div
+              onClick={() => ShowComments(el.id)}
               className="d-flex align-items-center text-muted"
               style={{ cursor: "pointer" }}
             >
@@ -212,7 +225,7 @@ const LoadCommunityPosts = function() {
               <span>{el.comments}</span>
             </div>
           </div>
-          
+
           <div className="mt-3 d-none" id={`comments-${el.id}`}>
             <div className="comments-container bg-light p-3 rounded-3 mt-3">
               <CommunityPostComments data={el} />
@@ -270,7 +283,8 @@ const LoadCommunityPosts = function() {
     LoadPosts();
     setInterval(() => {
       if (document.getElementById("postsloader") != null) {
-        document.getElementById("postsloader").innerHTML = "Jelenleg nincs közösségi bejegyzés..";
+        document.getElementById("postsloader").innerHTML =
+          "Jelenleg nincs közösségi bejegyzés..";
         document.getElementById("loaderspinner").classList = [];
       }
     }, 3000);
@@ -285,26 +299,36 @@ const LoadCommunityPosts = function() {
               activeposts.map((post) => PostEntry(post))
             ) : (
               <div className="text-center py-5">
-                <div className="spinner-border text-primary" id="loaderspinner" role="status">
+                <div
+                  className="spinner-border text-primary"
+                  id="loaderspinner"
+                  role="status"
+                >
                   <span className="visually-hidden">Betöltés...</span>
                 </div>
-                <p className="mt-3" id="postsloader">Posztok betöltése...</p>
+                <p className="mt-3" id="postsloader">
+                  Posztok betöltése...
+                </p>
               </div>
             )}
-            
+
             <div className="d-flex justify-content-between mt-4">
-              <button 
-                type="button" 
-                className="btn btn-outline-primary px-4" 
-                onClick={(e) => {setI(i-1)}} 
+              <button
+                type="button"
+                className="btn btn-outline-primary px-4"
+                onClick={(e) => {
+                  setI(i - 1);
+                }}
                 disabled={i <= 1}
               >
                 Previous
               </button>
-              <button 
-                type="button" 
-                className="btn btn-primary px-4" 
-                onClick={(e) => {setI(i+1)}}
+              <button
+                type="button"
+                className="btn btn-primary px-4"
+                onClick={(e) => {
+                  setI(i + 1);
+                }}
               >
                 Next
               </button>

@@ -144,7 +144,6 @@ function Navbar() {
                     window.location.href = "/auth/login";
                   }}
                 >
-                  
                   <div className="fw-bold">Bejelentkezés</div>
                 </button>
               ) : (
@@ -229,8 +228,7 @@ function Navbar() {
                         window.location.href = "/auth/login";
                       }}
                     >
-                      
-                  <div className="fw-bold">Bejelentkezés</div>
+                      <div className="fw-bold">Bejelentkezés</div>
                     </button>
                   ) : (
                     <div

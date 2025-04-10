@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { FaStar, FaRegStar, FaQuoteLeft } from "react-icons/fa";
 import CONFIG from "../../config.json";
 import Cookies from "js-cookie";
-import $ from 'jquery';
+import $ from "jquery";
 function WriteRating() {
   const [current, setCurrent] = useState(5);
   const [length, setLength] = useState(0);
@@ -30,23 +30,25 @@ function WriteRating() {
     var text = reviewText.current.value;
     var userid = Cookies.get("userid");
     $.ajax({
-      "url": `${API}/ratings/new`,
+      url: `${API}/ratings/new`,
       type: "POST",
       data: {
         userid: userid,
         stars: current,
-        comment: text
+        comment: text,
       },
       success: (resp) => {
         window.location.reload();
-      }
-    })
-  }
+      },
+    });
+  };
 
   return (
     <>
-    <hr />
-      <div className="d-flex justify-content-center mt-2">{RateStars(current)}</div>
+      <hr />
+      <div className="d-flex justify-content-center mt-2">
+        {RateStars(current)}
+      </div>
       <hr />
       <div className="mt-3">
         <textarea
@@ -60,7 +62,9 @@ function WriteRating() {
         <p>{length} / 250</p>
       </div>
       <div>
-        <button className="h-btn w-100 p-3 mt-3" onClick={sendReview}>Küldés</button>
+        <button className="h-btn w-100 p-3 mt-3" onClick={sendReview}>
+          Küldés
+        </button>
       </div>
     </>
   );

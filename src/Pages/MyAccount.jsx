@@ -7,14 +7,16 @@ function MyAccount() {
   return (
     <div className="user-dashboard">
       <LoadProfileData />
-      
+
       <div className="dashboard-container">
         <div className="dashboard-header">
-          <h2 className="dashboard-title">Bejegyzések, Hírdetések és Egyebek</h2>
+          <h2 className="dashboard-title">
+            Bejegyzések, Hírdetések és Egyebek
+          </h2>
         </div>
-        
+
         <div className="dashboard-grid">
-          <div 
+          <div
             className="dashboard-card"
             onClick={() => (window.location.href = "/my-account/posts")}
           >
@@ -23,8 +25,8 @@ function MyAccount() {
             </div>
             <p className="card-label">Bejegyzések</p>
           </div>
-          
-          <div 
+
+          <div
             className="dashboard-card"
             onClick={() => (window.location.href = "/my-account/listings")}
           >
@@ -33,8 +35,8 @@ function MyAccount() {
             </div>
             <p className="card-label">Hirdetések</p>
           </div>
-          
-          <div 
+
+          <div
             className="dashboard-card"
             onClick={() => (window.location.href = "/my-account/requests")}
           >
@@ -47,8 +49,6 @@ function MyAccount() {
       </div>
     </div>
   );
-  
-  
 }
 
 export default MyAccount;

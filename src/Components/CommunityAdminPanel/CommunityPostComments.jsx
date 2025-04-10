@@ -17,7 +17,7 @@ function CommunityPostCommentsAdmin(data) {
     const psplit = postedat.split("-");
     const now = new Date();
     let postedat_text = "";
-    
+
     if (psplit[1][0] == "0") psplit[1] = psplit[1][1];
 
     if (parseInt(psplit[2].split(" ")[0]) != now.getDate())
@@ -35,7 +35,7 @@ function CommunityPostCommentsAdmin(data) {
       if (parseInt(psplit[0]) != now.getHours())
         postedat_text = `${now.getHours() - parseInt(psplit[0])} ó`;
     }
-    
+
     return postedat_text;
   };
 
@@ -57,9 +57,9 @@ function CommunityPostCommentsAdmin(data) {
         setComments(resp);
         setLoading(false);
       },
-      error: function() {
+      error: function () {
         setLoading(false);
-      }
+      },
     });
   };
 
@@ -68,7 +68,7 @@ function CommunityPostCommentsAdmin(data) {
     if (!window.confirm("Biztosan törölni szeretné ezt a bejegyzést?")) {
       return;
     }
-    
+
     $.ajax({
       url: `${API}/community/admin/comments/delete`,
       type: "post",
@@ -85,15 +85,15 @@ function CommunityPostCommentsAdmin(data) {
   const LoadImage = (url, index) => {
     return (
       <div className="comment-image-container" key={index}>
-        <img 
-          src={url || "/placeholder.svg"} 
-          alt="Comment attachment" 
+        <img
+          src={url || "/placeholder.svg"}
+          alt="Comment attachment"
           className="comment-image img-fluid rounded"
         />
       </div>
     );
   };
-  
+
   const commentEntry = (comment) => {
     var commentText = comment.comment;
     var username = comment.username;
@@ -103,7 +103,7 @@ function CommunityPostCommentsAdmin(data) {
     var postedat = comment.postedat;
     var postedat_text = formatTimeAgo(postedat);
     var images = comment.images.includes(",") ? comment.images.split(",") : [];
-    
+
     return (
       <div className="comment-item" key={comment.id}>
         <div className="comment-content">
@@ -123,10 +123,10 @@ function CommunityPostCommentsAdmin(data) {
                 </div>
               </div>
             </div>
-            
+
             <div className="comment-actions">
-              <button 
-                className="delete-button" 
+              <button
+                className="delete-button"
                 onClick={() => DeleteComment(comment.id)}
                 title="Hozzászólás törlése"
               >
@@ -134,11 +134,9 @@ function CommunityPostCommentsAdmin(data) {
               </button>
             </div>
           </div>
-          
-          <div className="comment-text">
-            {commentText}
-          </div>
-          
+
+          <div className="comment-text">{commentText}</div>
+
           {images.length > 0 && (
             <div className="comment-images">
               {images.map((url, index) => LoadImage(url, index))}

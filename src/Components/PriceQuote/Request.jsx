@@ -159,7 +159,9 @@ function Request() {
             <div className="form-group">
               <label htmlFor="subject" className="form-label">
                 <span className="label-title">Cím</span>
-                <span className="label-description ms-2">Írja le röviden, mit tapasztal járműve!</span>
+                <span className="label-description ms-2">
+                  Írja le röviden, mit tapasztal járműve!
+                </span>
               </label>
               <input
                 type="text"
@@ -169,11 +171,13 @@ function Request() {
                 ref={subjectRef}
               />
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="body" className="form-label">
                 <span className="label-title">Leírás</span>
-                <span className="label-description ms-2">Írja le részletesebben járműve problémáját!</span>
+                <span className="label-description ms-2">
+                  Írja le részletesebben járműve problémáját!
+                </span>
               </label>
               <input
                 type="text"
@@ -183,7 +187,7 @@ function Request() {
                 ref={bodyRef}
               />
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="owncars" className="form-label">
                 <span className="label-title">Saját Járművek</span>
@@ -198,7 +202,7 @@ function Request() {
                 {ownCars.map((i) => ownCarEntry(i))}
               </select>
             </div>
-            
+
             <button
               type="button"
               className="submit-button"
@@ -220,8 +224,12 @@ function Request() {
           <div className="quote-form">
             <div className="form-group">
               <label htmlFor="subject" className="form-label">
-                <span className="label-title">Cím<span className="required-mark">*</span></span>
-                <span className="label-description">Írja le röviden, mit tapasztal járműve!</span>
+                <span className="label-title">
+                  Cím<span className="required-mark">*</span>
+                </span>
+                <span className="label-description">
+                  Írja le röviden, mit tapasztal járműve!
+                </span>
               </label>
               <input
                 type="text"
@@ -231,11 +239,15 @@ function Request() {
                 ref={subjectRef}
               />
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="body" className="form-label">
-                <span className="label-title">Leírás<span className="required-mark">*</span></span>
-                <span className="label-description">Írja le részletesebben járműve problémáját!</span>
+                <span className="label-title">
+                  Leírás<span className="required-mark">*</span>
+                </span>
+                <span className="label-description">
+                  Írja le részletesebben járműve problémáját!
+                </span>
               </label>
               <textarea
                 name="body"
@@ -245,11 +257,15 @@ function Request() {
                 rows={8}
               ></textarea>
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="email" className="form-label">
-                <span className="label-title">Email cím <span className="required-mark">*</span></span>
-                <span className="label-description">Adja meg email címét ahol elérhetjük!</span>
+                <span className="label-title">
+                  Email cím <span className="required-mark">*</span>
+                </span>
+                <span className="label-description">
+                  Adja meg email címét ahol elérhetjük!
+                </span>
               </label>
               <input
                 type="email"
@@ -259,11 +275,8 @@ function Request() {
                 ref={emailRef}
               />
             </div>
-            
-            <button
-              className="submit-button"
-              onClick={SendRequestAnon}
-            >
+
+            <button className="submit-button" onClick={SendRequestAnon}>
               Ajánlat kérése
             </button>
           </div>
@@ -271,9 +284,6 @@ function Request() {
       </div>
     );
   }
-  
-  
- 
 }
 
 export default Request;

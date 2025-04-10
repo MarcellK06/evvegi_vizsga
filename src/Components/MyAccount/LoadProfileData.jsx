@@ -10,7 +10,7 @@ import {
   FaThList,
   FaCar,
   FaNewspaper,
-  FaCalendar
+  FaCalendar,
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { IoIosPricetags } from "react-icons/io";
@@ -70,9 +70,9 @@ function LoadProfileData() {
           <div className="admin-header">
             <h2 className="admin-title">Admin Panel</h2>
           </div>
-          
+
           <div className="admin-grid">
-            <div 
+            <div
               className="admin-card"
               onClick={() => (window.location.href = "/community/admin")}
             >
@@ -81,8 +81,8 @@ function LoadProfileData() {
               </div>
               <p className="card-label">Bejegyzések</p>
             </div>
-            
-            <div 
+
+            <div
               className="admin-card"
               onClick={() => (window.location.href = "/appointments/admin")}
             >
@@ -91,8 +91,8 @@ function LoadProfileData() {
               </div>
               <p className="card-label">Foglalt Időpontok</p>
             </div>
-            
-            <div 
+
+            <div
               className="admin-card"
               onClick={() => (window.location.href = "/marketplace/admin")}
             >
@@ -101,8 +101,8 @@ function LoadProfileData() {
               </div>
               <p className="card-label">Hirdetések</p>
             </div>
-            
-            <div 
+
+            <div
               className="admin-card"
               onClick={() => (window.location.href = "/requests/admin")}
             >
@@ -111,8 +111,8 @@ function LoadProfileData() {
               </div>
               <p className="card-label">Árajánlat kérések</p>
             </div>
-            
-            <div 
+
+            <div
               className="admin-card"
               onClick={() => (window.location.href = "/cars/admin")}
             >
@@ -121,7 +121,7 @@ function LoadProfileData() {
               </div>
               <p className="card-label">Jármű Ellenőrzés</p>
             </div>
-            <div 
+            <div
               className="admin-card"
               onClick={() => (window.location.href = "/admin/mailer")}
             >
@@ -242,103 +242,107 @@ function LoadProfileData() {
     };
     return (
       <>
-  <div className="profile-container">
-    <div className="profile-grid">
-      <div className="profile-info-section">
-        <div className="profile-header">
-          <div 
-            className="profile-avatar"
-            style={{
-              backgroundImage: `url(https://code2-api.paraghtibor.hu/user/avatar/${Cookies.get("userid")})`,
-            }}
-          >
-            <div className="avatar-edit-button">
-              <FaPencilAlt
-                className="edit-icon"
-                onClick={() =>
-                  CreateModal(
-                    <div>
-                      <p className="modal-title">Profilkép szerkesztése</p>
-                      <hr />
-                    </div>,
-                    openAvatarUpload,
-                    true
-                  )
-                }
-              />
+        <div className="profile-container">
+          <div className="profile-grid">
+            <div className="profile-info-section">
+              <div className="profile-header">
+                <div
+                  className="profile-avatar"
+                  style={{
+                    backgroundImage: `url(https://code2-api.paraghtibor.hu/user/avatar/${Cookies.get(
+                      "userid"
+                    )})`,
+                  }}
+                >
+                  <div className="avatar-edit-button">
+                    <FaPencilAlt
+                      className="edit-icon"
+                      onClick={() =>
+                        CreateModal(
+                          <div>
+                            <p className="modal-title">
+                              Profilkép szerkesztése
+                            </p>
+                            <hr />
+                          </div>,
+                          openAvatarUpload,
+                          true
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="user-details">
+                  <h2 className="user-name">{name}</h2>
+                  <p className="user-rank">{rank}</p>
+                </div>
+              </div>
+              <div className="logout-container">
+                <button
+                  type="button"
+                  onClick={HandleLogout}
+                  className="logout-button"
+                >
+                  Kijelentkezés
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="user-details">
-            <h2 className="user-name">{name}</h2>
-            <p className="user-rank">{rank}</p>
-          </div>
-        </div>
-        <div className="logout-container">
-          <button
-            type="button"
-            onClick={HandleLogout}
-            className="logout-button"
-          >
-            Kijelentkezés
-          </button>
-        </div>
-      </div>
-      
-      <div className="user-data-section">
-        <div className="form-grid">
-          <div className="form-labels">
-            <div className="form-label">Email cím</div>
-            <div className="form-label">Telefonszám</div>
-          </div>
-          <div className="form-fields">
-            <div className="field-container">
-              <label className="mobile-label">Email cím</label>
-              <input
-                type="text"
-                name="email"
-                id="email"
-                defaultValue={email}
-                className="text-field"
-                disabled
-                ref={emailRef}
-              />
-            </div>
-            <div className="field-container">
-              <label className="mobile-label">Telefonszám</label>
-              <input
-                type="text"
-                name="phonenumber"
-                id="phonenumber"
-                defaultValue={phone}
-                className="text-field"
-                disabled
-                ref={phonenumberRef}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="actions-container">
-          <button
-            type="button"
-            id="savebutton"
-            className="h-btn hidden"
-            onClick={saveData}
-          >
-            Mentés
-          </button>
-          <button 
-            className="edit-button h-btn p-2"
-            onClick={changeEditMode}
-          >
-            <FaPencilAlt className="edit-icon" />
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <AdminPanel />
-</>
+            <div className="user-data-section">
+              <div className="form-grid">
+                <div className="form-labels">
+                  <div className="form-label">Email cím</div>
+                  <div className="form-label">Telefonszám</div>
+                </div>
+                <div className="form-fields">
+                  <div className="field-container">
+                    <label className="mobile-label">Email cím</label>
+                    <input
+                      type="text"
+                      name="email"
+                      id="email"
+                      defaultValue={email}
+                      className="text-field"
+                      disabled
+                      ref={emailRef}
+                    />
+                  </div>
+                  <div className="field-container">
+                    <label className="mobile-label">Telefonszám</label>
+                    <input
+                      type="text"
+                      name="phonenumber"
+                      id="phonenumber"
+                      defaultValue={phone}
+                      className="text-field"
+                      disabled
+                      ref={phonenumberRef}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="actions-container">
+                <button
+                  type="button"
+                  id="savebutton"
+                  className="h-btn hidden"
+                  onClick={saveData}
+                >
+                  Mentés
+                </button>
+                <button
+                  className="edit-button h-btn p-2"
+                  onClick={changeEditMode}
+                >
+                  <FaPencilAlt className="edit-icon" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <AdminPanel />
+      </>
     );
   };
 

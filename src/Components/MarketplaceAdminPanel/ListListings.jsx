@@ -47,7 +47,7 @@ function ListListings() {
           brandFilterRef.current.value,
           modelFilterRef.current.value,
           engineCodeFilterRef.current.value,
-        ]
+        ],
       },
       success: function (resp) {
         if (i < listings.length) setActiveListings(listings[i - 1]);
@@ -107,7 +107,7 @@ function ListListings() {
     }
 
     let images = el.images;
-    
+
     const ApproveListing = (i) => {
       var userid = Cookie.get("userid");
       var rankid = Cookie.get("rank");
@@ -200,53 +200,53 @@ function ListListings() {
   }, []);
   return (
     <>
-    <div className="row">
-      <div className="container col-sm-3 my-2">
-        <div className="d-flex justify-content-center mt-5">
-          <div className="col-2"></div>
-          <div className="col-8 listing-entry d-flex justify-content-center flex-column text-center">
-            <p className="fs-4 fw-bold mt-2 mb-4 ">Szűrők</p>
-            <div className="m-2">
-              <label htmlFor="brand" className="form-label fw-bold">
-                Gyártó
-              </label>
-              <select ref={brandFilterRef} className="form-select ">
-                <option value="-">-</option>
-              </select>
+      <div className="row">
+        <div className="container col-sm-3 my-2">
+          <div className="d-flex justify-content-center mt-5">
+            <div className="col-2"></div>
+            <div className="col-8 listing-entry d-flex justify-content-center flex-column text-center">
+              <p className="fs-4 fw-bold mt-2 mb-4 ">Szűrők</p>
+              <div className="m-2">
+                <label htmlFor="brand" className="form-label fw-bold">
+                  Gyártó
+                </label>
+                <select ref={brandFilterRef} className="form-select ">
+                  <option value="-">-</option>
+                </select>
+              </div>
+              <div className="m-2">
+                <label htmlFor="model" className="form-label fw-bold">
+                  Gyártmány
+                </label>
+                <select ref={modelFilterRef} className="form-select ">
+                  <option value="-">-</option>
+                </select>
+              </div>
+              <div className="m-2">
+                <label htmlFor="engineCode" className="form-label fw-bold">
+                  Motorkód
+                </label>
+                <select ref={engineCodeFilterRef} className="form-select ">
+                  <option value="-">-</option>
+                </select>
+              </div>
+              <div className="px-0 px-sm-4 py-2">
+                <input
+                  type="button"
+                  value="Szűrés"
+                  className="h-btn w-100"
+                  onClick={LoadListings}
+                />
+              </div>
             </div>
-            <div className="m-2">
-              <label htmlFor="model" className="form-label fw-bold">
-                Gyártmány
-              </label>
-              <select ref={modelFilterRef} className="form-select ">
-                <option value="-">-</option>
-              </select>
-            </div>
-            <div className="m-2">
-              <label htmlFor="engineCode" className="form-label fw-bold">
-                Motorkód
-              </label>
-              <select ref={engineCodeFilterRef} className="form-select ">
-                <option value="-">-</option>
-              </select>
-            </div>
-            <div className="px-0 px-sm-4 py-2">
-              <input
-                type="button"
-                value="Szűrés"
-                className="h-btn w-100"
-                onClick={LoadListings}
-              />
-            </div>
+            <div className="col-2"></div>
           </div>
-          <div className="col-2"></div>
         </div>
+        <div className="container col-sm-7 my-2">
+          {activeListings.map((i) => ListingEntry(i))}
+        </div>
+        <div className="col-sm-2 p-0"></div>
       </div>
-      <div className="container col-sm-7 my-2">
-        {activeListings.map((i) => ListingEntry(i))}
-      </div>
-      <div className="col-sm-2 p-0"></div>
-    </div>
     </>
   );
 }

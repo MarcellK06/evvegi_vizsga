@@ -4,7 +4,13 @@ import $ from "jquery";
 import Cookie from "js-cookie";
 import CommunityPostComments from "./CommunityPostComments";
 import { CiClock2 } from "react-icons/ci";
-import { FaRegCommentDots, FaTrash, FaImages, FaEye, FaExclamationTriangle } from "react-icons/fa";
+import {
+  FaRegCommentDots,
+  FaTrash,
+  FaImages,
+  FaEye,
+  FaExclamationTriangle,
+} from "react-icons/fa";
 import { json } from "react-router-dom";
 import { ModalContext } from "../../Providers/ModalProvider";
 import Cookies from "js-cookie";
@@ -46,7 +52,7 @@ function LoadCommunityPostsAdmin() {
 
   var posts = [];
   var [activeposts, setActivePosts] = useState([]);
-  
+
   const ShowComments = (id) => {
     var el = document.getElementById(`comments-${id}`);
     if (el.classList.contains("d-block")) {
@@ -89,7 +95,10 @@ function LoadCommunityPostsAdmin() {
                 data-bs-target={`#carousel-${el.id}`}
                 data-bs-slide="prev"
               >
-                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span
+                  className="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
                 <span className="visually-hidden">Previous</span>
               </button>
               <button
@@ -98,7 +107,10 @@ function LoadCommunityPostsAdmin() {
                 data-bs-target={`#carousel-${el.id}`}
                 data-bs-slide="next"
               >
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                <span
+                  className="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
                 <span className="visually-hidden">Next</span>
               </button>
             </>
@@ -110,11 +122,11 @@ function LoadCommunityPostsAdmin() {
 
   const DeletePost = (postid) => {
     var userid = Cookies.get("userid");
-    
+
     if (!window.confirm("Biztosan törölni szeretné ezt a bejegyzést?")) {
       return;
     }
-    
+
     $.ajax({
       url: `${API}/community/admin/posts/delete`,
       type: "post",
@@ -149,14 +161,14 @@ function LoadCommunityPostsAdmin() {
       if (parseInt(psplit[0]) != now.getHours())
         postedat_text = `${now.getHours() - parseInt(psplit[0])} ó`;
     }
-    
+
     return postedat_text;
   };
 
   const PostEntry = (el) => {
     var postedat_text = formatTimeAgo(el.postedat);
     var userid = el.userid;
-    
+
     return (
       <div className="admin-post-card" key={el.id}>
         <div className="post-header">
@@ -172,11 +184,11 @@ function LoadCommunityPostsAdmin() {
             <span>{postedat_text}</span>
           </div>
         </div>
-        
+
         <div className="post-content">
           <h3 className="post-title">{el.title}</h3>
           <p className="post-description">{el.description}</p>
-          
+
           {el.images[0] != "" && (
             <div className="post-images">
               <div className="image-preview">
@@ -222,17 +234,17 @@ function LoadCommunityPostsAdmin() {
             </div>
           )}
         </div>
-        
+
         <div className="post-actions">
-          <button 
+          <button
             className="action-button comments-button"
             onClick={() => ShowComments(el.id)}
           >
             <FaRegCommentDots className="action-icon" />
             <span>{el.comments}</span>
           </button>
-          
-          <button 
+
+          <button
             className="action-button delete-button"
             onClick={() => DeletePost(el.id)}
             title="Bejegyzés törlése"
@@ -241,7 +253,7 @@ function LoadCommunityPostsAdmin() {
             <span>Törlés</span>
           </button>
         </div>
-        
+
         <div className="comments-container d-none" id={`comments-${el.id}`}>
           <CommunityPostComments data={el} />
         </div>
@@ -291,9 +303,9 @@ function LoadCommunityPostsAdmin() {
         }
         setLoading(false);
       },
-      error: function() {
+      error: function () {
         setLoading(false);
-      }
+      },
     });
   };
 
@@ -308,7 +320,7 @@ function LoadCommunityPostsAdmin() {
           <FaExclamationTriangle className="me-2" />
           Közösségi Bejegyzések Kezelése
         </h2>
-        
+
         <div className="row">
           <div className="col-lg-8 col-md-10 mx-auto">
             {loading ? (
@@ -321,17 +333,17 @@ function LoadCommunityPostsAdmin() {
             ) : activeposts.length > 0 ? (
               <>
                 {activeposts.map((post) => PostEntry(post))}
-                
+
                 <div className="pagination-controls">
-                  <button 
+                  <button
                     className="pagination-button prev-button"
-                    onClick={() => setI(i - 1)} 
+                    onClick={() => setI(i - 1)}
                     disabled={i <= 1}
                   >
                     Előző
                   </button>
                   <span className="page-indicator">Oldal: {i}</span>
-                  <button 
+                  <button
                     className="pagination-button next-button"
                     onClick={() => setI(i + 1)}
                   >

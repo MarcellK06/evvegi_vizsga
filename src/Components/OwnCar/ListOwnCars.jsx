@@ -3,7 +3,13 @@ import $ from "jquery";
 import Cookie from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../../Providers/ModalProvider";
-import { FaEye, FaTrash, FaCheckCircle, FaHourglassHalf, FaCar } from "react-icons/fa";
+import {
+  FaEye,
+  FaTrash,
+  FaCheckCircle,
+  FaHourglassHalf,
+  FaCar,
+} from "react-icons/fa";
 
 function ListOwnCars() {
   var API = CONFIG.API;
@@ -101,9 +107,9 @@ function ListOwnCars() {
             <p className="detail-value">{el.status}</p>
           </div>
         </div>
-        
+
         <hr className="divider" />
-        
+
         <div className="car-images-container">
           <div className="row g-3">
             {el.images.map((img, index) => (
@@ -119,9 +125,9 @@ function ListOwnCars() {
                           <h4 className="modal-title">Fénykép Megtekintés</h4>
                           <hr className="divider" />
                         </div>,
-                        <img 
-                          src={img || "/placeholder.svg"} 
-                          className="img-fluid modal-image" 
+                        <img
+                          src={img || "/placeholder.svg"}
+                          className="img-fluid modal-image"
                           alt={`Car image ${index + 1} full view`}
                         />,
                         true
@@ -163,9 +169,11 @@ function ListOwnCars() {
               <span className="car-engine">{engineCode}</span>
             </div>
           </div>
-          
+
           <div className="car-actions">
-            <div className={`approval-status ${approved ? 'approved' : 'pending'}`}>
+            <div
+              className={`approval-status ${approved ? "approved" : "pending"}`}
+            >
               {approved ? (
                 <>
                   <FaCheckCircle className="status-icon" />
@@ -178,8 +186,8 @@ function ListOwnCars() {
                 </>
               )}
             </div>
-            
-            <button 
+
+            <button
               className="action-button view-button"
               onClick={() =>
                 CreateModal(
@@ -195,14 +203,14 @@ function ListOwnCars() {
                 )
               }
             >
-              <FaEye/>
+              <FaEye />
             </button>
-            
-            <button 
+
+            <button
               className="action-button delete-button"
               onClick={() => HandleDelete(el)}
             >
-              <FaTrash/>
+              <FaTrash />
             </button>
           </div>
         </div>
@@ -217,7 +225,7 @@ function ListOwnCars() {
           <FaCar className="me-2" />
           Saját Járművek
         </h2>
-        
+
         <div className="row">
           <div className="col-lg-10 col-md-12 mx-auto">
             {ownCars.length > 0 ? (

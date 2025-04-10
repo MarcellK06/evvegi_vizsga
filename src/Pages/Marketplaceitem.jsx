@@ -15,7 +15,6 @@ function Marketplaceitem() {
       },
     });
   };
-  
 
   const dataEntry = (i, idx) => {
     if (idx > 0) return;
