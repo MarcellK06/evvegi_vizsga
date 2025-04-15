@@ -84,8 +84,8 @@ function Ratings() {
         transition={{ delay: 0.2, duration: 0.5 }}
       >
         <div className="average-rating">
-          <h3>{ratings.avg.toString().substring(0, 3)}</h3>
-          <StarBuilder a={Math.round(ratings.avg)} s={30} />
+          <h3>{ratings.avg == null ? 0 : ratings.avg.toString().substring(0, 3)}</h3>
+          <StarBuilder a={Math.round(ratings.avg == null ? 0 : ratings.avg)} s={30} />
           <p>{ratings.all_ratings} értékelés alapján</p>
         </div>
         <div className="rating-distribution">
