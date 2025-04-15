@@ -22,6 +22,12 @@ function Exam() {
         </div>
         <div className="col-2"></div>
       </div>
+      <div className="row">
+        <div className="col-2"></div>
+        <div className="col-8">
+          <a href="https://api.szalkacar.hu/ppt" target="_blank" className="fs-3">PPT Letöltése</a></div>
+        <div className="col-2"></div>
+      </div>
     </>
   );
 }
