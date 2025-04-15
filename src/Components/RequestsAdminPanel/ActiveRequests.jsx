@@ -439,7 +439,7 @@ function ActiveRequests() {
           onClick={() => setActiveRequest(u)}
         >
           <div className="ms-3">
-            {u.email == "USER" ? "Regsztrált felhasználó" : u.email}
+            {u.email == "USER" ? "Regisztrált felhasználó" : u.email}
           </div>
           <div className="ms-5" style={{ fontSize: "15px" }}>
             {u.title.split("").slice(0, 25).join("")}...

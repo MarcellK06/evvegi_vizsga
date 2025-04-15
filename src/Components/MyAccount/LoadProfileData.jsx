@@ -288,7 +288,7 @@ function LoadProfileData() {
               </div>
             </div>
 
-            <div className="user-data-section">
+            <div className="user-data-section ">
               <div className="form-grid">
                 <div className="form-labels">
                   <div className="form-label">Email cím</div>
@@ -302,7 +302,7 @@ function LoadProfileData() {
                       name="email"
                       id="email"
                       defaultValue={email}
-                      className="text-field"
+                      className="text-field mt-2"
                       disabled
                       ref={emailRef}
                     />
@@ -314,7 +314,7 @@ function LoadProfileData() {
                       name="phonenumber"
                       id="phonenumber"
                       defaultValue={phone}
-                      className="text-field"
+                      className="text-field mt-2"
                       disabled
                       ref={phonenumberRef}
                     />

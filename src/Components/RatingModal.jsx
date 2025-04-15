@@ -5,7 +5,9 @@ function RatingModal() {
   const [stars, setStars] = useState(5);
   const [error, setError] = useState("");
 
-  const Handle = () => {};
+  const Handle = () => {
+    
+  };
 
   const StartSelector = ({ stars, s = 35 }) => {
     var st = [];
