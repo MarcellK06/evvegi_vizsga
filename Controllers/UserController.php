@@ -112,7 +112,7 @@ Route::post("/user/get-password-recovery", ["email"], function($params){
     DB::runSql("INSERT INTO password_recovery (userid, token, expiry) VALUES ($userid, '$token', '$expiry')");
     
 
-    Mailer::Send($email, "SzalkaCar jelszó visszaállítás", Mailer::MailTamplate("Jelszó visszaáálítás", "
+    Mailer::Send($email, "SzalkaCar jelszó visszaállítás", Mailer::MailTamplate("Jelszó visszaálítás", "
         <p>A visszaállító kódja:  <b>".$token."</b></p>
         <p>A kód eddig érvényes: ".$expiry."</p>
     "));
