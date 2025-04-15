@@ -22,7 +22,7 @@ function GDPR() {
     <>
       <div style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
         <iframe
-          src="https://code2-api.paraghtibor.hu/gdpr"
+          src="https://api.szalkacar.hu/gdpr"
           style={{ border: 0, width: "100%", height: "100%" }}
           title="GDPR iframe"
         >

@@ -22,7 +22,7 @@ function Aszf() {
     <>
       <div style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
         <iframe
-          src="https://code2-api.paraghtibor.hu/aszf"
+          src="https://api.szalkacar.hu/aszf"
           style={{ border: 0, width: "100%", height: "100%" }}
           title="GDPR iframe"
         >

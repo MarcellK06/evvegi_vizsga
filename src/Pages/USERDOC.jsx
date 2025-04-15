@@ -22,7 +22,7 @@ function USERDOC() {
     <>
       <div style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
         <iframe
-          src="https://code2-api.paraghtibor.hu/userdoc"
+          src="https://api.szalkacar.hu/userdoc"
           style={{ border: 0, width: "100%", height: "100%" }}
           title="USERDOC iframe"
         >

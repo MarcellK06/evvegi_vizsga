@@ -249,7 +249,7 @@ function LoadProfileData() {
                 <div
                   className="profile-avatar"
                   style={{
-                    backgroundImage: `url(https://code2-api.paraghtibor.hu/user/avatar/${Cookies.get(
+                    backgroundImage: `url(https://api.szalkacar.hu/user/avatar/${Cookies.get(
                       "userid"
                     )})`,
                   }}

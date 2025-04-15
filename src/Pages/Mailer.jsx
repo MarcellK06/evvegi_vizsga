@@ -31,7 +31,7 @@ function Mailer() {
             }}
           >
             <img
-              src="https://code1-web.paraghtibor.hu/static/media/logo.054ff8c9fa696cfba909.png"
+              src="https://www.szalkacar.hu/static/media/logo.054ff8c9fa696cfba909.png"
               style={{ width: "25%" }}
               alt="Logo"
             />
